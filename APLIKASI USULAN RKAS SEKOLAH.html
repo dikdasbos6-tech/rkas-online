@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi RKAS Otomatis Excel - Kabupaten Lingga</title>
+    <style>
+        :root {
+            --excel-green: #107c41;
+            --excel-light-green: #f3fdf6;
+            --excel-border: #d1d1d1;
+            --excel-header-bg: #f8f9fa;
+            --excel-text: #333333;
+        }
+
+        body {
+            font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: var(--excel-text);
+            font-size: 13px;
+        }
+
+        .excel-ribbon {
+            background-color: var(--excel-green);
+            color: white;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ribbon-title { font-weight: bold; font-size: 15px; }
+
+        .nav-tabs {
+            display: flex;
+            background-color: #e1dfdd;
+            border-bottom: 1px solid #bcbab8;
+            padding-left: 20px;
+        }
+        .nav-tab {
+            padding: 8px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-top: 5px;
+            border-radius: 4px 4px 0 0;
+            background-color: #f3f2f1;
+            margin-right: 3px;
+        }
+        .nav-tab.active {
+            background-color: #ffffff;
+            border-color: #bcbab8;
+            border-bottom: 2px solid #ffffff;
+            color: var(--excel-green);
+            font-weight: bold;
+        }
+
+        .view-container { display: none; padding: 15px; max-width: 1300px; margin: 0 auto; }
+        .view-container.active { display: block; }
+
+        .excel-toolbar {
+            background: #f3f2f1;
+            padding: 10px 15px;
+            border-bottom: 1px solid #bcbab8;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .panel-block {
+            background: white;
+            border: 1px solid var(--excel-border);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .excel-btn {
+            background: white;
+            border: 1px solid #8a8886;
+            padding: 5px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 2px;
+        }
+        .excel-btn:hover { background: #edebe9; border-color: var(--excel-green); }
+        .excel-select, .excel-input { padding: 4px 8px; border: 1px solid #8a8886; border-radius: 2px; }
+
+        .excel-sheet {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border: 1px solid #d2d2d2;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .rkas-title-block { text-align: center; font-weight: bold; font-size: 15px; margin-bottom: 25px; line-height: 1.4; text-transform: uppercase; }
+        .meta-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; table-layout: fixed; }
+        .meta-table td { border: none !important; padding: 4px 5px; vertical-align: middle; line-height: 1.35; }
+        .meta-table td:nth-child(2), .meta-table td:nth-child(5) { text-align: center; }
+        .meta-table td:nth-child(3), .meta-table td:nth-child(6) { overflow-wrap: anywhere; }
+
+        .excel-grid { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .excel-grid th, .excel-grid td { border: 1px solid #c0c0c0; padding: 5px 6px; font-size: 12px; }
+        .excel-grid th { background-color: #eaeaea; font-weight: bold; text-align: center; }
+        .bg-header-level { background-color: #f2f2f2; font-weight: bold; }
+        
+        .murni-col, .perubahan-col { transition: all 0.3s ease; }
+        .hide-col { display: none !important; }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-bold { font-weight: bold; }
+
+        .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; }
+        .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33%; vertical-align: top; }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+        .form-group { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
+        .form-group label { font-weight: bold; color: #444; }
+
+
+        .modal-manager { border:1px solid #d1d1d1; background:#fafafa; padding:8px; border-radius:4px; }
+        .modal-manager-title { font-weight:bold; color:var(--excel-green); margin-bottom:6px; }
+        .modal-manager-row { display:grid; grid-template-columns: 90px 1fr 55px 85px 105px auto; gap:6px; align-items:center; padding:5px 0; border-bottom:1px solid #e5e5e5; font-size:11px; }
+        .modal-manager-row:last-child { border-bottom:none; }
+        .mini-btn { border:1px solid #999; background:white; cursor:pointer; padding:3px 7px; border-radius:2px; }
+        .mini-btn:hover { border-color:var(--excel-green); background:#f0fff5; }
+        .btn-delete:hover { border-color:#c00; color:#c00; }
+        .dynamic-modal-row td { vertical-align:middle; }
+        @media(max-width:900px){ .modal-manager-row { grid-template-columns: 1fr 1fr; } }
+
+
+        .save-load-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+        .btn-save{background:#107c41!important;color:#fff!important;border-color:#0b6334!important}
+        .btn-load{background:#eaf4ff!important;color:#145a9c!important;border-color:#8db9df!important}
+        .place-date-row{margin-top:4px;text-align:right;font-size:11px;font-style:italic}
+        .print-only-date{display:none}
+        @media print{
+            #rkas-view .excel-grid th{
+                background:#d9ead3 !important;
+                -webkit-print-color-adjust:exact !important;
+                print-color-adjust:exact !important;
+            }
+            #rkas-view .excel-grid tr.bg-header-level td{
+                background:#e2f0d9 !important;
+                -webkit-print-color-adjust:exact !important;
+                print-color-adjust:exact !important;
+            }
+            #rkas-view .excel-grid tr.modal-category-row td{
+                background:#fce4d6 !important;
+                -webkit-print-color-adjust:exact !important;
+                print-color-adjust:exact !important;
+            }
+            #rkas-view .excel-grid tr.dynamic-modal-row td{
+                background:#fff !important;
+            }
+            .print-only-date{display:block !important}
+        }
+
+        /* ================= PRINT RKAS SAJA ================= */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 8mm;
+            }
+
+            body {
+                background: #fff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 10px !important;
+            }
+
+            body * {
+                visibility: hidden !important;
+            }
+
+            #rkas-view,
+            #rkas-view .excel-sheet,
+            #rkas-view .excel-sheet * {
+                visibility: visible !important;
+            }
+
+            #rkas-view {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: none !important;
+            }
+
+            #rkas-view .excel-sheet {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+
+            #rkas-view .excel-grid {
+                width: 100% !important;
+                margin-top: 8px !important;
+                page-break-inside: auto;
+            }
+
+            #rkas-view .excel-grid tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            #rkas-view .excel-grid th,
+            #rkas-view .excel-grid td {
+                font-size: 8px !important;
+                padding: 3px 4px !important;
+            }
+
+            #rkas-view .rkas-title-block {
+                font-size: 12px !important;
+                margin-bottom: 10px !important;
+            }
+
+            #rkas-view .meta-table {
+                margin-bottom: 8px !important;
+            }
+
+            #rkas-view .meta-table td {
+                font-size: 9px !important;
+                padding: 1px 3px !important;
+            }
+
+            #rkas-view .sig-block {
+                margin-top: 15px !important;
+            }
+
+            #rkas-view .sig-block td {
+                font-size: 9px !important;
+                padding: 4px !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            /* Jika data penandatangan kosong, kolomnya tidak tampil saat cetak. */
+            .sig-block .sig-empty {
+                display: none !important;
+            }
+        }
+
+    
+
+        /* ================= DATABASE ONLINE ================= */
+        .online-db-box{margin-top:12px;padding:12px;border:1px solid #cfd8e3;border-radius:6px;background:#f8fbff;}
+        .online-db-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .online-db-grid label{font-weight:bold;font-size:12px;display:block;margin-bottom:4px;}
+        .online-db-grid input{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #bbb;border-radius:4px;}
+        .online-db-status{font-size:12px;margin-top:8px;font-weight:bold;}
+        @media(max-width:700px){.online-db-grid{grid-template-columns:1fr;}}
+
+        /* ================= REKAP SELURUH SEKOLAH ================= */
+        .rekap-toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;}
+        .rekap-filter-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+        .rekap-note{margin-top:12px;padding:9px 12px;background:#f5f9ff;border:1px solid #cbd8ea;border-radius:4px;font-size:12px;color:#334;}
+        .rekap-sheet{margin-top:12px;padding:12px;}
+        .rekap-grid{width:100%;min-width:1050px;border-collapse:collapse;table-layout:fixed;}
+        .rekap-grid th,.rekap-grid td{border:1px solid #777;padding:6px 7px;vertical-align:middle;}
+        .rekap-grid thead th{background:#eaf2f8;font-weight:bold;text-align:center;}
+        .rekap-grid td:nth-child(1){width:42px;text-align:center;}
+        .rekap-grid td:nth-child(2){width:125px;}
+        .rekap-grid td:nth-child(3){width:105px;text-align:center;}
+        .rekap-grid td:nth-child(4){width:255px;}
+        .rekap-grid td:nth-child(5){width:90px;text-align:center;}
+        .rekap-grid td.num{text-align:right;white-space:nowrap;}
+        .rekap-grid .total-row td{font-weight:bold;background:#f1f1f1;}
+        .rekap-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+        .rekap-empty{text-align:center!important;color:#777!important;padding:25px!important;}
+
+        /* ================= LOGIN & HAK AKSES ================= */
+        body.auth-locked > *:not(#auth-overlay){display:none !important;}
+        #auth-overlay{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#eef7f1,#f7fbff);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+        .auth-card{width:min(460px,100%);background:#fff;border:1px solid #cfd8e3;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:24px;box-sizing:border-box;}
+        .auth-title{font-size:20px;font-weight:700;color:var(--excel-green);margin:0 0 6px;}
+        .auth-subtitle{font-size:12px;color:#666;margin-bottom:18px;}
+        .auth-field{margin-bottom:12px;}
+        .auth-field label{display:block;font-weight:700;font-size:12px;margin-bottom:5px;}
+        .auth-field input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #aaa;border-radius:5px;}
+        .auth-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+        .auth-status{margin-top:12px;padding:9px 10px;border-radius:5px;background:#f6f6f6;font-size:12px;min-height:18px;}
+        .user-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;}
+        .access-denied{background:#fff5f5!important;border-color:#e3aaaa!important;color:#9b0000!important;}
+
+    </style>
+</head>
+<body class="auth-locked">
+
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-title">🔐 Login RKAS Online</div>
+            <div class="auth-subtitle"><b>Operator Sekolah</b> login menggunakan NPSN dan password yang ditentukan Admin. <b>Admin</b> login menggunakan username <b>admin</b>.</div>
+            <div class="auth-field"><label>Login Sebagai</label><select id="auth-role" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid #aaa;border-radius:5px;" onchange="updateLoginPlaceholder()"><option value="operator">Operator Sekolah</option><option value="admin">Admin</option></select></div>
+            <div class="auth-field"><label id="auth-username-label">NPSN</label><input id="auth-email" type="text" autocomplete="username" placeholder="Masukkan NPSN sekolah"></div>
+            <div class="auth-field"><label>Password</label><input id="auth-password" type="password" autocomplete="current-password" placeholder="Password dari Admin"></div>
+            <div class="auth-actions">
+                <button class="excel-btn btn-save" onclick="loginOnlineUser()">🔑 Login</button>
+                
+            </div>
+            <div id="auth-status" class="auth-status">Belum login.</div>
+
+        </div>
+    </div>
+
+    <div class="excel-ribbon no-print">
+        <div class="ribbon-title">Microsoft Excel - Workspace Anggaran RKAS Kabupaten Lingga</div>
+        <div class="user-badge"><span id="logged-user-label">Belum login</span> <button class="excel-btn" style="padding:4px 8px;" onclick="logoutOnlineUser()">🚪 Keluar</button> <span>Tahun Anggaran <span id="ribbon-year">2026</span></span></div>
+    </div>
+
+    <div class="nav-tabs no-print">
+        <div class="nav-tab active" onclick="switchTab('rkas-view', this)">📊 Lembar Kerja RKAS</div>
+        <div id="master-nav-tab" class="nav-tab" onclick="switchTab('master-view', this)">⚙️ Kelola Master Data Sekolah</div>
+        <div id="rekap-nav-tab" class="nav-tab" onclick="switchTab('rekap-view', this)">📊 Hasil Rekap Seluruh Sekolah</div>
+    </div>
+
+    <!-- ==================== TAB 1: LEMBAR KERJA RKAS ==================== -->
+    <div id="rkas-view" class="view-container active">
+        <div class="excel-toolbar no-print">
+            <div>
+                <label style="font-weight: bold;">Sekolah Target:</label>
+                <select id="school-selector" class="excel-select" style="width: 280px;" onchange="handleSchoolChange()">
+                    <option value="">-- Pilih Lembaga --</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-weight: bold;">Jenis Anggaran:</label>
+                <select id="rkas-type-selector" class="excel-select" onchange="toggleRkasType()">
+                    <option value="perubahan">RKAS Perubahan</option>
+                    <option value="murni">RKAS Murni</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-weight: bold;">Tahun:</label>
+                <input id="rkas-year-input" class="excel-input" type="number" min="2000" max="2100" value="2026"
+                       style="width:90px;" onchange="updateRkasYear()" oninput="updateRkasYear(false)">
+            </div>
+            <div>
+                <label style="font-weight: bold;">Sumber Dana:</label>
+                <select id="rkas-source-selector" class="excel-select" onchange="updateRkasSource()">
+                    <option value="Bos Reguler">Bos Reguler</option>
+                    <option value="Bos Kinerja Berkemajuan terbaik">Bos Kinerja Berkemajuan terbaik</option>
+                    <option value="bos kinerja sekolah prestasi">bos kinerja sekolah prestasi</option>
+                    <option value="bos afirmasi">bos afirmasi</option>
+                </select>
+            </div>
+            <button class="excel-btn" onclick="window.print()">🖨️ Cetak Dokumen</button>
+            <button class="excel-btn btn-save" onclick="saveRkasData()">💾 Simpan RKAS</button>
+            <button class="excel-btn btn-load" onclick="loadRkasData()">📂 Muat RKAS</button>
+        </div>
+
+        <!-- Panel Input Dinamis Pengesahan Jabatan & Kegiatan Tambahan Belanja Modal -->
+        <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+            <!-- Kiri: Management Pengesahan Sesuai Mode -->
+            <div class="panel-block">
+                <h4 style="margin: 0 0 10px 0; color: var(--excel-green);" id="pejabat-title">✍️ Penandatangan Dokumen (Versi Perubahan)</h4>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nama Komite</label>
+                        <input type="text" id="p-komite-nama" class="excel-input" oninput="updateSignatures()">
+                    </div>
+                    <div class="form-group">
+                        <label>NIP Komite</label>
+                        <input type="text" id="p-komite-nip" class="excel-input" oninput="updateSignatures()" placeholder="-">
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Kepala Sekolah</label>
+                        <input type="text" id="p-kasek-nama" class="excel-input" oninput="updateSignatures()">
+                    </div>
+                    <div class="form-group">
+                        <label>NIP Kepala Sekolah</label>
+                        <input type="text" id="p-kasek-nip" class="excel-input" oninput="updateSignatures()">
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Bendahara</label>
+                        <input type="text" id="p-bendahara-nama" class="excel-input" oninput="updateSignatures()">
+                    </div>
+                    <div class="form-group">
+                        <label>NIP Bendahara</label>
+                        <input type="text" id="p-bendahara-nip" class="excel-input" oninput="updateSignatures()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tempat Tanda Tangan</label>
+                        <input type="text" id="p-tempat" class="excel-input" placeholder="Contoh: Dabo Singkep" oninput="updateSignaturePlaceDate()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Tanda Tangan</label>
+                        <input type="date" id="p-tanggal" class="excel-input" oninput="updateSignaturePlaceDate()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kanan: Form Tambah Belanja Modal Terintegrasi -->
+            <div class="panel-block">
+                <h4 style="margin: 0 0 10px 0; color: var(--excel-green);">➕ Tambah Kegiatan Belanja Modal</h4>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Rekening Akun</label>
+                        <select id="modal-rekening" class="excel-select">
+                            <option value="5.2.02">5.2.02 (Belanja Modal Peralatan dan Mesin)</option>
+                            <option value="5.2.05">5.2.05 (Belanja Modal Aset Tetap Lainnya)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="modal-side-group">
+                        <label>Posisi Anggaran</label>
+                        <select id="modal-side" class="excel-select" onchange="renderDynamicModalRows()">
+                            <option value="before">Sebelum Perubahan</option>
+                            <option value="after">Sesudah Perubahan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Uraian Barang / Kegiatan</label>
+                        <input type="text" id="modal-uraian" class="excel-input" placeholder="Misal: Pengadaan Laptop Core i5">
+                    </div>
+                    <div class="form-group">
+                        <label>Volume</label>
+                        <input type="number" id="modal-vol" class="excel-input" value="1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Satuan</label>
+                        <select id="modal-satuan" class="excel-select">
+                            <option value="Unit">Unit</option>
+                            <option value="Set">Set</option>
+                            <option value="Buah">Buah</option>
+                            <option value="Paket">Paket</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Harga Satuan (Rp)</label>
+                        <input type="number" id="modal-harga" class="excel-input" value="0" min="0">
+                    </div>
+                </div>
+                <button id="modal-save-btn" class="excel-btn" style="background: var(--excel-green); color: white; margin-top: 10px; width: 100%; justify-content: center;" onclick="execAddBelanjaModal()">⚡ Tambahkan Barang ke RKAS</button>
+                <button id="modal-cancel-btn" class="excel-btn" style="display:none; margin-top:6px; width:100%; justify-content:center;" onclick="cancelEditBelanjaModal()">↩️ Batal Edit</button>
+                <div id="modal-items-manager" style="margin-top:12px;"></div>
+            </div>
+        </div>
+
+        <!-- Excel Main Sheet Paper Look -->
+        <div class="excel-sheet">
+            <div class="rkas-title-block" id="sheet-title-text">
+                RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS) PERUBAHAN<br>
+                KABUPATEN LINGGA - PROVINSI KEPULAUAN RIAU<br>
+                TAHUN ANGGARAN 2026
+            </div>
+<table class="meta-table">
+                <colgroup>
+                    <col style="width:15%;"><col style="width:2%;"><col style="width:33%;">
+                    <col style="width:15%;"><col style="width:2%;"><col style="width:33%;">
+                </colgroup>
+                <tr>
+                    <td>Nama Sekolah</td>
+                    <td>:</td>
+                    <td id="lbl-nama" style="font-weight:bold;">-</td>
+                    <td>Sumber Dana</td>
+                    <td>:</td>
+                    <td style="font-weight:bold;"><span id="lbl-sumber-dana" style="display:inline-block; background:#fff2cc; padding:2px 6px; border:1px solid #d6b656; white-space:nowrap;">Bos Reguler</span></td>
+                </tr>
+                <tr>
+                    <td>Tahun</td>
+                    <td>:</td>
+                    <td id="lbl-tahun" style="font-weight:bold;">2026</td>
+                    <td>NPSN</td>
+                    <td>:</td>
+                    <td id="lbl-npsn">-</td>
+                </tr>
+                <tr>
+                    <td>Kecamatan</td>
+                    <td>:</td>
+                    <td id="lbl-kecamatan">-</td>
+                    <td>Jumlah Siswa Terdata</td>
+                    <td>:</td>
+                    <td id="lbl-siswa" style="font-weight:bold;">0 Siswa</td>
+                </tr>
+                <tr>
+                    <td>Status Sekolah</td>
+                    <td>:</td>
+                    <td id="lbl-status">-</td>
+                    <td>Pagu Dana Definitif</td>
+                    <td>:</td>
+                    <td id="lbl-pagu" style="font-weight:bold; color:blue; font-size:14px;">Rp 0</td>
+                </tr>
+                <tr>
+                    <td>Tarif Salur Nasional</td>
+                    <td>:</td>
+                    <td id="lbl-tarif" style="font-weight:bold; color:var(--excel-green);">-</td>
+                    <td></td><td></td><td></td>
+                </tr>
+            </table>
+
+            <table class="excel-grid">
+                <thead>
+                    <tr>
+                        <th rowspan="3" style="width: 3%;">NO</th>
+                        <th rowspan="3" style="width: 8%;">KODE REKENING</th>
+                        <th rowspan="3" style="width: 10%;">KODE PROG & KEGIATAN</th>
+                        <th rowspan="3" style="width: 30%;">URAIAN</th>
+                        <th colspan="4" class="murni-col-header" style="width: 22%;" id="header-murni-title">SEBELUM PERUBAHAN</th>
+                        <th colspan="4" class="perubahan-col" style="width: 22%;">SESUDAH PERUBAHAN</th>
+                        <th rowspan="3" class="perubahan-col" style="width: 5%;">SELISIH</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">RINCIAN PERHITUNGAN</th>
+                        <th rowspan="2">JUMLAH (Rp)</th>
+                        <th colspan="3" class="perubahan-col">RINCIAN PERHITUNGAN</th>
+                        <th rowspan="2" class="perubahan-col">JUMLAH (Rp)</th>
+                    </tr>
+                    <tr>
+                        <th>VOL</th><th>SAT</th><th>HARGA SATUAN</th>
+                        <th class="perubahan-col">VOL</th><th class="perubahan-col">SAT</th><th class="perubahan-col">HARGA SATUAN</th>
+                    </tr>
+                </thead>
+                <tbody id="rkas-grid-body">
+                    <!-- Base Grid Row Math -->
+                    <tr style="background:#f2f2f2; font-size:10px;" class="text-center text-bold">
+                        <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8=(5x7)</td><td class="perubahan-col">9</td><td class="perubahan-col">10</td><td class="perubahan-col">11</td><td class="perubahan-col">12=(9x11)</td><td class="perubahan-col">13</td>
+                    </tr>
+                    <tr class="bg-header-level">
+                        <td></td><td>4.</td><td></td><td>PENDAPATAN</td>
+                        <td></td><td></td><td></td><td class="text-right" id="p-murni-total">0</td>
+                        <td class="perubahan-col"></td><td class="perubahan-col"></td><td class="perubahan-col"></td><td class="text-right perubahan-col" id="p-ubah-total">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr>
+                        <td></td><td>4.1.01</td><td></td><td style="padding-left:15px; color:#444;">- Dana BOS Reguler Terhitung Sekolah</td>
+                        <td class="text-center" id="v-murni-s">0</td><td class="text-center">siswa</td><td class="text-right" id="h-murni-s">0</td><td class="text-right text-bold" id="j-murni-s">0</td>
+                        <td class="text-center perubahan-col" id="v-ubah-s">0</td><td class="text-center perubahan-col">siswa</td><td class="text-right perubahan-col" id="h-ubah-s">0</td><td class="text-right text-bold perubahan-col" id="j-ubah-s">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr class="bg-header-level">
+                        <td></td><td>5.</td><td></td><td>BELANJA</td>
+                        <td></td><td></td><td></td><td class="text-right" id="b-murni-total">0</td>
+                        <td class="perubahan-col"></td><td class="perubahan-col"></td><td class="perubahan-col"></td><td class="text-right perubahan-col" id="b-ubah-total">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr class="bg-header-level" style="background:#fafafa;">
+                        <td></td><td>5.1</td><td></td><td style="padding-left:10px;">BELANJA OPERASI</td>
+                        <td></td><td></td><td></td><td class="text-right" id="bo-murni-total">0</td>
+                        <td class="perubahan-col"></td><td class="perubahan-col"></td><td class="perubahan-col"></td><td class="text-right perubahan-col" id="bo-ubah-total">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr>
+                        <td></td><td>5.1.02</td><td></td><td style="padding-left:20px;">Belanja Barang dan Jasa</td>
+                        <td class="text-center">1</td><td class="text-center">Tahun</td><td class="text-right" id="bj-murni-h">0</td><td class="text-right" id="bj-murni-j">0</td>
+                        <td class="text-center perubahan-col">1</td><td class="text-center perubahan-col">Tahun</td><td class="text-right perubahan-col" id="bj-ubah-h">0</td><td class="text-right perubahan-col" id="bj-ubah-j">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr class="bg-header-level" style="background:#fafafa;">
+                        <td></td><td>5.2</td><td></td><td style="padding-left:10px;">BELANJA MODAL</td>
+                        <td></td><td></td><td></td><td class="text-right" id="bm-murni-total">0</td>
+                        <td class="perubahan-col"></td><td class="perubahan-col"></td><td class="perubahan-col"></td><td class="text-right perubahan-col" id="bm-ubah-total">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                    <tr class="bg-header-level modal-category-row">
+                        <td></td><td>5.2.02</td><td></td><td style="padding-left:20px;">Belanja Modal Peralatan dan Mesin</td>
+                        <td colspan="4" id="cat-502-before" class="text-right">0</td>
+                        <td colspan="4" class="perubahan-col text-right" id="cat-502-after">0</td>
+                        <td class="perubahan-col text-right">0</td>
+                    </tr>
+                    <tr class="bg-header-level modal-category-row">
+                        <td></td><td>5.2.05</td><td></td><td style="padding-left:20px;">Belanja Modal Aset Tetap Lainnya</td>
+                        <td colspan="4" id="cat-505-before" class="text-right">0</td>
+                        <td colspan="4" class="perubahan-col text-right" id="cat-505-after">0</td>
+                        <td class="perubahan-col text-right">0</td>
+                    </tr>
+                    <tr class="bg-header-level" style="background:#fff2cc;" id="row-totals-summary">
+                        <td></td><td></td><td></td><td class="text-center">SELISIH HITUNGAN (PENDAPATAN - BELANJA)</td>
+                        <td></td><td></td><td></td><td class="text-right" style="color:green;">0</td>
+                        <td class="perubahan-col"></td><td class="perubahan-col"></td><td class="perubahan-col"></td><td class="text-right perubahan-col" style="color:green;">0</td>
+                        <td class="text-right perubahan-col">0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- BAGIAN TANDA TANGAN REVISI: BERBARIS SEJAJAR (KOMITE, KEPALA SEKOLAH, BENDAHARA) -->
+            <table class="sig-block">
+                <tr>
+                    <td>Mengetahui,<br>Komite Sekolah</td>
+                    <td><br>Kepala Sekolah</td>
+                    <td><span id="sig-place">Kabupaten Lingga</span>, <span id="sig-date">4 September 2026</span><br>Bendahara Sekolah</td>
+                </tr>
+                <tr style="height: 60px;">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="text-bold">
+                    <td><span id="txt-sig-komite">AZWAR</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-kasek-nama">SUHAIDIR, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
+                    <td><span id="txt-sig-bendahara-nama">DESSY MULYANI, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
+                </tr>
+                <tr><td colspan="3" style="height: 35px;"></td></tr>
+
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 2: KELOLA MASTER DATA SEKOLAH ==================== -->
+    <div id="master-view" class="view-container">
+        <div class="panel-block" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3 style="margin-top:0; color: var(--excel-green);">📂 Kelola Master Data Sekolah</h3>
+                <p style="font-size:12px; color:#555; margin-bottom:10px;">
+                    Format workbook: <b>NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa</b>.
+                    Bisa unggah Excel <b>.xlsx/.xls</b> atau CSV.
+                </p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+                    <button class="excel-btn" onclick="downloadMasterTemplate()">📥 Download Template Excel</button>
+                    <button class="excel-btn" style="background:#fff0f0;color:#b00000;border-color:#d88;" onclick="deleteAllMasterDatabase()">🗑️ Hapus Seluruh Database</button>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap:wrap;">
+                    <input type="file" id="upload-csv-file" accept=".xlsx,.xls,.csv,.txt">
+                    <button class="excel-btn btn-save" onclick="saveUploadedData()">💾 Simpan Data</button>
+                </div>
+                <div class="online-db-box" style="margin-top:14px;">
+                    <div style="font-weight:bold;margin-bottom:6px;">🔐 Manajemen Operator Sekolah</div>
+                    <div style="font-size:12px;color:#555;margin-bottom:10px;">Admin dapat menambah/mengubah sekolah dan menentukan password operator. Operator login hanya menggunakan NPSN + password ini.</div>
+                    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+                        <div><label>NPSN</label><input id="admin-op-npsn" type="text" maxlength="8" placeholder="8 digit NPSN"></div>
+                        <div><label>Password Operator</label><input id="admin-op-password" type="text" placeholder="Password operator"></div>
+                        <div><label>Nama Sekolah</label><input id="admin-op-nama" type="text" placeholder="Nama sekolah"></div>
+                        <div><label>Kecamatan</label><input id="admin-op-kecamatan" type="text" placeholder="Kecamatan"></div>
+                        <div><label>Status</label><select id="admin-op-status"><option>Negeri</option><option>Swasta</option></select></div>
+                        <div><label>Jumlah Siswa</label><input id="admin-op-siswa" type="number" min="0" placeholder="0"></div>
+                    </div>
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                        <button class="excel-btn btn-save" onclick="adminSaveOperatorSchool()">💾 Tambah / Simpan Operator</button>
+                        <button class="excel-btn" onclick="loadOnlineOperatorAccounts(true).then(()=>{renderMasterTable();alert('Data sekolah/operator online berhasil dimuat ke komputer Admin.');}).catch(e=>alert('Gagal memuat data online.\n\n'+e.message))">☁️ Muat Sekolah Online</button>
+                        <button class="excel-btn" onclick="adminClearOperatorForm()">↺ Bersihkan</button>
+                    </div>
+                    <div id="admin-operator-status" style="margin-top:8px;font-size:12px;color:#555;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="excel-sheet" style="padding: 20px;">
+            <h3 style="margin-top: 0;">📋 Database Sekolah Aktif Terdaftar</h3>
+            <table class="excel-grid">
+                <thead>
+                    <tr>
+                        <th>NPSN</th>
+                        <th>Kecamatan</th>
+                        <th>Status</th>
+                        <th>Nama Sekolah</th>
+                        <th>Jumlah Siswa</th>
+                        <th>Password Operator</th>
+                        <th style="width:190px;">Kelola</th>
+                    </tr>
+                </thead>
+                <tbody id="master-db-rows"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 3: HASIL REKAP SELURUH SEKOLAH ==================== -->
+    <div id="rekap-view" class="view-container">
+        <div class="panel-block rekap-panel">
+            <div class="rekap-toolbar">
+                <div>
+                    <h3 style="margin:0 0 5px 0; color:var(--excel-green);">📊 Hasil Rekap Seluruh Sekolah</h3>
+                    <div style="font-size:12px;color:#666;">Data diambil dari Lembar Kerja RKAS dan masuk setelah tombol <b>💾 Simpan RKAS</b> ditekan.</div>
+                </div>
+                <div class="rekap-filter-wrap">
+                    <label for="rekap-mode-selector"><b>Pilihan Rekap:</b></label>
+                    <select id="rekap-mode-selector" class="excel-select" onchange="renderHasilRekap()">
+                        <option value="murni">RKAS Murni</option>
+                        <option value="perubahan">RKAS Perubahan</option>
+                    </select>
+                    <button class="excel-btn" onclick="muatRekapOnline()">☁️ Muat Rekap Online</button>
+                    <button class="excel-btn" onclick="downloadHasilRekapWorkbook()">📥 Unduh Workbook</button>
+                    <button class="excel-btn" style="background:#fff0f0;color:#b00000;border-color:#d88;" onclick="deleteAllHasilRekap()">🗑️ Hapus Semua</button>
+                    <button class="excel-btn" onclick="toggleOnlineDbSettings()">⚙️ Database Online</button>
+                </div>
+            </div>
+            <div class="rekap-note" id="rekap-note">Menampilkan data RKAS Murni yang sudah disimpan.</div>
+            <div id="online-db-settings" class="online-db-box no-print" style="display:none;">
+                <div style="font-weight:bold;margin-bottom:6px;">☁️ Pengaturan Database Online (Supabase)</div>
+                <div style="font-size:12px;color:#555;margin-bottom:10px;">Koneksi Supabase sudah disiapkan untuk project RKAS ini. Publishable key digunakan dari browser. Database menggunakan tabel <b>rkas_online</b> dan <b>rkas_operator_accounts</b>. Login Admin/Operator pada aplikasi ini adalah login custom, bukan Supabase Authentication.</div>
+                <div class="online-db-grid">
+                    <div><label>Supabase Project URL</label><input id="supabase-url-input" type="url" placeholder="https://xxxxx.supabase.co"></div>
+                    <div><label>Supabase Publishable Key</label><input id="supabase-key-input" type="password" placeholder="sb_publishable_..."></div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                    <button class="excel-btn btn-save" onclick="saveOnlineDbConfig()">💾 Simpan Koneksi</button>
+                    <button class="excel-btn" onclick="testOnlineDbConnection()">🔎 Tes Koneksi</button>
+                    <button class="excel-btn" onclick="clearOnlineDbConfig()">🧹 Hapus Koneksi</button>
+                </div>
+                <div id="online-db-status" class="online-db-status">Status: belum dikonfigurasi.</div>
+            </div>
+        </div>
+
+        <div class="excel-sheet rekap-sheet">
+            <div style="overflow-x:auto;">
+                <table class="excel-grid rekap-grid" id="hasil-rekap-table">
+                    <thead id="hasil-rekap-head"></thead>
+                    <tbody id="hasil-rekap-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        // Database Sekolah Orisinil
+        let masterSekolah = [
+            {npsn: "11001455", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 013 SENAYANG", siswa: 64},
+            {npsn: "11001407", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 001 SENAYANG", siswa: 108},
+            {npsn: "11001423", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 005 SENAYANG", siswa: 93},
+            {npsn: "11001442", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 010 SENAYANG", siswa: 138},
+            {npsn: "11001525", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SMP NEGERI 2 SENAYANG", siswa: 185},
+            {npsn: "11001426", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 006 SENAYANG", siswa: 102},
+            {npsn: "60730346", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SMP NEGERI 5 SENAYANG", siswa: 67}
+        ];
+
+        // Object Penyimpanan Data Pejabat Terpisah antara Murni dan Perubahan
+        let dataPejabat = {
+            murni: { komite: "AZWAR (MURNI)", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" },
+            perubahan: { komite: "AZWAR", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" }
+        };
+
+        // Data belanja modal dipisahkan per sekolah dan per sisi anggaran.
+        // Format baru: {sekolahIndex:{murni:[], before:[], after:[]}}
+        let kegiatanSuntikanModal = {};
+        let editingModalIndex = null;
+        let editingModalSide = null;
+        try {
+            const savedPejabat = JSON.parse(localStorage.getItem('RKAS_PEJABAT_DATA') || 'null');
+            if (savedPejabat && typeof savedPejabat === 'object') {
+                dataPejabat = { ...dataPejabat, ...savedPejabat };
+            }
+        } catch(e) {}
+
+        function switchTab(tabId, el) {
+            // Operator sekolah hanya boleh membuka Lembar Kerja RKAS.
+            if (!isAdmin() && (tabId === 'master-view' || tabId === 'rekap-view')) {
+                tabId = 'rkas-view';
+                el = document.querySelector('.nav-tab[onclick*="rkas-view"]');
+            }
+            document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+            if (el) el.classList.add('active');
+        }
+
+        // ============================================================
+        // LOGIN ADMIN / OPERATOR + PEMBATASAN HAK AKSES
+        // ============================================================
+        const AUTH_SESSION_KEY = 'RKAS_CUSTOM_AUTH_SESSION_V1';
+        const OPERATOR_ACCOUNTS_KEY = 'RKAS_OPERATOR_ACCOUNTS_V1';
+        const ADMIN_USERNAME = 'admin';
+        const ADMIN_PASSWORD = '160816';
+        let onlineAuthSession = null;
+        let onlineUserProfile = null;
+
+        function getOperatorAccounts(){
+            try{ const raw=localStorage.getItem(OPERATOR_ACCOUNTS_KEY); const a=raw?JSON.parse(raw):{}; return a&&typeof a==='object'?a:{}; }catch(e){ return {}; }
+        }
+        function saveOperatorAccounts(a){ localStorage.setItem(OPERATOR_ACCOUNTS_KEY,JSON.stringify(a||{})); }
+        function getAuthSession(){ try{ const raw=localStorage.getItem(AUTH_SESSION_KEY); return raw?JSON.parse(raw):null; }catch(e){return null;} }
+        function setAuthSession(session){ onlineAuthSession=session||null; if(session)localStorage.setItem(AUTH_SESSION_KEY,JSON.stringify(session)); else localStorage.removeItem(AUTH_SESSION_KEY); }
+        function authStatus(msg,ok=false){ const el=document.getElementById('auth-status'); if(el){el.textContent=msg;el.style.color=ok?'#107c41':'#8a0000';el.style.background=ok?'#f0fff5':'#fff5f5';} }
+        function isLoggedIn(){ return !!(onlineAuthSession && onlineUserProfile); }
+        function isAdmin(){ return isLoggedIn() && onlineUserProfile.role==='admin'; }
+        function currentOperatorNpsn(){ return isLoggedIn()&&!isAdmin()?String(onlineUserProfile.npsn||''):''; }
+        function canAccessSchool(idx){ if(!isLoggedIn()||!masterSekolah[idx])return false; return isAdmin()||String(masterSekolah[idx].npsn)===currentOperatorNpsn(); }
+        function canAccessNpsn(npsn){ return isAdmin() || (isLoggedIn() && String(onlineUserProfile.npsn||'')===String(npsn||'')); }
+
+        function updateLoginPlaceholder(){
+            const role=String(document.getElementById('auth-role')?.value||'operator');
+            const input=document.getElementById('auth-email'), label=document.getElementById('auth-username-label');
+            if(role==='admin'){ if(label)label.textContent='Username Admin'; if(input){input.type='text';input.placeholder='admin';input.value='';} }
+            else { if(label)label.textContent='NPSN'; if(input){input.type='text';input.placeholder='Masukkan NPSN sekolah';input.value='';} }
+        }
+        async function loginOnlineUser(){
+            const identifier=String(document.getElementById('auth-email')?.value||'').trim();
+            const role=String(document.getElementById('auth-role')?.value||'operator').toLowerCase();
+            const password=String(document.getElementById('auth-password')?.value||'');
+            if(!identifier||!password){authStatus('Username/NPSN dan password wajib diisi.');return;}
+            if(role==='admin'){
+                if(identifier.toLowerCase()!==ADMIN_USERNAME||password!==ADMIN_PASSWORD){authStatus('Username atau password Admin salah.');return;}
+                onlineUserProfile={role:'admin',username:ADMIN_USERNAME};
+                // Admin menarik data operator/sekolah dari server agar dapat bekerja dari laptop mana pun.
+                try{ await loadOnlineOperatorAccounts(true); }catch(e){ console.warn('Gagal memuat akun operator online:',e); }
+            }else{
+                if(!/^\d{8}$/.test(identifier)){authStatus('NPSN operator harus terdiri dari 8 digit.');return;}
+                let accounts=getOperatorAccounts();
+                let acc=accounts[identifier];
+                // Pada laptop baru, akun diambil langsung dari Supabase.
+                if(!acc){
+                    try{ acc=await fetchOnlineOperatorAccount(identifier); }catch(e){ console.warn('Akun operator online tidak dapat dibaca:',e); }
+                }
+                if(!acc || acc.active===false){authStatus('Operator untuk NPSN ini belum dibuat oleh Admin atau sedang nonaktif.');return;}
+                if(String(acc.password)!==password){authStatus('Password operator salah. Silakan hubungi Admin.');return;}
+                // Jika sekolah belum ada di browser ini, bangun Master Data dari akun online.
+                let school=masterSekolah.find(s=>String(s.npsn)===identifier);
+                if(!school){
+                    school={npsn:identifier,nama:acc.nama_sekolah||('Sekolah '+identifier),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0};
+                    masterSekolah.push(school);
+                    localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
+                }
+                onlineUserProfile={role:'operator',npsn:identifier,nama:school.nama,username:identifier};
+            }
+            setAuthSession({role:onlineUserProfile.role,npsn:onlineUserProfile.npsn||'',username:onlineUserProfile.username,login_at:Date.now()});
+            await enterAuthenticatedApp();
+        }
+        function applyRoleAccessUI(){
+            const masterTab=document.getElementById('master-nav-tab'), rekapTab=document.getElementById('rekap-nav-tab'), selector=document.getElementById('school-selector');
+            if(masterTab)masterTab.style.display=isAdmin()?'':'none';
+            if(rekapTab)rekapTab.style.display=isAdmin()?'':'none';
+            if(selector){ const current=selector.value; selector.innerHTML='<option value="">-- Pilih Lembaga --</option>'; masterSekolah.forEach((s,idx)=>{if(!canAccessSchool(idx))return;const op=document.createElement('option');op.value=idx;op.textContent=`${s.nama} (${s.npsn})`;selector.appendChild(op);}); if([...selector.options].some(o=>o.value===current))selector.value=current; }
+            const label=document.getElementById('logged-user-label');
+            if(label)label.textContent=isLoggedIn()?(isAdmin()?'ADMIN • admin':`OPERATOR • NPSN ${onlineUserProfile.npsn}`):'Belum login';
+            // Setelah login operator, pastikan tampilan selalu kembali ke Lembar Kerja RKAS.
+            if(!isAdmin()){
+                document.querySelectorAll('.view-container').forEach(v=>v.classList.remove('active'));
+                document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+                const rkasView=document.getElementById('rkas-view'), rkasTab=document.querySelector('.nav-tab[onclick*="rkas-view"]');
+                if(rkasView)rkasView.classList.add('active');
+                if(rkasTab)rkasTab.classList.add('active');
+            }
+        }
+        async function enterAuthenticatedApp(){
+            document.body.classList.remove('auth-locked'); const overlay=document.getElementById('auth-overlay'); if(overlay)overlay.style.display='none';
+            initApp(); applyRoleAccessUI();
+            if(!isAdmin()){const rows=loadHasilRekap().filter(r=>canAccessNpsn(r?.npsn));localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(rows));}
+            authStatus('Login berhasil.',true);
+        }
+        async function tryRestoreLogin(){
+            const saved=getAuthSession(); if(!saved?.role){authStatus('Silakan login.');return;}
+            if(saved.role==='admin'){onlineUserProfile={role:'admin',username:'admin'}; try{await loadOnlineOperatorAccounts(true);}catch(e){console.warn('Gagal memuat akun operator online:',e);}}
+            else{
+                const npsn=String(saved.npsn||''); let accounts=getOperatorAccounts(), acc=accounts[npsn];
+                if(!acc){try{acc=await fetchOnlineOperatorAccount(npsn);}catch(e){console.warn('Gagal membaca akun operator online:',e);}}
+                let school=masterSekolah.find(s=>String(s.npsn)===npsn);
+                if(!school && acc){school={npsn,nama:acc.nama_sekolah||('Sekolah '+npsn),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0};masterSekolah.push(school);localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));}
+                if(!acc||acc.active===false||!school){setAuthSession(null);authStatus('Sesi operator tidak dapat dipulihkan. Silakan login kembali.');return;}
+                accounts[npsn]=acc;saveOperatorAccounts(accounts); onlineUserProfile={role:'operator',npsn,nama:school.nama,username:npsn};
+            }
+            onlineAuthSession=saved; await enterAuthenticatedApp();
+        }
+        async function logoutOnlineUser(){ setAuthSession(null);onlineUserProfile=null;document.body.classList.add('auth-locked');const overlay=document.getElementById('auth-overlay');if(overlay)overlay.style.display='flex';authStatus('Anda sudah keluar.'); }
+
+        function adminOperatorAccountFor(npsn){ return getOperatorAccounts()[String(npsn)]||null; }
+        function adminFillOperatorForm(idx){
+            if(!isAdmin())return; const s=masterSekolah[idx]; if(!s)return; const a=adminOperatorAccountFor(s.npsn)||{};
+            const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??'';}; set('admin-op-npsn',s.npsn);set('admin-op-password',a.password||'');set('admin-op-nama',s.nama);set('admin-op-kecamatan',s.kecamatan);set('admin-op-status',s.status||'Negeri');set('admin-op-siswa',Number(s.siswa)||0); document.getElementById('admin-operator-status').textContent='Mode edit: '+s.nama;
+        }
+        function adminClearOperatorForm(){['admin-op-npsn','admin-op-password','admin-op-nama','admin-op-kecamatan','admin-op-siswa'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const st=document.getElementById('admin-op-status');if(st)st.value='Negeri';const m=document.getElementById('admin-operator-status');if(m)m.textContent='';}
+        async function adminSaveOperatorSchool(){
+            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat mengelola Operator Sekolah.');return;}
+            const npsn=String(document.getElementById('admin-op-npsn')?.value||'').replace(/\D/g,''); const password=String(document.getElementById('admin-op-password')?.value||'');
+            const nama=String(document.getElementById('admin-op-nama')?.value||'').trim(), kec=String(document.getElementById('admin-op-kecamatan')?.value||'').trim(), status=String(document.getElementById('admin-op-status')?.value||'Negeri'), siswa=Math.max(0,parseInt(document.getElementById('admin-op-siswa')?.value||'0',10)||0);
+            if(!/^\d{8}$/.test(npsn)){alert('NPSN harus 8 digit.');return;} if(!password){alert('Password operator wajib ditentukan Admin.');return;} if(!nama){alert('Nama sekolah wajib diisi.');return;}
+            let idx=masterSekolah.findIndex(s=>String(s.npsn)===npsn); if(idx<0){masterSekolah.push({npsn,kecamatan:kec,status,nama,siswa});idx=masterSekolah.length-1;}else{Object.assign(masterSekolah[idx],{kecamatan:kec,status,nama,siswa});}
+            const account={npsn,password,active:true,updated_at:new Date().toISOString(),nama_sekolah:nama,kecamatan:kec,status,siswa};
+            const accounts=getOperatorAccounts(); accounts[npsn]=account; saveOperatorAccounts(accounts); localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp(); adminFillOperatorForm(idx);
+            try{
+                await upsertOnlineOperatorAccount(account);
+                alert('Data sekolah dan password operator berhasil disimpan DI ONLINE. Operator dapat login dari laptop/Chrome lain.');
+            }catch(e){
+                console.error(e);
+                alert('Data berhasil disimpan di laptop ini, tetapi GAGAL disimpan ke database online.\n\n'+e.message);
+            }
+        }
+        async function adminDisableOperator(npsn){
+            if(!isAdmin())return;
+            const a=getOperatorAccounts(); if(!a[npsn]){alert('Akun operator belum dibuat.');return;}
+            const next=a[npsn].active===false; if(!confirm((next?'Aktifkan':'Nonaktifkan')+' login operator NPSN '+npsn+'?'))return;
+            a[npsn].active=next; a[npsn].updated_at=new Date().toISOString(); saveOperatorAccounts(a); renderMasterTable();
+            try{ await upsertOnlineOperatorAccount(a[npsn]); alert('Status operator berhasil diperbarui di database online.'); }
+            catch(e){ alert('Status berubah di laptop ini, tetapi gagal disimpan online.\n\n'+e.message); }
+        }
+
+        function initApp() {
+            const selector = document.getElementById('school-selector');
+            if (!selector) return;
+            selector.innerHTML = '<option value="">-- Pilih Lembaga --</option>';
+            masterSekolah.forEach((s, idx) => {
+                const op = document.createElement('option');
+                op.value = idx;
+                op.textContent = `${s.nama} (${s.npsn})`;
+                selector.appendChild(op);
+            });
+            renderMasterTable();
+            loadRkasSettings();
+            loadPejabatInputs();
+            updateModalSideUI();
+        }
+
+        function renderMasterTable() {
+            const tbody=document.getElementById('master-db-rows'); if(!tbody)return; tbody.innerHTML=''; const accounts=getOperatorAccounts();
+            masterSekolah.forEach((s,idx)=>{ const tr=document.createElement('tr'); const a=accounts[String(s.npsn)]||{}; const state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat');
+                tr.innerHTML=`<td>${escapeHtml(s.npsn)}</td><td>${escapeHtml(s.kecamatan)}</td><td>${escapeHtml(s.status)}</td><td class="text-bold">${escapeHtml(s.nama)}</td><td class="text-center"><input type="number" min="0" value="${Number(s.siswa)||0}" title="Jumlah siswa dapat diedit" style="width:75px;text-align:center;padding:3px;border:1px solid #8a8886;border-radius:2px;" onchange="editMasterSiswa(${idx},this.value)"></td><td class="text-center"><span style="font-weight:bold;color:${a.password&&a.active!==false?'#107c41':'#a15c00'}">${a.password?'••••••':'Belum ditentukan'}</span><br><small>${state}</small></td><td class="text-center"><button class="mini-btn" onclick="adminFillOperatorForm(${idx})">✏️ Edit / Password</button> <button class="mini-btn" onclick="adminDisableOperator('${escapeJs(String(s.npsn))}')">${a.active===false?'▶️ Aktifkan':'⛔ Nonaktifkan'}</button></td>`; tbody.appendChild(tr); });
+        }
+
+        function editMasterSiswa(idx, value) {
+            if (!isAdmin()) { alert('Akses ditolak. Hanya Admin yang dapat mengubah Master Data Sekolah.'); return; }
+            if (!masterSekolah[idx]) return;
+            const n = Math.max(0, parseInt(String(value).replace(/[^\d]/g,''), 10) || 0);
+            masterSekolah[idx].siswa = n;
+            localStorage.setItem('MASTER_SEKOLAH_RKAS', JSON.stringify(masterSekolah));
+            const current = getCurrentSchoolIndex();
+            if (current === idx) {
+                handleSchoolChange();
+            } else {
+                renderMasterTable();
+            }
+        }
+
+        function editMasterSiswaPrompt(idx) {
+            if (!isAdmin()) { alert('Akses ditolak. Hanya Admin yang dapat mengubah Master Data Sekolah.'); return; }
+            if (!masterSekolah[idx]) return;
+            const old = Number(masterSekolah[idx].siswa) || 0;
+            const val = prompt(`Edit Jumlah Siswa untuk ${masterSekolah[idx].nama}:`, old);
+            if (val === null) return;
+            editMasterSiswa(idx, val);
+        }
+
+        function deleteAllMasterDatabase() {
+            if (!isAdmin()) { alert('Akses ditolak. Hanya Admin yang dapat menghapus Master Data Sekolah.'); return; }
+            if (!masterSekolah.length) {
+                alert('Database sekolah sudah kosong.');
+                return;
+            }
+            const ok = confirm('PERINGATAN!\n\nSemua data sekolah pada database Master akan dihapus dari browser, termasuk NPSN, nama sekolah, kecamatan, status, dan jumlah siswa.\n\nLanjutkan?');
+            if (!ok) return;
+            localStorage.removeItem('MASTER_SEKOLAH_RKAS');
+            masterSekolah = [];
+            kegiatanSuntikanModal = {};
+            const selector = document.getElementById('school-selector');
+            if (selector) selector.innerHTML = '<option value="">-- Pilih Lembaga --</option>';
+            renderMasterTable();
+            const set = (id,val) => { const el=document.getElementById(id); if(el) el.innerText=val; };
+            set('lbl-nama','-'); set('lbl-npsn','-'); set('lbl-kecamatan','-');
+            set('lbl-status','-'); set('lbl-siswa','0 Siswa'); set('lbl-tarif','-'); set('lbl-pagu','Rp 0');
+            renderDynamicModalRows();
+            alert('Seluruh database sekolah berhasil dihapus dari browser.');
+        }
+
+        function loadPejabatInputs() {
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const current = dataPejabat[mode];
+            if (!current) return;
+            const fields = {
+                'p-komite-nama': current.komite,
+                'p-komite-nip': current.komite_nip,
+                'p-kasek-nama': current.kasek,
+                'p-kasek-nip': current.kasek_nip,
+                'p-bendahara-nama': current.bendahara,
+                'p-bendahara-nip': current.bendahara_nip,
+                'p-tempat': current.tempat || 'Kabupaten Lingga',
+                'p-tanggal': current.tanggal || '2026-09-04'
+            };
+            Object.entries(fields).forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.value=val||''; });
+            const title=document.getElementById('pejabat-title');
+            if(title) title.innerText=`✍️ Penandatangan Dokumen (Versi ${mode.toUpperCase()})`;
+            updateSignatures();
+        }
+
+        function updateSignatures() {
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const d = dataPejabat[mode];
+            if (!d) return;
+            const map = {
+                komite:['p-komite-nama','p-komite-nip','txt-sig-komite','txt-sig-komite-nip'],
+                kasek:['p-kasek-nama','p-kasek-nip','txt-sig-kasek-nama','txt-sig-kasek-nip'],
+                bendahara:['p-bendahara-nama','p-bendahara-nip','txt-sig-bendahara-nama','txt-sig-bendahara-nip']
+            };
+            Object.entries(map).forEach(([key,ids])=>{
+                d[key]=document.getElementById(ids[0])?.value ?? d[key];
+                d[key+'_nip']=document.getElementById(ids[1])?.value ?? d[key+'_nip'];
+                const n=document.getElementById(ids[2]); if(n) n.innerText=d[key]||'';
+                const nip=document.getElementById(ids[3]); if(nip) nip.innerText=d[key+'_nip'] ? 'NIP. '+d[key+'_nip'] : '';
+            });
+        }
+
+        function formatTanggalIndonesia(iso) {
+            if (!iso) return '';
+            const d = new Date(iso + 'T00:00:00');
+            if (Number.isNaN(d.getTime())) return iso;
+            const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            return `${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+        }
+
+        function updateSignaturePlaceDate() {
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const d = dataPejabat[mode];
+            if (!d) return;
+            d.tempat = document.getElementById('p-tempat')?.value?.trim() || '';
+            d.tanggal = document.getElementById('p-tanggal')?.value || '';
+            const place = document.getElementById('sig-place');
+            const date = document.getElementById('sig-date');
+            if (place) place.innerText = d.tempat || '';
+            if (date) date.innerText = formatTanggalIndonesia(d.tanggal);
+            try { localStorage.setItem('RKAS_PEJABAT_DATA', JSON.stringify(dataPejabat)); } catch(e) {}
+        }
+
+        function updateEmptySignatureBlocks() {
+            const groups = [
+                ['txt-sig-komite', 'txt-sig-komite-nip'],
+                ['txt-sig-kasek-nama', 'txt-sig-kasek-nip'],
+                ['txt-sig-bendahara-nama', 'txt-sig-bendahara-nip']
+            ];
+            groups.forEach(ids => {
+                const name = document.getElementById(ids[0]);
+                const nip = document.getElementById(ids[1]);
+                if (!name || !nip) return;
+                const cell = name.closest('td');
+                const nameVal = (name.innerText || '').trim();
+                const nipVal = (nip.innerText || '').replace(/^NIP\.\s*-?\s*$/i,'').trim();
+                if (cell) cell.classList.toggle('sig-empty', !nameVal || nameVal === '-');
+            });
+        }
+
+        // Pengaturan RKAS: Tahun dan Sumber Dana disimpan terpisah per sekolah + jenis RKAS.
+        let rkasYear = 2026;
+        let rkasSource = 'Bos Reguler';
+        const RKAS_SOURCE_OPTIONS = [
+            'Bos Reguler',
+            'Bos Kinerja Berkemajuan terbaik',
+            'bos kinerja sekolah prestasi',
+            'bos afirmasi'
+        ];
+
+        function getRkasSettingsStorageKey(){
+            const idx = getCurrentSchoolIndex();
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            return `RKAS_SETTINGS_${idx===null?'none':idx}_${mode}`;
+        }
+
+        function persistRkasSettings(){
+            try{
+                localStorage.setItem(getRkasSettingsStorageKey(), JSON.stringify({
+                    year: rkasYear,
+                    source: rkasSource
+                }));
+            }catch(e){}
+        }
+
+        function updateRkasTitle(){
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const title = document.getElementById('sheet-title-text');
+            if(title){
+                title.innerHTML = mode === 'murni'
+                    ? `RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS) MURNI<br>KABUPATEN LINGGA - PROVINSI KEPULAUAN RIAU<br>TAHUN ANGGARAN ${rkasYear}`
+                    : `RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS) PERUBAHAN<br>KABUPATEN LINGGA - PROVINSI KEPULAUAN RIAU<br>TAHUN ANGGARAN ${rkasYear}`;
+            }
+            const ribbon = document.getElementById('ribbon-year');
+            if(ribbon) ribbon.innerText = rkasYear;
+            const yearLabel = document.getElementById('lbl-tahun');
+            if(yearLabel) yearLabel.innerText = rkasYear;
+            const sourceLabel = document.getElementById('lbl-sumber-dana');
+            if(sourceLabel) sourceLabel.innerText = rkasSource;
+        }
+
+        function updateRkasYear(save=true){
+            const input = document.getElementById('rkas-year-input');
+            let y = Number(input?.value);
+            if(!Number.isInteger(y) || y < 2000 || y > 2100) y = 2026;
+            rkasYear = y;
+            if(input) input.value = rkasYear;
+            updateRkasTitle();
+            if(save) persistRkasSettings();
+        }
+
+        function updateRkasSource(save=true){
+            const select = document.getElementById('rkas-source-selector');
+            const value = select?.value || 'Bos Reguler';
+            rkasSource = RKAS_SOURCE_OPTIONS.includes(value) ? value : 'Bos Reguler';
+            if(select) select.value = rkasSource;
+            updateRkasTitle();
+            if(save) persistRkasSettings();
+        }
+
+        function applyRkasSettings(settings){
+            if(settings && Number.isInteger(Number(settings.year)) && Number(settings.year)>=2000 && Number(settings.year)<=2100){
+                rkasYear = Number(settings.year);
+            }else{
+                rkasYear = 2026;
+            }
+            rkasSource = RKAS_SOURCE_OPTIONS.includes(settings?.source) ? settings.source : 'Bos Reguler';
+            const yearInput = document.getElementById('rkas-year-input');
+            const sourceSelect = document.getElementById('rkas-source-selector');
+            if(yearInput) yearInput.value = rkasYear;
+            if(sourceSelect) sourceSelect.value = rkasSource;
+            updateRkasTitle();
+        }
+
+        function loadRkasSettings(){
+            let settings = null;
+            try{
+                const raw = localStorage.getItem(getRkasSettingsStorageKey());
+                if(raw) settings = JSON.parse(raw);
+            }catch(e){}
+            applyRkasSettings(settings);
+        }
+
+        function toggleRkasType() {
+            const mode=document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const title=document.getElementById('sheet-title-text');
+            const header=document.getElementById('header-murni-title');
+            updateRkasTitle();
+            if(header) header.innerText=mode==='murni'?'MURNI':'SEBELUM PERUBAHAN';
+            document.querySelectorAll('.perubahan-col').forEach(el=>el.classList.toggle('hide-col',mode==='murni'));
+            loadPejabatInputs();
+            updateModalSideUI();
+            calculateRkasMath();
+        }
+
+        function handleSchoolChange() {
+            const idx=getCurrentSchoolIndex();
+            if(idx===null) return;
+            const s=masterSekolah[idx];
+            const rate=s.nama.includes('SMP')?1580000:1250000;
+            const set=(id,val)=>{const el=document.getElementById(id);if(el)el.innerText=val;};
+            set('lbl-nama',s.nama); set('lbl-npsn',s.npsn); set('lbl-kecamatan',s.kecamatan); set('lbl-status',s.status);
+            set('lbl-siswa',`${s.siswa} Siswa`); set('lbl-tarif',`Rp ${rate.toLocaleString('id-ID')} / Anak`);
+            loadRkasSettings();
+            // Saat sekolah dipilih, pastikan Belanja Modal Aset Tetap Lainnya
+            // memiliki Buku Pelajaran minimal 10% dari Pagu Dana.
+            ensureAutoBukuPelajaran10Persen(idx);
+            calculateRkasMath();
+        }
+
+        function getCurrentSchoolIndex() {
+            const v = document.getElementById('school-selector')?.value;
+            if(v === '' || v == null) return null;
+            const idx=Number(v);
+            return (Number.isInteger(idx) && canAccessSchool(idx)) ? idx : null;
+        }
+
+        function ensureSchoolModalData(idx) {
+            if (idx === null) return null;
+            if (!kegiatanSuntikanModal[idx]) {
+                kegiatanSuntikanModal[idx] = { murni: [], before: [], after: [] };
+            }
+            return kegiatanSuntikanModal[idx];
+        }
+
+        function getActiveModalSide() {
+            const mode = document.getElementById('rkas-type-selector').value;
+            return mode === 'murni' ? 'murni' : document.getElementById('modal-side').value;
+        }
+
+        function updateModalSideUI() {
+            const mode = document.getElementById('rkas-type-selector').value;
+            const group = document.getElementById('modal-side-group');
+            const side = document.getElementById('modal-side');
+            if (mode === 'murni') {
+                group.style.display = 'none';
+            } else {
+                group.style.display = '';
+            }
+            renderDynamicModalRows();
+        }
+
+        function getItemsForSide(side) {
+            const idx = getCurrentSchoolIndex();
+            const data = ensureSchoolModalData(idx);
+            return data ? data[side] : [];
+        }
+
+        // ============================================================
+        // SINKRONISASI RKAS MURNI <-> PERUBAHAN
+        // Aturan:
+        // 1) Murni = data dasar/original.
+        // 2) Saat masuk Perubahan, Murni disalin ke SEBELUM dan SESUDAH.
+        // 3) Barang baru di SESUDAH mempunyai pasangan SEBELUM = 0/-.
+        // 4) Barang baru di SEBELUM mempunyai pasangan SESUDAH = 0/-.
+        // 5) Perubahan setelah mode aktif tidak mengubah data Murni.
+        // 6) Kode rekening menentukan posisi kategori secara otomatis.
+        // ============================================================
+        function cloneModalItem(item, extra = {}) {
+            return {
+                id: item.id || ('M' + Date.now() + Math.random().toString(36).slice(2,8)),
+                rekening: item.rekening === '5.2.05' ? '5.2.05' : '5.2.02',
+                uraian: item.uraian || '',
+                vol: Number(item.vol) || 0,
+                satuan: item.satuan || 'Unit',
+                harga: Number(item.harga) || 0,
+                ...extra
+            };
+        }
+
+        function modalItemKey(item) {
+            return [
+                item.rekening === '5.2.05' ? '5.2.05' : '5.2.02',
+                String(item.uraian || '').trim().toLowerCase()
+            ].join('|');
+        }
+
+        function findModalItem(items, item) {
+            const key = modalItemKey(item);
+            return (items || []).find(x => modalItemKey(x) === key);
+        }
+
+        // Murni menjadi sumber dasar. Jangan pernah mengubah array murni
+        // ketika pengguna mengedit Sebelum/Sesudah Perubahan.
+        function copyMurniToBefore(idx) {
+            const data = ensureSchoolModalData(idx);
+            if (!data) return;
+
+            data.murni = Array.isArray(data.murni) ? data.murni : [];
+            data.before = data.murni.map(x => cloneModalItem(x));
+            data.after  = data.murni.map(x => cloneModalItem(x));
+        }
+
+        // Memastikan data perubahan memiliki seluruh barang Murni pada
+        // kedua sisi, tetapi TIDAK menghapus barang tambahan yang dibuat user.
+        function ensurePerubahanBaseline(idx) {
+            const data = ensureSchoolModalData(idx);
+            if (!data) return;
+
+            data.murni = Array.isArray(data.murni) ? data.murni : [];
+            data.before = Array.isArray(data.before) ? data.before : [];
+            data.after = Array.isArray(data.after) ? data.after : [];
+
+            data.murni.forEach(m => {
+                if (!findModalItem(data.before, m)) data.before.push(cloneModalItem(m));
+                if (!findModalItem(data.after, m)) data.after.push(cloneModalItem(m));
+            });
+        }
+
+        // Menyamakan struktur perubahan tanpa menimpa nilai yang telah diedit.
+        function syncBeforeWithAfter(idx) {
+            const data = ensureSchoolModalData(idx);
+            if (!data) return;
+
+            ensurePerubahanBaseline(idx);
+
+            // Jangan menyalin nilai SESUDAH ke SEBELUM.
+            // SEBELUM adalah snapshot dasar (Murni) + barang yang memang
+            // ditambahkan khusus ke Sebelum.
+            data.before = data.before.map(x => cloneModalItem(x));
+            data.after = data.after.map(x => cloneModalItem(x));
+        }
+
+        function addChangeItem(data, side, item) {
+            const target = data[side];
+            const existing = findModalItem(target, item);
+            if (existing) {
+                // Jika barang sudah ada, edit nilai pada sisi tersebut,
+                // bukan menggandakan baris.
+                Object.assign(existing, cloneModalItem(item, { id: existing.id }));
+                return existing;
+            }
+            const fresh = cloneModalItem(item);
+            target.push(fresh);
+            return fresh;
+        }
+
+        // ============================================================
+        // OTOMATIS BUKU PELAJARAN 10%
+        // Saat sekolah dipilih, tambahkan Buku Pelajaran pada 5.2.05
+        // sebesar minimal 10% dari Pagu Dana. Untuk RKAS Perubahan,
+        // data Murni otomatis menjadi dasar Sebelum + Sesudah.
+        // Data yang sudah ada tidak ditimpa agar tidak merusak data lama.
+        // ============================================================
+        function getPaguSekolah(idx) {
+            const sekolah = masterSekolah[idx];
+            if (!sekolah) return 0;
+            const rate = sekolah.nama && sekolah.nama.includes('SMP') ? 1580000 : 1250000;
+            return (Number(sekolah.siswa) || 0) * rate;
+        }
+
+        function isBukuPelajaranItem(item) {
+            return item && String(item.uraian || '').trim().toLowerCase().includes('buku pelajaran');
+        }
+
+        function ensureAutoBukuPelajaran10Persen(idx) {
+            const data = ensureSchoolModalData(idx);
+            const pagu = getPaguSekolah(idx);
+            if (!data || pagu <= 0) return;
+
+            const minimum = pagu * 0.10;
+            const existingBook = (data.murni || []).find(isBukuPelajaranItem);
+
+            // Hanya membuat otomatis jika Buku Pelajaran belum ada.
+            // Jika sudah ada, nilai pengguna tidak ditimpa.
+            if (!existingBook) {
+                data.murni.push({
+                    id: 'BUKU10_' + idx,
+                    rekening: '5.2.05',
+                    uraian: 'Buku Pelajaran',
+                    vol: 1,
+                    satuan: 'Paket',
+                    harga: minimum
+                });
+            }
+
+            // Pastikan pada Perubahan tersedia di kedua sisi.
+            ensurePerubahanBaseline(idx);
+        }
+
+        // Validasi khusus Belanja Modal Aset Tetap Lainnya (5.2.05).
+        // Untuk penambahan BARU dengan satuan Paket, total 5.2.05
+        // setelah penambahan wajib mencapai minimal 10% dari Pagu Dana.
+        function validateModalAsetTetapLainnya10Persen(idx, side, rec, sat, vol, hrg, isEditing) {
+            const sekolah = masterSekolah[idx];
+            if (!sekolah) return true;
+
+            const pagu = getPaguSekolah(idx);
+            const minimum = pagu * 0.10;
+            if (minimum <= 0) return true;
+
+            const data = ensureSchoolModalData(idx);
+            const items = data && Array.isArray(data[side]) ? data[side] : [];
+
+            // Hitung kondisi AKHIR setelah tombol Simpan ditekan.
+            // Ini penting agar edit Buku Pelajaran/5.2.05 ke nilai yang
+            // lebih kecil, termasuk pindah rekening ke 5.2.02, tidak lolos.
+            let total = 0;
+            items.forEach((item, i) => {
+                if (isEditing && editingModalSide === side && editingModalIndex === i) return;
+                if (item.rekening !== '5.2.05') return;
+                total += (Number(item.vol) || 0) * (Number(item.harga) || 0);
+            });
+
+            if (rec === '5.2.05') {
+                total += (Number(vol) || 0) * (Number(hrg) || 0);
+            }
+
+            if (total < minimum) {
+                alert('Buku sekolah anda tidak mencapai ketentuan minimal 10% dari juknis BOS Kementrian');
+                return false;
+            }
+            return true;
+        }
+
+        function validateEditAsetTetapLainnya10Persen(idx, side, oldItem, newItem) {
+            const sekolah = masterSekolah[idx];
+            if (!sekolah) return true;
+
+            // Validasi hanya bila edit menyentuh akun 5.2.05, baik sebelum
+            // maupun sesudah perubahan. Nilai akhir harus tetap >= 10%.
+            if ((!oldItem || oldItem.rekening !== '5.2.05') && newItem.rekening !== '5.2.05') return true;
+
+            const pagu = getPaguSekolah(idx);
+            const minimum = pagu * 0.10;
+            if (minimum <= 0) return true;
+
+            const data = ensureSchoolModalData(idx);
+            const items = data && Array.isArray(data[side]) ? data[side] : [];
+            let total = 0;
+
+            items.forEach((item, i) => {
+                if (editingModalSide === side && editingModalIndex === i) return;
+                if (item.rekening !== '5.2.05') return;
+                total += (Number(item.vol) || 0) * (Number(item.harga) || 0);
+            });
+
+            if (newItem.rekening === '5.2.05') {
+                total += (Number(newItem.vol) || 0) * (Number(newItem.harga) || 0);
+            }
+
+            if (total < minimum) {
+                alert('Buku sekolah anda tidak mencapai ketentuan minimal 10% dari juknis BOS Kementrian');
+                return false;
+            }
+            return true;
+        }
+
+        function execAddBelanjaModal() {
+            const idx = getCurrentSchoolIndex();
+            if (idx === null) {
+                alert('Silakan pilih Sekolah Target terlebih dahulu.');
+                return;
+            }
+
+            const rec = document.getElementById('modal-rekening').value === '5.2.05'
+                ? '5.2.05' : '5.2.02';
+            const ur = document.getElementById('modal-uraian').value.trim();
+            const vol = Number(document.getElementById('modal-vol').value) || 0;
+            const sat = document.getElementById('modal-satuan').value.trim() || 'Unit';
+            const hrg = Number(document.getElementById('modal-harga').value) || 0;
+            const mode = document.getElementById('rkas-type-selector').value;
+            const side = mode === 'murni'
+                ? 'murni'
+                : (document.getElementById('modal-side').value === 'after' ? 'after' : 'before');
+
+            if (!ur) { alert('Harap isi uraian barang modal!'); return; }
+            if (vol <= 0) { alert('Volume harus lebih dari 0.'); return; }
+            if (hrg < 0) { alert('Harga satuan tidak boleh negatif.'); return; }
+
+            const data = ensureSchoolModalData(idx);
+            const item = {
+                rekening: rec,
+                uraian: ur,
+                vol: vol,
+                satuan: sat,
+                harga: hrg
+            };
+
+            const isEditingModal = (editingModalIndex !== null && editingModalSide &&
+                data[editingModalSide] && data[editingModalSide][editingModalIndex]);
+
+            // EDIT: validasi KONDISI AKHIR sebelum data benar-benar diubah.
+            // Jadi jika akun 5.2.05 (Sebelum/Sesudah/Murni) turun di bawah
+            // 10%, perubahan DITOLAK dan data lama tetap utuh.
+            if (isEditingModal) {
+                const old = data[editingModalSide][editingModalIndex];
+                const replacement = cloneModalItem(item, { id: old.id });
+                if (!validateEditAsetTetapLainnya10Persen(idx, editingModalSide, old, replacement)) return;
+
+                // Bila mode masih sama dan sisi sama -> update langsung.
+                if (editingModalSide === side) {
+                    data[side][editingModalIndex] = replacement;
+                } else {
+                    data[editingModalSide].splice(editingModalIndex, 1);
+                    addChangeItem(data, side, replacement);
+                }
+            } else {
+                // TAMBAH BARU: jika memilih 5.2.05, nilai akhir harus memenuhi 10%.
+                if (!validateModalAsetTetapLainnya10Persen(idx, side, rec, sat, vol, hrg, false)) return;
+                addChangeItem(data, side, item);
+            }
+
+            // Murni adalah master dasar. Setiap tambah/edit di Murni
+            // langsung menjadi baseline Sebelum + Sesudah.
+            if (mode === 'murni') {
+                data.before = data.murni.map(x => cloneModalItem(x));
+                data.after  = data.murni.map(x => cloneModalItem(x));
+            } else {
+                // Pastikan barang Murni tetap tersedia di kedua sisi.
+                ensurePerubahanBaseline(idx);
+            }
+
+            cancelEditBelanjaModal(true);
+            renderDynamicModalRows();
+            calculateRkasMath();
+        }
+
+        function startEditBelanjaModal(side, index) {
+            const idx = getCurrentSchoolIndex();
+            const data = ensureSchoolModalData(idx);
+            if (!data || !data[side] || !data[side][index]) return;
+
+            const m = data[side][index];
+            document.getElementById('modal-rekening').value =
+                (m.rekening === '5.2.02' || m.rekening === '5.2.05') ? m.rekening : '5.2.02';
+            document.getElementById('modal-uraian').value = m.uraian;
+            document.getElementById('modal-vol').value = m.vol;
+            const satuanEl = document.getElementById('modal-satuan');
+            if (satuanEl && !Array.from(satuanEl.options).some(o => o.value === String(m.satuan))) {
+                const opt = document.createElement('option');
+                opt.value = String(m.satuan);
+                opt.textContent = String(m.satuan);
+                satuanEl.appendChild(opt);
+            }
+            if (satuanEl) satuanEl.value = m.satuan;
+            document.getElementById('modal-harga').value = m.harga;
+
+            if (document.getElementById('rkas-type-selector').value === 'perubahan') {
+                document.getElementById('modal-side').value = side === 'after' ? 'after' : 'before';
+            }
+            editingModalIndex = index;
+            editingModalSide = side;
+            document.getElementById('modal-save-btn').innerText = '💾 Simpan Perubahan Barang';
+            document.getElementById('modal-cancel-btn').style.display = 'flex';
+            document.getElementById('modal-uraian').focus();
+        }
+
+        function deleteBelanjaModal(side, index) {
+            const idx = getCurrentSchoolIndex();
+            const data = ensureSchoolModalData(idx);
+            if (!data || !data[side] || !data[side][index]) return;
+
+            const item = data[side][index];
+
+            if (side === 'after' && document.getElementById('rkas-type-selector').value === 'perubahan') {
+                if (!confirm(`Hapus "${item.uraian}" dari SESUDAH PERUBAHAN?\n\nData SEBELUM PERUBAHAN tidak akan diubah. Sesudah akan menjadi - / 0.`)) return;
+                // Jangan hapus baris pasangan. Jadikan sesudah 0/- agar Sebelum tetap utuh.
+                item.vol = 0;
+                item.satuan = '-';
+                item.harga = 0;
+                renderDynamicModalRows();
+                calculateRkasMath();
+                return;
+            }
+
+            if (!confirm('Hapus barang ini dari RKAS?')) return;
+            const removed = data[side][index];
+            data[side].splice(index, 1);
+
+            if (editingModalSide === side && editingModalIndex === index) cancelEditBelanjaModal(true);
+
+            if (side === 'murni') {
+                ['before','after'].forEach(k => {
+                    const pos = data[k].findIndex(x => modalItemKey(x) === modalItemKey(removed));
+                    if (pos >= 0) data[k].splice(pos, 1);
+                });
+            }
+            calculateRkasMath();
+        }
+
+        function cancelEditBelanjaModal(silent) {
+            editingModalIndex = null;
+            editingModalSide = null;
+            document.getElementById('modal-uraian').value = '';
+            document.getElementById('modal-vol').value = '1';
+            document.getElementById('modal-satuan').value = 'Unit';
+            document.getElementById('modal-harga').value = '0';
+            document.getElementById('modal-save-btn').innerText = '⚡ Tambahkan Barang ke RKAS';
+            document.getElementById('modal-cancel-btn').style.display = 'none';
+            if (!silent) renderDynamicModalRows();
+        }
+
+        function calculateSideTotals(items) {
+            const result = { '5.2.02': 0, '5.2.05': 0, total: 0 };
+
+            (items || []).forEach(m => {
+                const rekening = m.rekening === '5.2.02' ? '5.2.02' : '5.2.05';
+                const val = (Number(m.vol) || 0) * (Number(m.harga) || 0);
+                result[rekening] += val;
+                result.total += val;
+            });
+
+            return result;
+        }
+
+        function calculateRkasMath() {
+            const idx = getCurrentSchoolIndex();
+            if (idx === null) return;
+
+            const s = masterSekolah[idx];
+            const rate = s.nama.includes('SMP') ? 1580000 : 1250000;
+            const pagu = s.siswa * rate;
+            const data = ensureSchoolModalData(idx);
+
+            // Murni adalah sumber data dasar. Saat Perubahan dibuka,
+            // seluruh barang Murni tersedia di Sebelum dan Sesudah.
+            // Setelah itu nilai kedua sisi dapat diedit secara independen.
+            if (document.getElementById('rkas-type-selector')?.value === 'perubahan') {
+                ensurePerubahanBaseline(idx);
+            }
+
+            const before = calculateSideTotals(data.before);
+            const after = calculateSideTotals(data.after);
+            const murni = calculateSideTotals(data.murni);
+
+            document.getElementById('lbl-pagu').innerText = "Rp " + pagu.toLocaleString('id-ID');
+
+            document.getElementById('v-murni-s').innerText = s.siswa;
+            document.getElementById('h-murni-s').innerText = rate.toLocaleString('id-ID');
+            document.getElementById('j-murni-s').innerText = pagu.toLocaleString('id-ID');
+            document.getElementById('p-murni-total').innerText = pagu.toLocaleString('id-ID');
+
+            document.getElementById('v-ubah-s').innerText = s.siswa;
+            document.getElementById('h-ubah-s').innerText = rate.toLocaleString('id-ID');
+            document.getElementById('j-ubah-s').innerText = pagu.toLocaleString('id-ID');
+            document.getElementById('p-ubah-total').innerText = pagu.toLocaleString('id-ID');
+
+            document.getElementById('bj-murni-h').innerText = Math.max(0, pagu - murni.total).toLocaleString('id-ID');
+            document.getElementById('bj-murni-j').innerText = Math.max(0, pagu - murni.total).toLocaleString('id-ID');
+            document.getElementById('bj-ubah-h').innerText = Math.max(0, pagu - after.total).toLocaleString('id-ID');
+            document.getElementById('bj-ubah-j').innerText = Math.max(0, pagu - after.total).toLocaleString('id-ID');
+
+            document.getElementById('bo-murni-total').innerText = Math.max(0, pagu - murni.total).toLocaleString('id-ID');
+            document.getElementById('bo-ubah-total').innerText = Math.max(0, pagu - after.total).toLocaleString('id-ID');
+
+            document.getElementById('bm-murni-total').innerText = murni.total.toLocaleString('id-ID');
+            document.getElementById('bm-ubah-total').innerText = after.total.toLocaleString('id-ID');
+
+            document.getElementById('b-murni-total').innerText = pagu.toLocaleString('id-ID');
+            document.getElementById('b-ubah-total').innerText = pagu.toLocaleString('id-ID');
+
+            const safeText=(id,val)=>{const el=document.getElementById(id);if(el)el.innerText=val;};
+            safeText('cat-502-before', before['5.2.02'].toLocaleString('id-ID'));
+            safeText('cat-505-before', before['5.2.05'].toLocaleString('id-ID'));
+            safeText('cat-502-after', after['5.2.02'].toLocaleString('id-ID'));
+            safeText('cat-505-after', after['5.2.05'].toLocaleString('id-ID'));
+
+            renderDynamicModalRows();
+        }
+
+        function renderDynamicModalRows() {
+            document.querySelectorAll('.dynamic-modal-row').forEach(el => el.remove());
+
+            const idx = getCurrentSchoolIndex();
+            const manager = document.getElementById('modal-items-manager');
+            const targetTableBody = document.getElementById('rkas-grid-body');
+            if (idx === null) {
+                if (manager) manager.innerHTML = '';
+                return;
+            }
+
+            const data = ensureSchoolModalData(idx);
+            const mode = document.getElementById('rkas-type-selector').value;
+
+            if (mode === 'perubahan') ensurePerubahanBaseline(idx);
+
+            let htmlManager = '<div class="modal-manager"><div class="modal-manager-title">📦 Daftar Barang Modal — Edit / Hapus</div>';
+
+            if (mode === 'murni') {
+                const items = data.murni || [];
+                htmlManager += '<div style="font-weight:bold;margin:6px 0 3px;">MURNI</div>';
+                if (!items.length) {
+                    htmlManager += '<div style="font-size:11px;color:#777;padding:3px 0 6px;">Belum ada barang.</div>';
+                }
+                items.forEach((m,i) => {
+                    htmlManager += modalManagerLine(m,'murni',i);
+                    appendModalRow(m, m, 'murni', targetTableBody);
+                });
+            } else {
+                // SATU baris untuk SATU nama barang: Sebelum dan Sesudah tampil berdampingan.
+                // Daftar kunci berasal dari gabungan Murni + Sebelum + Sesudah.
+                const all = [];
+                const seen = new Set();
+                [...(data.murni||[]), ...(data.before||[]), ...(data.after||[])].forEach(item => {
+                    const key = modalItemKey(item);
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        all.push(item);
+                    }
+                });
+
+                htmlManager += '<div style="font-weight:bold;margin:6px 0 3px;">PERUBAHAN — satu baris per nama barang</div>';
+                if (!all.length) {
+                    htmlManager += '<div style="font-size:11px;color:#777;padding:3px 0 6px;">Belum ada barang.</div>';
+                }
+
+                all.forEach(base => {
+                    const beforeItem = findModalItem(data.before, base);
+                    const afterItem  = findModalItem(data.after, base);
+                    const b = beforeItem || {rekening:base.rekening, uraian:base.uraian, vol:0, satuan:'-', harga:0};
+                    const a = afterItem  || {rekening:base.rekening, uraian:base.uraian, vol:0, satuan:'-', harga:0};
+
+                    const bi = beforeItem ? data.before.indexOf(beforeItem) : -1;
+                    const ai = afterItem ? data.after.indexOf(afterItem) : -1;
+
+                    htmlManager += `<div class="modal-manager-row" style="grid-template-columns:90px 1fr 150px 150px 100px auto;">
+                        <div><b>${escapeHtml(b.rekening)}</b></div>
+                        <div>${escapeHtml(base.uraian)}</div>
+                        <div>Sebelum: ${b.vol} ${escapeHtml(b.satuan)}<br>Rp ${Number(b.harga||0).toLocaleString('id-ID')}</div>
+                        <div>Sesudah: ${a.vol} ${escapeHtml(a.satuan)}<br>Rp ${Number(a.harga||0).toLocaleString('id-ID')}</div>
+                        <div style="text-align:right"><b>Rp ${((Number(a.vol)||0)*(Number(a.harga)||0)).toLocaleString('id-ID')}</b></div>
+                        <div style="white-space:nowrap">
+                            ${bi>=0 ? `<button class="mini-btn" onclick="startEditBelanjaModal('before',${bi})">✏️ Sebelum</button>` : ''}
+                            ${ai>=0 ? `<button class="mini-btn" onclick="startEditBelanjaModal('after',${ai})">✏️ Sesudah</button>` : `<button class="mini-btn" onclick="addAfterFromBase('${escapeJs(base.rekening)}','${escapeJs(base.uraian)}')">➕ Sesudah</button>`}
+                            ${ai>=0 ? `<button class="mini-btn btn-delete" onclick="deleteBelanjaModal('after',${ai})">🗑️ Hapus Sesudah</button>` : ''}
+                        </div>
+                    </div>`;
+
+                    appendModalRow(b, a, 'perubahan', targetTableBody, base.uraian);
+                });
+            }
+
+            htmlManager += '</div>';
+            if (manager) manager.innerHTML = htmlManager;
+
+            document.querySelectorAll('.dynamic-modal-row .perubahan-col').forEach(c => {
+                c.classList.toggle('hide-col', mode === 'murni');
+            });
+        }
+
+        function modalManagerLine(m, side, i) {
+            const rekening = m.rekening === '5.2.05' ? '5.2.05' : '5.2.02';
+            const total = (Number(m.vol)||0) * (Number(m.harga)||0);
+            return `<div class="modal-manager-row">
+                <div><b>${rekening}</b></div>
+                <div>${escapeHtml(m.uraian)}</div>
+                <div>${m.vol} ${escapeHtml(m.satuan)}</div>
+                <div style="text-align:right">Rp ${Number(m.harga).toLocaleString('id-ID')}</div>
+                <div style="text-align:right"><b>Rp ${total.toLocaleString('id-ID')}</b></div>
+                <div style="white-space:nowrap">
+                    <button class="mini-btn" onclick="startEditBelanjaModal('${side}',${i})">✏️ Edit</button>
+                    <button class="mini-btn btn-delete" onclick="deleteBelanjaModal('${side}',${i})">🗑️ Hapus</button>
+                </div>
+            </div>`;
+        }
+
+        function appendModalRow(beforeItem, afterItem, mode, targetTableBody, uraianOverride) {
+            const rekening = (beforeItem?.rekening || afterItem?.rekening) === '5.2.05' ? '5.2.05' : '5.2.02';
+            const bVol = Number(beforeItem?.vol)||0;
+            const bSat = beforeItem?.satuan || '-';
+            const bHarga = Number(beforeItem?.harga)||0;
+            const bTotal = bVol*bHarga;
+            const aVol = Number(afterItem?.vol)||0;
+            const aSat = afterItem?.satuan || '-';
+            const aHarga = Number(afterItem?.harga)||0;
+            const aTotal = aVol*aHarga;
+            const uraian = uraianOverride || beforeItem?.uraian || afterItem?.uraian || '';
+
+            const tr = document.createElement('tr');
+            tr.className = 'dynamic-modal-row';
+            tr.dataset.rekening = rekening;
+            tr.innerHTML = `
+                <td></td>
+                <td>${rekening}</td>
+                <td></td>
+                <td style="padding-left:20px;color:blue;">• Pengadaan: ${escapeHtml(uraian)}</td>
+                <td class="text-center">${mode==='murni' ? bVol : (beforeItem ? bVol : '-')}</td>
+                <td class="text-center">${mode==='murni' ? escapeHtml(bSat) : (beforeItem ? escapeHtml(bSat) : '-')}</td>
+                <td class="text-right">${mode==='murni' ? bHarga.toLocaleString('id-ID') : (beforeItem ? bHarga.toLocaleString('id-ID') : '-')}</td>
+                <td class="text-right text-bold">${mode==='murni' ? bTotal.toLocaleString('id-ID') : (beforeItem ? bTotal.toLocaleString('id-ID') : '0')}</td>
+                <td class="text-center perubahan-col">${mode==='murni' ? '' : aVol}</td>
+                <td class="text-center perubahan-col">${mode==='murni' ? '' : escapeHtml(aSat)}</td>
+                <td class="text-right perubahan-col">${mode==='murni' ? '' : aHarga.toLocaleString('id-ID')}</td>
+                <td class="text-right text-bold perubahan-col">${mode==='murni' ? '' : aTotal.toLocaleString('id-ID')}</td>
+                <td class="text-right perubahan-col">${mode==='murni' ? '' : (aTotal-bTotal).toLocaleString('id-ID')}</td>`;
+
+            const categoryRows = Array.from(targetTableBody.querySelectorAll('tr.modal-category-row'));
+            const categoryRow = categoryRows.find(row => row.cells[1] && row.cells[1].textContent.trim() === rekening);
+            if (categoryRow) {
+                let anchor = categoryRow;
+                while (anchor.nextElementSibling && anchor.nextElementSibling.classList.contains('dynamic-modal-row') && anchor.nextElementSibling.dataset.rekening === rekening) {
+                    anchor = anchor.nextElementSibling;
+                }
+                anchor.insertAdjacentElement('afterend', tr);
+            } else {
+                const summary = document.getElementById('row-totals-summary');
+                targetTableBody.insertBefore(tr, summary);
+            }
+        }
+
+        function escapeJs(value) {
+            return String(value ?? '').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;').replace(/\r?\n/g,' ');
+        }
+
+        function addAfterFromBase(rekening, uraian) {
+            const idx = getCurrentSchoolIndex();
+            if (idx === null) return;
+            const data = ensureSchoolModalData(idx);
+            const source = findModalItem(data.before, {rekening, uraian}) || findModalItem(data.murni, {rekening, uraian});
+            if (!source) return;
+            data.after.push(cloneModalItem(source, {id: undefined}));
+            renderDynamicModalRows();
+            calculateRkasMath();
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+            }[ch]));
+        }
+
+
+
+        function getRkasStorageKey(){
+            const idx = getCurrentSchoolIndex();
+            const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            return `RKAS_DATA_${idx===null?'none':idx}_${mode}`;
+        }
+
+        function saveRkasData(){
+            if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
+            const idx = getCurrentSchoolIndex();
+            if(idx === null){ alert('Silakan pilih Sekolah Target terlebih dahulu.'); return; }
+            try{
+                const payload = {
+                    version: 2,
+                    savedAt: new Date().toISOString(),
+                    schoolIndex: idx,
+                    kegiatan: ensureSchoolModalData(idx),
+                    pejabat: dataPejabat,
+                    rkasSettings: { year: rkasYear, source: rkasSource }
+                };
+                localStorage.setItem(getRkasStorageKey(), JSON.stringify(payload));
+                // Setiap penyimpanan RKAS langsung memperbarui Rekap Seluruh Sekolah.
+                saveSchoolToHasilRekap(idx, document.getElementById('rkas-type-selector')?.value || 'perubahan');
+                alert('Data RKAS berhasil disimpan di browser dan masuk ke Hasil Rekap Seluruh Sekolah.');
+            }catch(err){
+                console.error(err);
+                alert('Data gagal disimpan: ' + err.message);
+            }
+        }
+
+        function loadRkasData(){
+            if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
+            const rawSelector=document.getElementById('school-selector')?.value;
+            if(rawSelector!=='' && rawSelector!=null && !canAccessSchool(Number(rawSelector))){ alert('AKSES DITOLAK. Anda hanya dapat memuat data sekolah yang ditugaskan kepada akun Anda.'); return; }
+            const idx = getCurrentSchoolIndex();
+            if(idx === null){ alert('Silakan pilih Sekolah Target terlebih dahulu.'); return; }
+            try{
+                const raw = localStorage.getItem(getRkasStorageKey());
+                if(!raw){ alert('Belum ada data RKAS tersimpan untuk sekolah dan mode ini.'); return; }
+                const payload = JSON.parse(raw);
+                if(payload.kegiatan) kegiatanSuntikanModal[idx] = payload.kegiatan;
+                if(payload.pejabat) dataPejabat = payload.pejabat;
+                if(payload.rkasSettings) applyRkasSettings(payload.rkasSettings);
+                persistRkasSettings();
+                loadPejabatInputs();
+                calculateRkasMath();
+                alert('Data RKAS berhasil dimuat.');
+            }catch(err){
+                console.error(err);
+                alert('Data RKAS gagal dimuat: ' + err.message);
+            }
+        }
+
+        function downloadMasterTemplate(){
+            const rows = [
+                ['NPSN','Kecamatan','Status','Nama Sekolah','Jumlah Siswa'],
+                ['11000000','Kec. Contoh','Negeri','SD NEGERI CONTOH',100]
+            ];
+            try{
+                if(window.XLSX){
+                    const ws = XLSX.utils.aoa_to_sheet(rows);
+                    ws['!cols'] = [{wch:14},{wch:24},{wch:14},{wch:35},{wch:16}];
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, 'Master Sekolah');
+                    XLSX.writeFile(wb, 'TEMPLATE_MASTER_DATA_SEKOLAH.xlsx');
+                }else{
+                    const csv = rows.map(r => r.join(',')).join('\r\n');
+                    const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+                    const a=document.createElement('a');
+                    a.href=URL.createObjectURL(blob);
+                    a.download='TEMPLATE_MASTER_DATA_SEKOLAH.csv';
+                    a.click();
+                    setTimeout(()=>URL.revokeObjectURL(a.href),500);
+                }
+            }catch(err){
+                console.error(err);
+                alert('Template gagal dibuat: ' + err.message);
+            }
+        }
+
+        function normalizeHeader(v){
+            return String(v ?? '').trim().toLowerCase()
+                .replace(/\s+/g,' ')
+                .replace(/[_-]/g,' ');
+        }
+
+        function parseMasterRows(rows){
+            if(!Array.isArray(rows) || !rows.length) return [];
+            const headers = rows[0].map(normalizeHeader);
+            const aliases = {
+                npsn:['npsn'],
+                kecamatan:['kecamatan'],
+                status:['status'],
+                nama:['nama sekolah','nama_sekolah','sekolah','nama'],
+                siswa:['jumlah siswa','jumlah_siswa','siswa','jumlah siswa terdata']
+            };
+            const col = {};
+            Object.keys(aliases).forEach(key=>{
+                col[key] = headers.findIndex(h=>aliases[key].includes(h));
+            });
+            if(col.npsn<0 || col.kecamatan<0 || col.status<0 || col.nama<0 || col.siswa<0){
+                throw new Error('Kolom wajib tidak lengkap. Gunakan template: NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa.');
+            }
+            const result=[];
+            for(let i=1;i<rows.length;i++){
+                const r=rows[i]||[];
+                if(r.every(v=>String(v??'').trim()==='')) continue;
+                const npsn=String(r[col.npsn]??'').trim();
+                const kecamatan=String(r[col.kecamatan]??'').trim();
+                const status=String(r[col.status]??'').trim();
+                const nama=String(r[col.nama]??'').trim();
+                const siswa=Number(String(r[col.siswa]??'').replace(/[^\d-]/g,''))||0;
+                if(!npsn && !nama) continue;
+                if(!npsn || !nama) continue;
+                result.push({npsn,kecamatan,status,nama,siswa});
+            }
+            return result;
+        }
+
+        function mergeMasterData(items){
+            let countAdded=0, countUpdated=0;
+            items.forEach(incoming=>{
+                const existing=masterSekolah.find(s=>String(s.npsn)===String(incoming.npsn));
+                if(existing){
+                    existing.kecamatan=incoming.kecamatan;
+                    existing.status=incoming.status;
+                    existing.nama=incoming.nama;
+                    existing.siswa=incoming.siswa;
+                    countUpdated++;
+                }else{
+                    masterSekolah.push(incoming);
+                    countAdded++;
+                }
+            });
+            return {countAdded,countUpdated};
+        }
+
+        function saveUploadedData(){
+            if(!isAdmin()){ alert('Akses ditolak. Hanya Admin yang dapat mengunggah atau mengubah Master Data Sekolah.'); return; }
+            const fileInput=document.getElementById('upload-csv-file');
+            if(!fileInput || !fileInput.files.length){
+                alert('Silakan pilih file Excel/CSV template terlebih dahulu.');
+                return;
+            }
+            const file=fileInput.files[0];
+            const ext=file.name.toLowerCase().split('.').pop();
+            const reader=new FileReader();
+
+            reader.onload=function(e){
+                try{
+                    let rows=[];
+                    if(ext==='xlsx' || ext==='xls'){
+                        if(!window.XLSX) throw new Error('Modul Excel belum tersedia. Pastikan komputer/HP terhubung internet saat membuka aplikasi.');
+                        const wb=XLSX.read(e.target.result,{type:'array'});
+                        const firstSheet=wb.Sheets[wb.SheetNames[0]];
+                        rows=XLSX.utils.sheet_to_json(firstSheet,{header:1,defval:''});
+                    }else{
+                        const text=String(e.target.result||'').replace(/^\uFEFF/,'');
+                        rows=text.split(/\r?\n/).filter(Boolean).map(line=>{
+                            const out=[]; let cur='', quote=false;
+                            for(let i=0;i<line.length;i++){
+                                const ch=line[i];
+                                if(ch==='"'){
+                                    if(quote && line[i+1]==='"'){cur+='"';i++;}
+                                    else quote=!quote;
+                                }else if(ch===',' && !quote){out.push(cur);cur='';}
+                                else cur+=ch;
+                            }
+                            out.push(cur);
+                            return out;
+                        });
+                    }
+                    const items=parseMasterRows(rows);
+                    if(!items.length) throw new Error('Tidak ada data sekolah yang valid pada file.');
+                    const result=mergeMasterData(items);
+                    localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
+                    renderMasterTable();
+                    initApp();
+                    fileInput.value='';
+                    alert(`Berhasil! ${result.countAdded} data baru ditambahkan dan ${result.countUpdated} data diperbarui. Semua masuk ke database Kelola Master Data.`);
+                }catch(err){
+                    console.error(err);
+                    alert('Gagal menyimpan data: ' + err.message);
+                }
+            };
+
+            if(ext==='xlsx' || ext==='xls') reader.readAsArrayBuffer(file);
+            else reader.readAsText(file);
+        }
+
+        function loadMasterDatabase(){
+            try{
+                const raw=localStorage.getItem('MASTER_SEKOLAH_RKAS');
+                if(raw){
+                    const parsed=JSON.parse(raw);
+                    if(Array.isArray(parsed)) masterSekolah=parsed;
+                }
+            }catch(err){ console.warn('Database master lokal tidak dapat dimuat.',err); }
+        }
+
+        function updateSheetPlaceDate(){
+            const el=document.getElementById('sheet-place-date');
+            const sig=document.getElementById('sig-date');
+            const now=new Date();
+            const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            const text=`Kabupaten Lingga, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            if(el) el.innerText=text;
+            if(sig) sig.innerText=`${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+        }
+
+        // Dipakai agar RKAS Perubahan otomatis membawa daftar barang Murni
+        // ke kolom Sebelum Perubahan, tanpa menghapus data Murni.
+        function ensurePerubahanBeforeFromMurni(idx){
+            if(idx===null) return;
+            const data=ensureSchoolModalData(idx);
+            if(!data.murni) data.murni=[];
+            if(!data.before || data.before.length===0){
+                data.before = data.murni.map(item=>({...item}));
+            }else{
+                // Sinkronkan item Murni ke Sebelum Perubahan berdasarkan
+                // rekening + uraian, tanpa menggandakan item yang sudah ada.
+                data.murni.forEach(m=>{
+                    const found=data.before.find(b=>b.rekening===m.rekening && b.uraian===m.uraian);
+                    if(!found) data.before.push({...m});
+                });
+            }
+        }
+
+        const _toggleRkasTypeOriginal = toggleRkasType;
+        toggleRkasType = function(){
+            const mode=document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            const idx=getCurrentSchoolIndex();
+            if(mode==='perubahan' && idx!==null) ensurePerubahanBeforeFromMurni(idx);
+            _toggleRkasTypeOriginal();
+            updateSheetPlaceDate();
+        };
+
+        const _handleSchoolChangeOriginal = handleSchoolChange;
+        handleSchoolChange = function(){
+            const idx=getCurrentSchoolIndex();
+            if(idx!==null && !canAccessSchool(idx)){
+                alert('AKSES DITOLAK. Sekolah tersebut tidak ditugaskan kepada akun Anda.');
+                const selector=document.getElementById('school-selector'); if(selector) selector.value='';
+                return;
+            }
+            _handleSchoolChangeOriginal();
+            loadRkasSettings();
+            const mode=document.getElementById('rkas-type-selector')?.value || 'perubahan';
+            if(mode==='perubahan' && idx!==null) ensurePerubahanBeforeFromMurni(idx);
+            calculateRkasMath();
+            updateSheetPlaceDate();
+        };
+
+        const _initAppOriginal = initApp;
+        initApp = function(){
+            loadMasterDatabase();
+            _initAppOriginal();
+            updateSheetPlaceDate();
+        };
+
+
+
+        // ============================================================
+        // HASIL REKAP SELURUH SEKOLAH
+        // Sumber data: Lembar Kerja RKAS yang telah ditekan "Simpan RKAS".
+        // Disimpan terpisah agar tidak mengubah database master sekolah.
+        // ============================================================
+        const HASIL_REKAP_STORAGE_KEY = 'RKAS_HASIL_REKAP_SEKOLAH';
+
+        function formatRupiahRekap(n){
+            return Number(n || 0).toLocaleString('id-ID');
+        }
+
+        function getRekapSnapshotForSide(idx, side){
+            const s = masterSekolah[idx];
+            if (!s) return null;
+            const data = ensureSchoolModalData(idx) || {murni:[],before:[],after:[]};
+            const items = Array.isArray(data[side]) ? data[side] : [];
+            const totals = calculateSideTotals(items);
+            const rate = String(s.nama || '').toUpperCase().includes('SMP') ? 1580000 : 1250000;
+            const pendapatan = (Number(s.siswa) || 0) * rate;
+            return {
+                kecamatan: s.kecamatan || '-',
+                npsn: s.npsn || '-',
+                nama: s.nama || '-',
+                siswa: Number(s.siswa) || 0,
+                pendapatan,
+                barangJasa: Math.max(0, pendapatan - totals.total),
+                modalPeralatanMesin: totals['5.2.02'] || 0,
+                modalAsetTetapLainnya: totals['5.2.05'] || 0,
+                totalBelanja: totals.total || 0,
+                updatedAt: new Date().toISOString()
+            };
+        }
+
+        function loadHasilRekap(){
+            try{
+                const raw = localStorage.getItem(HASIL_REKAP_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            }catch(e){
+                console.warn('Data Hasil Rekap tidak dapat dimuat.', e);
+                return [];
+            }
+        }
+
+        function saveHasilRekap(rows){
+            localStorage.setItem(HASIL_REKAP_STORAGE_KEY, JSON.stringify(rows));
+        }
+
+        function saveSchoolToHasilRekap(idx, mode){
+            const s = masterSekolah[idx];
+            if (!s) return;
+            const rows = loadHasilRekap();
+            const data = ensureSchoolModalData(idx);
+            let snapshot;
+
+            if (mode === 'murni') {
+                snapshot = getRekapSnapshotForSide(idx, 'murni');
+            } else {
+                // RKAS Perubahan menyimpan dua kondisi: Sebelum dan Sesudah.
+                snapshot = {
+                    sebelum: getRekapSnapshotForSide(idx, 'before'),
+                    sesudah: getRekapSnapshotForSide(idx, 'after')
+                };
+            }
+
+            const key = `${String(s.npsn)}__${mode}`;
+            const record = {
+                key,
+                mode,
+                npsn: String(s.npsn || '-'),
+                nama: s.nama || '-',
+                kecamatan: s.kecamatan || '-',
+                siswa: Number(s.siswa) || 0,
+                snapshot,
+                savedAt: new Date().toISOString()
+            };
+            const pos = rows.findIndex(r => r && r.key === key);
+            if (pos >= 0) rows[pos] = record;
+            else rows.push(record);
+            // Urutkan mengikuti urutan sekolah di Master Data.
+            rows.sort((a,b) => String(a.kecamatan).localeCompare(String(b.kecamatan),'id') || String(a.nama).localeCompare(String(b.nama),'id') || String(a.mode).localeCompare(String(b.mode),'id'));
+            saveHasilRekap(rows);
+            renderHasilRekap();
+        }
+
+        function renderRekapHeader(mode){
+            const head = document.getElementById('hasil-rekap-head');
+            if (!head) return;
+            if (mode === 'murni') {
+                head.innerHTML = `<tr>
+                    <th style="width:45px;">No</th>
+                    <th>Kecamatan</th>
+                    <th>NPSN</th>
+                    <th>Nama Sekolah</th>
+                    <th>Jumlah Siswa</th>
+                    <th>Pendapatan</th>
+                    <th>Barang dan Jasa</th>
+                    <th>Modal Peralatan dan Mesin</th>
+                    <th>Modal Aset Tetap Lainnya</th>
+                </tr>`;
+            } else {
+                head.innerHTML = `<tr>
+                    <th rowspan="2" style="width:45px;">No</th>
+                    <th rowspan="2">Kecamatan</th>
+                    <th rowspan="2">NPSN</th>
+                    <th rowspan="2">Nama Sekolah</th>
+                    <th rowspan="2">Jumlah Siswa</th>
+                    <th colspan="4">Murni / Sebelum Perubahan</th>
+                    <th colspan="4">Sesudah Perubahan</th>
+                </tr><tr>
+                    <th>Pendapatan</th><th>Barang dan Jasa</th><th>Modal Peralatan dan Mesin</th><th>Modal Aset Tetap Lainnya</th>
+                    <th>Pendapatan</th><th>Barang dan Jasa</th><th>Modal Peralatan dan Mesin</th><th>Modal Aset Tetap Lainnya</th>
+                </tr>`;
+            }
+        }
+
+        function renderHasilRekap(){
+            const selector = document.getElementById('rekap-mode-selector');
+            const mode = selector ? selector.value : 'murni';
+            const body = document.getElementById('hasil-rekap-body');
+            const note = document.getElementById('rekap-note');
+            if (!body) return;
+            renderRekapHeader(mode);
+            const rows = loadHasilRekap().filter(r => r && r.mode === mode && canAccessNpsn(r.npsn));
+
+            if (note) {
+                note.innerHTML = mode === 'murni'
+                    ? 'Menampilkan hanya <b>RKAS Murni</b> yang sudah disimpan dari Lembar Kerja RKAS.'
+                    : 'Menampilkan <b>Sebelum Perubahan</b> dan <b>Sesudah Perubahan</b> untuk RKAS Perubahan yang sudah disimpan.';
+            }
+
+            if (!rows.length) {
+                const colspan = mode === 'murni' ? 9 : 13;
+                body.innerHTML = `<tr><td colspan="${colspan}" class="rekap-empty">Belum ada data tersimpan. Pilih sekolah pada Lembar Kerja RKAS, kemudian klik <b>💾 Simpan RKAS</b>.</td></tr>`;
+                return;
+            }
+
+            let html='';
+            const totals = {siswa:0, p1:0,bj1:0,m1:0,a1:0,p2:0,bj2:0,m2:0,a2:0};
+            rows.forEach((r,i)=>{
+                if (mode === 'murni') {
+                    const x = r.snapshot || {};
+                    totals.siswa += Number(x.siswa)||0;
+                    totals.p1 += Number(x.pendapatan)||0;
+                    totals.bj1 += Number(x.barangJasa)||0;
+                    totals.m1 += Number(x.modalPeralatanMesin)||0;
+                    totals.a1 += Number(x.modalAsetTetapLainnya)||0;
+                    html += `<tr>
+                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan)}</td><td>${escapeHtml(r.npsn)}</td><td>${escapeHtml(r.nama)}</td>
+                        <td class="num">${Number(x.siswa||0).toLocaleString('id-ID')}</td>
+                        <td class="num">${formatRupiahRekap(x.pendapatan)}</td><td class="num">${formatRupiahRekap(x.barangJasa)}</td>
+                        <td class="num">${formatRupiahRekap(x.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(x.modalAsetTetapLainnya)}</td>
+                    </tr>`;
+                } else {
+                    const b = r.snapshot?.sebelum || {};
+                    const a = r.snapshot?.sesudah || {};
+                    totals.siswa += Number(b.siswa)||0;
+                    totals.p1 += Number(b.pendapatan)||0; totals.bj1 += Number(b.barangJasa)||0; totals.m1 += Number(b.modalPeralatanMesin)||0; totals.a1 += Number(b.modalAsetTetapLainnya)||0;
+                    totals.p2 += Number(a.pendapatan)||0; totals.bj2 += Number(a.barangJasa)||0; totals.m2 += Number(a.modalPeralatanMesin)||0; totals.a2 += Number(a.modalAsetTetapLainnya)||0;
+                    html += `<tr>
+                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan)}</td><td>${escapeHtml(r.npsn)}</td><td>${escapeHtml(r.nama)}</td>
+                        <td class="num">${Number(b.siswa||0).toLocaleString('id-ID')}</td>
+                        <td class="num">${formatRupiahRekap(b.pendapatan)}</td><td class="num">${formatRupiahRekap(b.barangJasa)}</td><td class="num">${formatRupiahRekap(b.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(b.modalAsetTetapLainnya)}</td>
+                        <td class="num">${formatRupiahRekap(a.pendapatan)}</td><td class="num">${formatRupiahRekap(a.barangJasa)}</td><td class="num">${formatRupiahRekap(a.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(a.modalAsetTetapLainnya)}</td>
+                    </tr>`;
+                }
+            });
+
+            if (mode === 'murni') {
+                html += `<tr class="total-row"><td colspan="4" style="text-align:right;">TOTAL</td><td class="num">${totals.siswa.toLocaleString('id-ID')}</td><td class="num">${formatRupiahRekap(totals.p1)}</td><td class="num">${formatRupiahRekap(totals.bj1)}</td><td class="num">${formatRupiahRekap(totals.m1)}</td><td class="num">${formatRupiahRekap(totals.a1)}</td></tr>`;
+            } else {
+                html += `<tr class="total-row"><td colspan="4" style="text-align:right;">TOTAL</td><td class="num">${totals.siswa.toLocaleString('id-ID')}</td>
+                    <td class="num">${formatRupiahRekap(totals.p1)}</td><td class="num">${formatRupiahRekap(totals.bj1)}</td><td class="num">${formatRupiahRekap(totals.m1)}</td><td class="num">${formatRupiahRekap(totals.a1)}</td>
+                    <td class="num">${formatRupiahRekap(totals.p2)}</td><td class="num">${formatRupiahRekap(totals.bj2)}</td><td class="num">${formatRupiahRekap(totals.m2)}</td><td class="num">${formatRupiahRekap(totals.a2)}</td></tr>`;
+            }
+            body.innerHTML=html;
+        }
+
+        function deleteAllHasilRekap(){
+            if(!isAdmin()){ alert('Akses ditolak. Hanya Admin yang dapat menggunakan Hapus Semua pada Hasil Rekap.'); return; }
+            const rows = loadHasilRekap();
+            if (!rows.length) {
+                alert('Hasil Rekap Seluruh Sekolah sudah kosong.');
+                return;
+            }
+            if (!confirm('Hapus SEMUA data pada Hasil Rekap Seluruh Sekolah? Data Master Sekolah dan Lembar Kerja RKAS tidak akan dihapus.')) return;
+            localStorage.removeItem(HASIL_REKAP_STORAGE_KEY);
+            renderHasilRekap();
+            alert('Semua data Hasil Rekap Seluruh Sekolah berhasil dihapus. Data Master Sekolah dan Lembar Kerja RKAS tetap aman.');
+        }
+
+        function buildRekapWorkbookRows(mode){
+            const rows = loadHasilRekap().filter(r => r && r.mode === mode);
+            const aoa = [];
+            if (mode === 'murni') {
+                aoa.push(['HASIL REKAP SELURUH SEKOLAH']);
+                aoa.push(['RKAS MURNI']);
+                aoa.push([]);
+                aoa.push(['No','Kecamatan','NPSN','Nama Sekolah','Jumlah Siswa','Pendapatan','Barang dan Jasa','Modal Peralatan dan Mesin','Modal Aset Tetap Lainnya']);
+                const totals={siswa:0,pendapatan:0,bj:0,mpm:0,aset:0};
+                rows.forEach((r,i)=>{
+                    const x=r.snapshot||{};
+                    const siswa=Number(x.siswa)||0, pend=Number(x.pendapatan)||0, bj=Number(x.barangJasa)||0, mpm=Number(x.modalPeralatanMesin)||0, aset=Number(x.modalAsetTetapLainnya)||0;
+                    totals.siswa+=siswa; totals.pendapatan+=pend; totals.bj+=bj; totals.mpm+=mpm; totals.aset+=aset;
+                    aoa.push([i+1,r.kecamatan||'-',r.npsn||'-',r.nama||'-',siswa,pend,bj,mpm,aset]);
+                });
+                aoa.push(['','','','TOTAL',totals.siswa,totals.pendapatan,totals.bj,totals.mpm,totals.aset]);
+            } else {
+                aoa.push(['HASIL REKAP SELURUH SEKOLAH']);
+                aoa.push(['RKAS PERUBAHAN']);
+                aoa.push([]);
+                aoa.push(['No','Kecamatan','NPSN','Nama Sekolah','Jumlah Siswa','Murni / Sebelum Perubahan','','','', 'Sesudah Perubahan','','','']);
+                aoa.push(['','','','','','Pendapatan','Barang dan Jasa','Modal Peralatan dan Mesin','Modal Aset Tetap Lainnya','Pendapatan','Barang dan Jasa','Modal Peralatan dan Mesin','Modal Aset Tetap Lainnya']);
+                const totals={siswa:0,p1:0,bj1:0,m1:0,a1:0,p2:0,bj2:0,m2:0,a2:0};
+                rows.forEach((r,i)=>{
+                    const b=r.snapshot?.sebelum||{}, a=r.snapshot?.sesudah||{};
+                    const siswa=Number(b.siswa)||0;
+                    const vals=[Number(b.pendapatan)||0,Number(b.barangJasa)||0,Number(b.modalPeralatanMesin)||0,Number(b.modalAsetTetapLainnya)||0,Number(a.pendapatan)||0,Number(a.barangJasa)||0,Number(a.modalPeralatanMesin)||0,Number(a.modalAsetTetapLainnya)||0];
+                    totals.siswa+=siswa; totals.p1+=vals[0]; totals.bj1+=vals[1]; totals.m1+=vals[2]; totals.a1+=vals[3]; totals.p2+=vals[4]; totals.bj2+=vals[5]; totals.m2+=vals[6]; totals.a2+=vals[7];
+                    aoa.push([i+1,r.kecamatan||'-',r.npsn||'-',r.nama||'-',siswa,...vals]);
+                });
+                aoa.push(['','','','TOTAL',totals.siswa,totals.p1,totals.bj1,totals.m1,totals.a1,totals.p2,totals.bj2,totals.m2,totals.a2]);
+            }
+            return aoa;
+        }
+
+        function downloadHasilRekapWorkbook(){
+            if (typeof XLSX === 'undefined') {
+                alert('Fitur Workbook belum tersedia. Pastikan perangkat terhubung ke internet lalu coba lagi.');
+                return;
+            }
+            const selector=document.getElementById('rekap-mode-selector');
+            const mode=selector?.value||'murni';
+            const rows=loadHasilRekap().filter(r=>r&&r.mode===mode);
+            if(!rows.length){ alert('Belum ada data untuk diunduh pada pilihan rekap ini.'); return; }
+            try{
+                const wb=XLSX.utils.book_new();
+                const aoa=buildRekapWorkbookRows(mode);
+                const ws=XLSX.utils.aoa_to_sheet(aoa);
+                if(mode==='murni'){
+                    ws['!merges']=[
+                        {s:{r:0,c:0},e:{r:0,c:8}},
+                        {s:{r:1,c:0},e:{r:1,c:8}}
+                    ];
+                    ws['!cols']=[{wch:6},{wch:20},{wch:14},{wch:34},{wch:13},{wch:18},{wch:20},{wch:25},{wch:25}];
+                    ws['!autofilter']={ref:`A4:I${aoa.length-1}`};
+                }else{
+                    ws['!merges']=[
+                        {s:{r:0,c:0},e:{r:0,c:12}},
+                        {s:{r:1,c:0},e:{r:1,c:12}},
+                        {s:{r:3,c:0},e:{r:4,c:0}},
+                        {s:{r:3,c:1},e:{r:4,c:1}},
+                        {s:{r:3,c:2},e:{r:4,c:2}},
+                        {s:{r:3,c:3},e:{r:4,c:3}},
+                        {s:{r:3,c:4},e:{r:4,c:4}},
+                        {s:{r:3,c:5},e:{r:3,c:8}},
+                        {s:{r:3,c:9},e:{r:3,c:12}}
+                    ];
+                    ws['!cols']=[{wch:6},{wch:20},{wch:14},{wch:34},{wch:13},{wch:18},{wch:20},{wch:25},{wch:25},{wch:18},{wch:20},{wch:25},{wch:25}];
+                    ws['!autofilter']={ref:`A4:M${aoa.length-1}`};
+                }
+                ws['!freeze']={xSplit:5,ySplit:4};
+                XLSX.utils.book_append_sheet(wb,ws,mode==='murni'?'RKAS Murni':'RKAS Perubahan');
+                const now=new Date();
+                const stamp=now.toISOString().slice(0,10).replace(/-/g,'');
+                XLSX.writeFile(wb,`Hasil_Rekap_Seluruh_Sekolah_${mode==='murni'?'Murni':'Perubahan'}_${stamp}.xlsx`);
+            }catch(err){
+                console.error(err);
+                alert('Workbook gagal dibuat: '+err.message);
+            }
+        }
+
+        // ============================================================
+        // DATABASE ONLINE - SUPABASE
+        // Menyimpan seluruh payload RKAS + snapshot rekap ke database online.
+        // Fitur lokal tetap berjalan jika database online belum dikonfigurasi.
+        // ============================================================
+        const ONLINE_DB_CONFIG_KEY = 'RKAS_ONLINE_DB_CONFIG_V1';
+        const ONLINE_DB_TABLE = 'rkas_online';
+        // Koneksi bawaan untuk Project RKAS yang Anda gunakan.
+        // URL dinormalisasi agar aman walaupun pengguna menempelkan /rest/v1/.
+        const DEFAULT_SUPABASE_PROJECT_URL = 'https://zidkpanbgdmcnwghxqtg.supabase.co';
+        const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xTrWuaCJdg0Xl39MF9VnSw_johGNsl_';
+
+        function normalizeSupabaseUrl(value){
+            return String(value||'').trim().replace(/\/rest\/v1\/?$/i,'').replace(/\/$/,'');
+        }
+        function getOnlineDbConfig(){
+            try{
+                const raw = localStorage.getItem(ONLINE_DB_CONFIG_KEY);
+                const cfg = raw ? JSON.parse(raw) : {};
+                return {
+                    url:normalizeSupabaseUrl(cfg.url||DEFAULT_SUPABASE_PROJECT_URL),
+                    key:String(cfg.key||DEFAULT_SUPABASE_PUBLISHABLE_KEY).trim()
+                };
+            }catch(e){ return {url:DEFAULT_SUPABASE_PROJECT_URL,key:DEFAULT_SUPABASE_PUBLISHABLE_KEY}; }
+        }
+
+        function saveOnlineDbConfig(){
+            const url = normalizeSupabaseUrl(document.getElementById('supabase-url-input')?.value||'');
+            const key = String(document.getElementById('supabase-key-input')?.value||'').trim();
+            if(!/^https:\/\/[^\s]+\.supabase\.co$/i.test(url)){
+                alert('URL Supabase tidak valid. Contoh: https://xxxxx.supabase.co'); return;
+            }
+            if(!key){ alert('Publishable key Supabase belum diisi.'); return; }
+            localStorage.setItem(ONLINE_DB_CONFIG_KEY, JSON.stringify({url,key}));
+            updateOnlineDbStatus('Koneksi database online tersimpan.', true);
+        }
+
+        function clearOnlineDbConfig(){
+            if(!confirm('Hapus pengaturan koneksi database online dari browser ini? Data di server tidak dihapus.')) return;
+            localStorage.removeItem(ONLINE_DB_CONFIG_KEY);
+            const u=document.getElementById('supabase-url-input'), k=document.getElementById('supabase-key-input');
+            if(u) u.value=''; if(k) k.value='';
+            updateOnlineDbStatus('Belum dikonfigurasi.', false);
+        }
+
+        function toggleOnlineDbSettings(){
+            const box=document.getElementById('online-db-settings');
+            if(!box) return;
+            const show=box.style.display==='none';
+            box.style.display=show?'block':'none';
+            if(show){
+                const cfg=getOnlineDbConfig();
+                const u=document.getElementById('supabase-url-input'), k=document.getElementById('supabase-key-input');
+                if(u) u.value=cfg.url||'';
+                if(k) k.value=cfg.key||'';
+                updateOnlineDbStatus(cfg.url&&cfg.key?'Koneksi sudah dikonfigurasi.':'Belum dikonfigurasi.', !!(cfg.url&&cfg.key));
+            }
+        }
+
+        function updateOnlineDbStatus(msg, ok){
+            const el=document.getElementById('online-db-status');
+            if(el){ el.textContent='Status: '+msg; el.style.color=ok?'#107c41':'#8a4b00'; }
+        }
+
+        function onlineDbHeaders(cfg, extra){
+            const token=cfg.key;
+            return Object.assign({
+                'apikey': cfg.key,
+                'Authorization': 'Bearer '+token,
+                'Content-Type':'application/json'
+            }, extra||{});
+        }
+
+        async function fetchOnlineOperatorAccount(npsn){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const q=encodeURIComponent(String(npsn));
+            const res=await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?select=id,username,password,role,npsn,nama_sekolah,kecamatan,siswa,active,updated_at&username=eq.'+q+'&limit=1',{headers:onlineDbHeaders(cfg)});
+            if(!res.ok) throw new Error(await res.text());
+            const rows=await res.json();
+            const r=Array.isArray(rows)?rows[0]:null;
+            if(!r || r.role!=='operator') return null;
+            return {npsn:String(r.npsn||r.username||npsn),password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',status:r.status||'Negeri',siswa:Number(r.siswa)||0};
+        }
+
+        async function upsertOnlineOperatorAccount(account){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const record={username:String(account.npsn),password:String(account.password||''),role:'operator',npsn:String(account.npsn),nama_sekolah:String(account.nama_sekolah||''),kecamatan:String(account.kecamatan||''),siswa:Number(account.siswa)||0,active:account.active!==false,updated_at:new Date().toISOString()};
+            const res=await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?on_conflict=username',{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(record)});
+            if(!res.ok) throw new Error(await res.text());
+            return true;
+        }
+
+        async function loadOnlineOperatorAccounts(mergeToMaster=false){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const res=await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?select=username,password,role,npsn,nama_sekolah,kecamatan,siswa,active,updated_at&role=eq.operator&order=npsn.asc',{headers:onlineDbHeaders(cfg)});
+            if(!res.ok) throw new Error(await res.text());
+            const rows=await res.json();
+            const accounts=getOperatorAccounts();
+            (Array.isArray(rows)?rows:[]).forEach(r=>{
+                const npsn=String(r.npsn||r.username||''); if(!/^\d{8}$/.test(npsn)) return;
+                accounts[npsn]={npsn,password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',status:r.status||'Negeri',siswa:Number(r.siswa)||0};
+                if(mergeToMaster){
+                    const existing=masterSekolah.find(s=>String(s.npsn)===npsn);
+                    const data={npsn,nama:r.nama_sekolah||('Sekolah '+npsn),kecamatan:r.kecamatan||'',status:r.status||'Negeri',siswa:Number(r.siswa)||0};
+                    if(existing) Object.assign(existing,data); else masterSekolah.push(data);
+                }
+            });
+            saveOperatorAccounts(accounts);
+            if(mergeToMaster) localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
+            renderMasterTable();
+            return rows;
+        }
+
+        async function testOnlineDbConnection(){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url || !cfg.key){ alert('Database online belum dikonfigurasi. Buka ⚙️ Database Online terlebih dahulu.'); return false; }
+            try{
+                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=id&limit=1',{headers:onlineDbHeaders(cfg)});
+                if(!res.ok) throw new Error(await res.text());
+                updateOnlineDbStatus('Koneksi berhasil. Database siap digunakan.', true);
+                alert('Koneksi database online berhasil.');
+                return true;
+            }catch(err){
+                console.error(err);
+                updateOnlineDbStatus('Gagal terhubung: '+err.message, false);
+                alert('Koneksi database gagal. Pastikan Project URL, Publishable key, dan tabel sudah benar.\n\n'+err.message);
+                return false;
+            }
+        }
+
+        function getCurrentOnlineRecordKey(idx, mode, year){
+            const s=masterSekolah[idx];
+            return `${String(s?.npsn||'')}__${mode}__${Number(year||rkasYear)||0}`;
+        }
+
+        function buildOnlineRkasRecord(idx, mode){
+            const s=masterSekolah[idx];
+            const raw=localStorage.getItem(getRkasStorageKey());
+            let payload={};
+            try{ payload=raw?JSON.parse(raw):{}; }catch(e){}
+            const snapshot = mode==='murni'
+                ? getRekapSnapshotForSide(idx,'murni')
+                : {sebelum:getRekapSnapshotForSide(idx,'before'),sesudah:getRekapSnapshotForSide(idx,'after')};
+            return {
+                record_key:getCurrentOnlineRecordKey(idx,mode,rkasYear),
+                npsn:String(s?.npsn||'-'),
+                nama:String(s?.nama||'-'),
+                kecamatan:String(s?.kecamatan||'-'),
+                siswa:Number(s?.siswa)||0,
+                mode,
+                tahun:Number(rkasYear)||0,
+                sumber_dana:String(rkasSource||'-'),
+                rkas_payload:payload,
+                rekap_snapshot:snapshot,
+                saved_at:new Date().toISOString(),
+                updated_at:new Date().toISOString()
+            };
+        }
+
+        async function saveCurrentRkasOnline(idx,mode){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url || !cfg.key) return {configured:false};
+            const record=buildOnlineRkasRecord(idx,mode);
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key';
+            const res=await fetch(url,{
+                method:'POST',
+                headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),
+                body:JSON.stringify(record)
+            });
+            if(!res.ok) throw new Error(await res.text());
+            updateOnlineDbStatus('RKAS terakhir berhasil disimpan ke database online.',true);
+            return {configured:true,record};
+        }
+
+        async function loadOnlineRekapRows(){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url || !cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,nama,kecamatan,siswa,mode,tahun,sumber_dana,rkas_payload,rekap_snapshot,saved_at,updated_at&order=kecamatan.asc,nama.asc,mode.asc,tahun.desc';
+            const res=await fetch(url,{headers:onlineDbHeaders(cfg)});
+            if(!res.ok) throw new Error(await res.text());
+            const data=await res.json();
+            return Array.isArray(data)?data:[];
+        }
+
+        async function muatRekapOnline(){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url || !cfg.key){
+                alert('Database online belum dikonfigurasi. Silakan buka ⚙️ Database Online dan masukkan koneksi Supabase.');
+                toggleOnlineDbSettings();
+                return;
+            }
+            const selector=document.getElementById('rekap-mode-selector');
+            const mode=selector?.value||'murni';
+            const body=document.getElementById('hasil-rekap-body');
+            if(body) body.innerHTML='<tr><td colspan="13" style="text-align:center;padding:20px;">⏳ Membaca database online...</td></tr>';
+            try{
+                const rows=await loadOnlineRekapRows();
+                const mapped=rows.filter(r=>canAccessNpsn(r.npsn)).map(r=>({
+                    key:r.record_key, mode:r.mode, npsn:r.npsn, nama:r.nama, kecamatan:r.kecamatan, siswa:r.siswa,
+                    snapshot:r.rekap_snapshot, savedAt:r.updated_at||r.saved_at
+                }));
+                // Tampilkan langsung dari database online dan sinkronkan salinan lokal agar workbook tetap bisa digunakan.
+                localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(mapped));
+                renderHasilRekap();
+                const count=mapped.filter(r=>r.mode===mode).length;
+                updateOnlineDbStatus(`Berhasil memuat ${count} data ${mode==='murni'?'RKAS Murni':'RKAS Perubahan'} dari database online.`,true);
+            }catch(err){
+                console.error(err);
+                renderHasilRekap();
+                updateOnlineDbStatus('Gagal memuat: '+err.message,false);
+                alert('Gagal memuat Rekap Online.\n\n'+err.message);
+            }
+        }
+
+        // Simpan RKAS tetap menggunakan alur V8, lalu otomatis mengirim salinan ke database online jika dikonfigurasi.
+        const _saveRkasDataV8 = saveRkasData;
+        saveRkasData = async function(){
+            const idx=getCurrentSchoolIndex();
+            const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
+            if(idx===null){ alert('Silakan pilih Sekolah Target terlebih dahulu.'); return; }
+            if(!canAccessSchool(idx)){ alert('AKSES DITOLAK. Anda hanya dapat mengubah data sekolah yang ditugaskan kepada akun Anda.'); return; }
+            await _saveRkasDataV8();
+            if(idx===null) return;
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url || !cfg.key) return;
+            try{
+                await saveCurrentRkasOnline(idx,mode);
+                alert('RKAS juga berhasil disimpan ke DATABASE ONLINE.');
+            }catch(err){
+                console.error(err);
+                updateOnlineDbStatus('RKAS lokal tersimpan, tetapi gagal mengirim ke database online.',false);
+                alert('RKAS lokal berhasil disimpan, tetapi DATABASE ONLINE gagal menerima data.\n\n'+err.message+'\n\nPeriksa koneksi dan RLS Supabase.');
+            }
+        };
+
+        // Saat tab Rekap dibuka, tampilkan data terakhir tanpa mengubah lembar kerja.
+        const _switchTabBeforeRekap = switchTab;
+        switchTab = function(tabId, el){
+            if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
+            if(tabId==='master-view' && !isAdmin()){ alert('Akses ditolak. Menu Kelola Master Data Sekolah hanya untuk Admin.'); return; }
+            _switchTabBeforeRekap(tabId, el);
+            if(tabId === 'rekap-view') renderHasilRekap();
+        };
+
+        async function initOnlineAuthApp(){
+            document.body.classList.add('auth-locked');
+            updateLoginPlaceholder();
+            await tryRestoreLogin();
+        }
+        window.onload = initOnlineAuthApp;
+    </script>
+</body>
+</html>
