@@ -289,7 +289,7 @@
 
         /* ================= LOGIN & HAK AKSES ================= */
         body.auth-locked > *:not(#auth-overlay){display:none !important;}
-        #auth-overlay{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0EEBA4,#f7fbff);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+        #auth-overlay{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#eef7f1,#f7fbff);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
         .auth-card{width:min(460px,100%);background:#fff;border:1px solid #cfd8e3;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:24px;box-sizing:border-box;}
         .auth-title{font-size:20px;font-weight:700;color:var(--excel-green);margin:0 0 6px;}
         .auth-subtitle{font-size:12px;color:#666;margin-bottom:18px;}
@@ -299,7 +299,7 @@
         .auth-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
         .auth-status{margin-top:12px;padding:9px 10px;border-radius:5px;background:#f6f6f6;font-size:12px;min-height:18px;}
         .user-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;}
-        .access-denied{background:#F59393!important;border-color:#e3aaaa!important;color:#211717!important;}
+        .access-denied{background:#fff5f5!important;border-color:#e3aaaa!important;color:#9b0000!important;}
         .auth-password-box{margin-top:10px;padding:12px;border:1px solid #cfd8e3;border-radius:6px;background:#f8fbff;display:none;}
         .auth-password-box.show{display:block;}
         .auth-password-box .auth-field{margin-bottom:9px;}
@@ -683,7 +683,7 @@
                     </div>
                     <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
                         <button class="excel-btn btn-save" onclick="adminSaveOperatorSchool()">💾 Tambah / Simpan Operator</button>
-                        <button class="excel-btn" onclick="loadOnlineOperatorAccounts(true).then(()=>{renderMasterTable();alert('Data sekolah/operator online berhasil dimuat ke komputer Admin.');}).catch(e=>alert('Gagal memuat data online.\n\n'+e.message))">☁️ Muat Sekolah Online</button>
+                        <button class="excel-btn" onclick="loadOnlineOperatorAccounts(true).then(r=>{alert(`Data ONLINE berhasil dimuat.\n\nTotal akun sekolah terbaca: ${r.rows.length}\nSekolah baru masuk Master: ${r.merged}\nData dilewati karena NPSN tidak valid: ${r.skipped}\n\nJika seharusnya 176 sekolah tetapi angka di atas kurang dari 176, periksa RLS/Policy SELECT tabel rkas_operator_accounts di Supabase.`);}).catch(e=>alert('Gagal memuat data online.\n\n'+e.message))">☁️ Muat Sekolah Online</button>
                         <button class="excel-btn" onclick="adminClearOperatorForm()">↺ Bersihkan</button>
                     </div>
                     <div id="admin-operator-status" style="margin-top:8px;font-size:12px;color:#555;"></div>
@@ -2061,57 +2061,40 @@
             return {countAdded,countUpdated};
         }
 
-        function saveUploadedData(){
-            if(!isAdmin()){ alert('Akses ditolak. Hanya Admin yang dapat mengunggah atau mengubah Master Data Sekolah.'); return; }
-            const fileInput=document.getElementById('upload-csv-file');
-            if(!fileInput || !fileInput.files.length){
-                alert('Silakan pilih file Excel/CSV template terlebih dahulu.');
-                return;
-            }
-            const file=fileInput.files[0];
-            const ext=file.name.toLowerCase().split('.').pop();
-            const reader=new FileReader();
+        async function saveUploadedDataOnline(items){
+            const sent=await syncMasterItemsOnline(items);
+            localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
+            renderMasterTable(); initApp();
+            return sent;
+        }
 
-            reader.onload=function(e){
+        function saveUploadedData(){
+            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat mengunggah atau mengubah Master Data Sekolah.');return;}
+            const fileInput=document.getElementById('upload-csv-file');
+            if(!fileInput||!fileInput.files.length){alert('Silakan pilih file Excel/CSV template terlebih dahulu.');return;}
+            const file=fileInput.files[0], ext=file.name.toLowerCase().split('.').pop(), reader=new FileReader();
+            reader.onload=async function(e){
                 try{
                     let rows=[];
-                    if(ext==='xlsx' || ext==='xls'){
-                        if(!window.XLSX) throw new Error('Modul Excel belum tersedia. Pastikan komputer/HP terhubung internet saat membuka aplikasi.');
-                        const wb=XLSX.read(e.target.result,{type:'array'});
-                        const firstSheet=wb.Sheets[wb.SheetNames[0]];
-                        rows=XLSX.utils.sheet_to_json(firstSheet,{header:1,defval:''});
+                    if(ext==='xlsx'||ext==='xls'){
+                        if(!window.XLSX)throw new Error('Modul Excel belum tersedia. Pastikan komputer/HP terhubung internet saat membuka aplikasi.');
+                        const wb=XLSX.read(e.target.result,{type:'array'}); rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});
                     }else{
-                        const text=String(e.target.result||'').replace(/^\uFEFF/,'');
-                        rows=text.split(/\r?\n/).filter(Boolean).map(line=>{
-                            const out=[]; let cur='', quote=false;
-                            for(let i=0;i<line.length;i++){
-                                const ch=line[i];
-                                if(ch==='"'){
-                                    if(quote && line[i+1]==='"'){cur+='"';i++;}
-                                    else quote=!quote;
-                                }else if(ch===',' && !quote){out.push(cur);cur='';}
-                                else cur+=ch;
-                            }
-                            out.push(cur);
-                            return out;
-                        });
+                        const t=String(e.target.result||'').replace(/^\uFEFF/,'');
+                        rows=t.split(/\r?\n/).filter(Boolean).map(line=>{const out=[];let cur='',quote=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quote&&line[i+1]==='"'){cur+='"';i++;}else quote=!quote;}else if(ch===','&&!quote){out.push(cur);cur='';}else cur+=ch;}out.push(cur);return out;});
                     }
-                    const items=parseMasterRows(rows);
-                    if(!items.length) throw new Error('Tidak ada data sekolah yang valid pada file.');
+                    const items=parseMasterRows(rows).map(x=>({...x,npsn:normalizeNpsnValue(x.npsn)})).filter(x=>/^\d{8}$/.test(x.npsn));
+                    if(!items.length)throw new Error('Tidak ada data sekolah yang valid pada file.');
                     const result=mergeMasterData(items);
-                    localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
-                    renderMasterTable();
-                    initApp();
+                    localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp();
+                    const cfg=getOnlineDbConfig();
+                    if(!cfg.url||!cfg.key){fileInput.value='';alert(`Data lokal berhasil disimpan: ${result.countAdded} baru, ${result.countUpdated} diperbarui.\n\nDatabase online belum dikonfigurasi, jadi data BELUM dikirim ke server.`);return;}
+                    const sent=await saveUploadedDataOnline(items);
                     fileInput.value='';
-                    alert(`Berhasil! ${result.countAdded} data baru ditambahkan dan ${result.countUpdated} data diperbarui. Semua masuk ke database Kelola Master Data.`);
-                }catch(err){
-                    console.error(err);
-                    alert('Gagal menyimpan data: ' + err.message);
-                }
+                    alert(`BERHASIL DISIMPAN ONLINE!\n\n${sent} data sekolah dari file sudah dikirim ke database online.\n\nKlik ☁️ Muat Sekolah Online untuk memastikan seluruh data server terbaca.`);
+                }catch(err){console.error(err);alert('Gagal menyimpan data: '+err.message);}
             };
-
-            if(ext==='xlsx' || ext==='xls') reader.readAsArrayBuffer(file);
-            else reader.readAsText(file);
+            if(ext==='xlsx'||ext==='xls')reader.readAsArrayBuffer(file);else reader.readAsText(file);
         }
 
         function loadMasterDatabase(){
@@ -2539,14 +2522,25 @@
             }, extra||{});
         }
 
+        async function supabaseFetchJson(url, options={}, context='Database online'){
+            const res=await fetch(url,options);
+            if(!res.ok){
+                const text=await res.text();
+                throw new Error(text||(`${context} gagal (${res.status}).`));
+            }
+            return res.json();
+        }
+
+        // Membaca akun operator tanpa meminta kolom opsional (status), sehingga
+        // aplikasi tetap kompatibel dengan tabel rkas_operator_accounts versi lama.
         async function fetchOnlineOperatorLogin(identifier){
             const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
             const q=encodeURIComponent(String(identifier));
             const url=cfg.url+'/rest/v1/rkas_operator_accounts?select=username,password,role,npsn,nama_sekolah,kecamatan,siswa,active,updated_at&or=(username.eq.'+q+',npsn.eq.'+q+')&limit=1';
-            const res=await fetch(url,{headers:onlineDbHeaders(cfg)}); if(!res.ok) throw new Error(await res.text());
-            const rows=await res.json(); const r=Array.isArray(rows)?rows[0]:null;
+            const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Login operator');
+            const r=Array.isArray(rows)?rows[0]:null;
             if(!r||r.role!=='operator') return null;
-            return {username:String(r.username||''),npsn:String(r.npsn||''),password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',siswa:Number(r.siswa)||0};
+            return {username:String(r.username||''),npsn:String(r.npsn||''),password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',status:'Negeri',siswa:Number(r.siswa)||0};
         }
 
         async function fetchOnlineOperatorAccount(npsn){
@@ -2558,9 +2552,11 @@
             const rows=await res.json();
             const r=Array.isArray(rows)?rows[0]:null;
             if(!r || r.role!=='operator') return null;
-            return {username:String(r.username||r.npsn||npsn),npsn:String(r.npsn||r.username||npsn),password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',siswa:Number(r.siswa)||0};
+            return {username:String(r.username||r.npsn||npsn),npsn:String(r.npsn||r.username||npsn),password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',status:'Negeri',siswa:Number(r.siswa)||0};
         }
 
+        // Menyimpan hanya kolom inti yang wajib ada. Kolom status sengaja tidak
+        // dikirim karena pada database lama kolom tersebut bisa belum tersedia.
         async function upsertOnlineOperatorAccount(account){
             const cfg=getOnlineDbConfig();
             if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
@@ -2570,26 +2566,60 @@
             return true;
         }
 
-        async function loadOnlineOperatorAccounts(mergeToMaster=false){
+        async function fetchAllOnlineOperatorAccounts(){
             const cfg=getOnlineDbConfig();
             if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
-            const res=await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?select=username,password,role,npsn,nama_sekolah,kecamatan,siswa,active,updated_at&role=eq.operator&order=npsn.asc',{headers:onlineDbHeaders(cfg)});
-            if(!res.ok) throw new Error(await res.text());
-            const rows=await res.json();
-            const accounts=getOperatorAccounts();
-            (Array.isArray(rows)?rows:[]).forEach(r=>{
-                const npsn=String(r.npsn||r.username||''); if(!/^\d{8}$/.test(npsn)) return;
-                accounts[npsn]={npsn,password:String(r.password||''),active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:r.nama_sekolah||'',kecamatan:r.kecamatan||'',siswa:Number(r.siswa)||0};
+            const all=[]; const pageSize=1000; let offset=0;
+            while(true){
+                // Jangan select status agar database tanpa kolom status tetap bisa dibaca.
+                const url=cfg.url+'/rest/v1/rkas_operator_accounts?select=username,password,role,npsn,nama_sekolah,kecamatan,siswa,active,updated_at&role=eq.operator&order=npsn.asc&limit='+pageSize+'&offset='+offset;
+                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Memuat akun operator');
+                if(!Array.isArray(rows)||!rows.length) break;
+                all.push(...rows.map(r=>({...r,status:'Negeri'})));
+                if(rows.length<pageSize) break;
+                offset+=pageSize;
+            }
+            return all;
+        }
+
+        function normalizeNpsnValue(value){
+            const digits=String(value??'').replace(/\D/g,'');
+            if(!digits) return '';
+            return digits.length<8 ? digits.padStart(8,'0') : digits;
+        }
+
+        async function loadOnlineOperatorAccounts(mergeToMaster=false){
+            const rows=await fetchAllOnlineOperatorAccounts();
+            const accounts=getOperatorAccounts(); let skipped=0,merged=0;
+            rows.forEach(r=>{
+                const npsn=normalizeNpsnValue(r.npsn||r.username);
+                if(!/^\d{8}$/.test(npsn)){skipped++;return;}
+                accounts[npsn]={npsn,username:String(r.username||npsn),password:String(r.password||''),role:'operator',active:r.active!==false,updated_at:r.updated_at||'',nama_sekolah:String(r.nama_sekolah||''),kecamatan:String(r.kecamatan||''),status:String(r.status||'Negeri'),siswa:Number(r.siswa)||0};
                 if(mergeToMaster){
                     const existing=masterSekolah.find(s=>String(s.npsn)===npsn);
-                    const data={npsn,nama:r.nama_sekolah||('Sekolah '+npsn),kecamatan:r.kecamatan||'',siswa:Number(r.siswa)||0};
-                    if(existing) Object.assign(existing,data); else masterSekolah.push(data);
+                    const data={npsn,nama:String(r.nama_sekolah||('Sekolah '+npsn)),kecamatan:String(r.kecamatan||''),status:String(r.status||'Negeri'),siswa:Number(r.siswa)||0};
+                    if(existing) Object.assign(existing,data); else {masterSekolah.push(data);merged++;}
                 }
             });
             saveOperatorAccounts(accounts);
             if(mergeToMaster) localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
-            renderMasterTable();
-            return rows;
+            renderMasterTable(); initApp();
+            return {rows,skipped,merged};
+        }
+
+        async function syncMasterItemsOnline(items){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const existingRows=await fetchAllOnlineOperatorAccounts(); const byNpsn={};
+            existingRows.forEach(r=>{const n=normalizeNpsnValue(r.npsn||r.username);if(/^\d{8}$/.test(n))byNpsn[n]=r;});
+            const records=items.map(item=>{
+                const npsn=normalizeNpsnValue(item.npsn), old=byNpsn[npsn]||{};
+                return {username:String(old.username||npsn),password:String(old.password||''),role:'operator',npsn,nama_sekolah:String(item.nama||old.nama_sekolah||''),kecamatan:String(item.kecamatan||old.kecamatan||''),siswa:Number(item.siswa)||0,active:old.active!==false,updated_at:new Date().toISOString()};
+            }).filter(r=>/^\d{8}$/.test(r.npsn));
+            if(!records.length) throw new Error('Tidak ada data sekolah valid untuk dikirim ke database online.');
+            const res=await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?on_conflict=username',{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(records)});
+            if(!res.ok) throw new Error(await res.text());
+            return records.length;
         }
 
         async function testOnlineDbConnection(){
