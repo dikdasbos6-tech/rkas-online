@@ -117,7 +117,7 @@
 
         .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; }
         .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33%; vertical-align: top; position:relative; }
-        .sig-image{width:160px;height:65px;object-fit:contain;margin:-8px auto -28px;position:relative;z-index:3;display:inline-block;}
+        .sig-image{width:300px;height:125px;object-fit:contain;margin:-38px auto -62px;position:relative;z-index:20;display:inline-block;pointer-events:none;}
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
         .form-group { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
@@ -256,11 +256,12 @@
             #rkas-view .rkas-title-block{background:#eaf4ef !important;border:1.5px solid #2f6f4e !important;color:#183d2b !important;font-weight:800 !important;padding:8px !important;}
             #rkas-view .meta-table td{border-color:#9aa8a0 !important;}
             #rkas-view .meta-table tr:nth-child(even) td{background:#f7faf8 !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-            #rkas-view .sig-image{width:160px !important;height:65px !important;margin:-8px auto -28px !important;}
+            #rkas-view .sig-image{width:300px !important;height:125px !important;margin:-38px auto -62px !important;z-index:20 !important;pointer-events:none !important;}
         }
 
     
 
+        .global-supabase-status{display:inline-flex;align-items:center;margin-left:10px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;background:#fff1f1;color:#b42318;border:1px solid #f3b5b5;vertical-align:middle;} .global-supabase-status.online{background:#eaf8ef;color:#087443;border-color:#9ed7b5;} .global-supabase-status.offline{background:#fff1f1;color:#b42318;border-color:#f3b5b5;} .master-import-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;align-items:end;} .master-import-grid input[type=file]{width:100%;box-sizing:border-box;padding:9px;border:1px dashed #9db4c9;border-radius:8px;background:#f8fbff;} .master-import-info{padding:12px;border-radius:8px;background:#f3f8fc;color:#415466;font-size:12px;line-height:1.5;} .database-search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;} @media(max-width:800px){.master-import-grid{grid-template-columns:1fr;}.global-supabase-status{margin:5px 0 0;}}
         /* ================= DATABASE ONLINE ================= */
         .online-db-box{margin-top:12px;padding:12px;border:1px solid #cfd8e3;border-radius:6px;background:#f8fbff;}
         .online-db-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -268,6 +269,36 @@
         .online-db-grid input{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #bbb;border-radius:4px;}
         .online-db-status{font-size:12px;margin-top:8px;font-weight:bold;}
         @media(max-width:700px){.online-db-grid{grid-template-columns:1fr;}}
+
+        .deadline-box{margin-top:14px;padding:12px;border:1px solid #e7c46a;border-radius:6px;background:#fffaf0;}
+        .deadline-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .deadline-grid label{font-weight:bold;font-size:12px;display:block;margin-bottom:4px;}
+        .deadline-grid input{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #bbb;border-radius:4px;}
+        .deadline-status{margin-top:8px;font-size:12px;font-weight:bold;}
+        .drive-box{margin-top:14px;padding:12px;border:1px solid #b8d7f0;border-radius:6px;background:#f5faff;}
+        .drive-grid{display:grid;grid-template-columns:1fr;gap:8px;}
+        .drive-grid label{font-weight:bold;font-size:12px;display:block;margin-bottom:4px;}
+        .drive-grid input{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #bbb;border-radius:4px;}
+        .drive-status{margin-top:8px;font-size:12px;font-weight:bold;}
+        .submit-rkas-box{margin-top:10px;padding:10px;border:1px solid #b8d7f0;border-radius:6px;background:#f7fbff;}
+        .submit-rkas-box .submit-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+        .submit-rkas-status{margin-top:7px;font-size:12px;font-weight:bold;}
+        .deadline-login{margin:10px 0;padding:10px 12px;border-radius:8px;background:#fff8e8;border:1px solid #f0c36d;color:#7a4b00;font-size:12px;line-height:1.45;}
+        .deadline-login strong{display:block;font-size:13px;margin-bottom:3px;}
+        .master-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;background:linear-gradient(135deg,#0b6334,#145a9c);color:#fff;border-radius:10px 10px 0 0;}
+        .master-header h3{margin:0;font-size:18px;}
+        .master-header .sub{font-size:11px;opacity:.9;margin-top:3px;}
+        .master-card{border:1px solid #d9e2ec;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(20,40,70,.07);}
+        .master-toolbar{padding:12px 14px;background:#f7fafc;border-bottom:1px solid #dfe7ef;}
+        .master-toolbar input{width:min(520px,100%);padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;box-sizing:border-box;}
+        .master-table-wrap{overflow:auto;max-height:58vh;}
+        .master-table-wrap .excel-grid{margin:0;min-width:1000px;}
+        .master-table-wrap .excel-grid thead th{position:sticky;top:0;z-index:2;}
+        .master-count{font-size:12px;color:#52606d;margin-top:6px;}
+        .master-search{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 10px;}.admin-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:18px}.admin-settings-card{position:relative;overflow:hidden;border:1px solid #d8e2ee;border-radius:14px;padding:18px;background:linear-gradient(145deg,#fff,#f4f8fc);box-shadow:0 6px 20px rgba(20,55,90,.08)}.admin-settings-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#0b6334,#145a9c)}.admin-settings-card h4{margin:0 0 6px 8px;color:#17324d}.admin-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,#17324d,#145a9c);color:#fff}.field-hint{display:block;margin-top:4px;font-size:10px;color:#6b7785;font-style:italic}.deadline-login.closed{background:#fff0f0;border-color:#e4aaaa;color:#9b0000}.deadline-login.open{background:#effaf3;border-color:#9ad3ad;color:#176b39}.deadline-login.hidden{display:none}@media(max-width:850px){.admin-settings-grid{grid-template-columns:1fr}}
+
+        .master-search input{width:min(420px,100%);padding:8px 10px;border:1px solid #999;border-radius:4px;box-sizing:border-box;}
+        @media(max-width:700px){.deadline-grid{grid-template-columns:1fr;}}
 
         /* ================= REKAP SELURUH SEKOLAH ================= */
         .rekap-toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;}
@@ -286,6 +317,38 @@
         .rekap-grid .total-row td{font-weight:bold;background:#f1f1f1;}
         .rekap-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
         .rekap-empty{text-align:center!important;color:#777!important;padding:25px!important;}
+
+        /* ================= MASTER DATA DASHBOARD ================= */
+        .master-page{background:#fff;max-width:1500px;margin:0 auto;padding:14px;border-radius:14px;box-sizing:border-box;}
+        .master-page-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:2px 2px 8px;}
+        .master-page-head h2{margin:0;color:#075d34;font-size:22px;}
+        .master-page-sub{font-size:12px;color:#697586;margin-top:4px;}
+        .master-head-actions,.master-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+        .master-top-btn{border:1px solid #c8d5e3;background:#fff;padding:9px 13px;border-radius:7px;font-weight:700;color:#12643a;cursor:pointer;}
+        .master-top-btn:hover{background:#f1f8f4}.master-top-btn.danger{color:#c62828;border-color:#efb3b3;background:#fff7f7}
+        .master-settings-grid{display:grid;grid-template-columns:1.25fr 1.15fr 1.05fr;gap:12px;margin-bottom:14px;}
+        .master-setting-card{position:relative;border:1px solid #d7e1ea;border-radius:12px;padding:14px;background:linear-gradient(145deg,#fff,#f8fbfd);box-shadow:0 3px 14px rgba(25,55,80,.07);overflow:hidden;}
+        .master-setting-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#0b8a4b;}
+        .deadline-card:before{background:#df3e63}.admin-login-card:before{background:#2d79d7}.drive-card:before{background:#3d83f7}
+        .setting-title{display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;color:#17324d}.setting-title>span{font-size:19px}.setting-title b{display:block;font-size:13px}.setting-title small{display:block;color:#6b7280;font-size:10px;margin-top:3px;line-height:1.4}
+        .master-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.master-form-grid.one-col{grid-template-columns:1fr}
+        .master-setting-card label{display:block;font-weight:700;font-size:10px;margin-bottom:4px;color:#263746}.master-setting-card input,.master-setting-card select{width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #c4ced8;border-radius:5px;background:#fff;font-size:12px;min-height:34px}
+        .input-with-btn{display:flex;gap:5px}.input-with-btn input{flex:1}.input-with-btn .mini-btn{white-space:nowrap}
+        .master-actions{margin-top:10px}.master-actions .excel-btn{font-size:11px;padding:8px 10px}.danger-lite{background:#fff4f4!important;color:#c62828!important;border-color:#efb1b1!important}
+        .setting-status{font-size:11px;margin-top:8px;line-height:1.4}.deadline-note{margin-top:10px;color:#d32f2f;font-size:10px;line-height:1.45}.master-deadline-grid{grid-template-columns:1fr 1fr}.master-deadline-grid>div:last-child{grid-column:1/-1}
+        .database-card{margin-top:0}.database-header{background:linear-gradient(135deg,#06753d,#087b45);border-radius:10px 10px 0 0;padding:12px 15px}.database-header h3{font-size:15px}.database-badge{font-weight:700;font-size:11px}.database-toolbar{background:#f7fafc;padding:10px 12px}.database-search-row{display:flex;gap:8px;align-items:center}.database-search-row input{flex:1;max-width:560px}.master-filter-btn{height:35px;min-width:40px;border:1px solid #ccd7e2;background:#fff;border-radius:6px;cursor:pointer}.database-summary{font-size:10px;color:#64748b;margin-top:5px}.master-data-table{min-width:1450px;font-size:10px}.master-data-table th{font-size:10px;background:#eef2f5!important}.master-data-table td{padding:6px 7px}.master-data-table tbody tr:hover{background:#f5fbf7}.master-data-table th:first-child,.master-data-table td:first-child{width:38px;text-align:center}.master-data-table th:nth-child(2){width:85px}.master-data-table th:nth-child(3){width:135px}.master-data-table th:nth-child(4){width:70px}.master-data-table th:nth-child(5){min-width:220px}.master-data-table th:nth-child(6){width:90px}.master-data-table th:nth-child(7){width:115px}.master-data-table th:nth-child(8){width:120px}.master-data-table .mini-btn{font-size:10px;padding:4px 6px}
+        @media(max-width:1150px){.master-settings-grid{grid-template-columns:1fr 1fr}.admin-login-card{grid-column:1}.drive-card{grid-column:2}}
+        @media(max-width:760px){.master-page{padding:8px}.master-settings-grid{grid-template-columns:1fr}.admin-login-card,.drive-card{grid-column:auto}.master-form-grid{grid-template-columns:1fr}.master-page-head{align-items:flex-start}.master-head-actions{width:100%}.master-top-btn{flex:1}}
+        .master-tarif-box{grid-column:1/-1;margin-top:2px;padding:10px 12px;border:1px solid #b8dec8;border-radius:9px;background:linear-gradient(135deg,#f2fff7,#f7fbff);}
+        .master-tarif-title{display:flex;align-items:center;gap:7px;font-weight:800;color:#075d34;font-size:12px;margin-bottom:8px;}
+        .master-tarif-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+        .master-tarif-grid label{display:block;font-weight:700;font-size:10px;color:#263746;margin-bottom:4px;}
+        .master-tarif-grid input{width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #b7c9bd;border-radius:5px;background:#fff;font-size:12px;font-weight:700;}
+        .master-tarif-help{margin-top:6px;font-size:10px;color:#5f6b66;line-height:1.4;}
+        .tarif-cell{font-weight:700;color:#075d34;white-space:nowrap;text-align:right;}
+        .tarif-cell small{display:block;font-weight:400;color:#6b7280;margin-top:2px;}
+        .master-online-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;background:#eaf9ef;border:1px solid #a9d8b8;color:#14733c;font-size:10px;font-weight:800;}
+        @media(max-width:760px){.master-tarif-grid{grid-template-columns:1fr;}}
 
         /* ================= LOGIN & HAK AKSES ================= */
         body.auth-locked > *:not(#auth-overlay){display:none !important;}
@@ -321,6 +384,7 @@
                 <option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option>
                 <option value="2035">2035</option>
             </select></div>
+            <div id="login-input-deadline" class="deadline-login"><strong>⏰ Batas Input Operator</strong><span id="login-deadline-text">Sedang memuat pengaturan batas input...</span></div>
             <div class="auth-field"><label>Password</label><div style="display:flex;gap:5px;"><input id="auth-password" type="password" autocomplete="current-password" placeholder="Password dari Admin" style="flex:1;"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('auth-password',this)">👁️ Lihat</button></div></div>
             <div class="auth-actions">
                 <button class="excel-btn btn-save" onclick="loginOnlineUser()">🔑 Login</button>
@@ -345,7 +409,7 @@
     </div>
 
     <div class="excel-ribbon no-print">
-        <div class="ribbon-title">Microsoft Excel - Workspace Anggaran RKAS Kabupaten Lingga</div>
+        <div class="ribbon-title">Rencana Kegiatan dan Anggaran Sekolah (RKAS) Se-Kabupaten Lingga</div><div id="global-supabase-status" class="global-supabase-status offline">● SUPABASE OFFLINE</div>
         <div class="user-badge"><span id="logged-user-label">Belum login</span> <button class="excel-btn" style="padding:4px 8px;" onclick="logoutOnlineUser()">🚪 Keluar</button> <span>Tahun Anggaran <span id="ribbon-year">2026</span></span></div>
     </div>
 
@@ -387,7 +451,19 @@
             </div>
             <button class="excel-btn" onclick="window.print()">🖨️ Cetak Dokumen</button>
             <button class="excel-btn btn-save" onclick="saveRkasData()">💾 Simpan RKAS</button>
-            <button class="excel-btn btn-load" onclick="loadRkasData()">📂 Muat RKAS</button>
+            <button class="excel-btn btn-load" onclick="loadRkasData()">☁️ Muat RKAS Online</button>
+        </div>
+        <div class="submit-rkas-box no-print">
+            <div style="font-weight:bold;color:#145a9c;margin-bottom:6px;">📤 Kirim File RKAS ke Admin</div>
+            <div style="font-size:12px;color:#555;margin-bottom:7px;">
+                Klik tombol ini untuk membuat file RKAS sekolah dan mengirimkannya ke folder Google Drive Admin.
+                Jika Admin belum mengatur koneksi Drive, aplikasi akan memberi petunjuk.
+            </div>
+            <div class="submit-row">
+                <button class="excel-btn btn-save" onclick="kirimFileRkasKeAdmin()">📤 Kirim File ke Admin</button>
+                <button id="btn-open-drive-admin" class="excel-btn" onclick="bukaGoogleDriveAdmin()">📂 Buka Drive Admin</button>
+                <span id="submit-rkas-status" class="submit-rkas-status">Belum dikirim.</span>
+            </div>
         </div>
 
         <!-- Panel Input Dinamis Pengesahan Jabatan & Kegiatan Tambahan Belanja Modal -->
@@ -398,27 +474,27 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nama Komite</label>
-                        <input type="text" id="p-komite-nama" class="excel-input" oninput="updateSignatures()">
+                        <input type="text" id="p-komite-nama" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan nama Komite"><span class="field-hint">Silakan masukkan nama Komite.</span>
                     </div>
                     <div class="form-group">
                         <label>NIP Komite</label>
-                        <input type="text" id="p-komite-nip" class="excel-input" oninput="updateSignatures()" placeholder="-">
+                        <input type="text" id="p-komite-nip" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan NIP Komite"><span class="field-hint">Silakan masukkan NIP Komite.</span>
                     </div>
                     <div class="form-group">
                         <label>Nama Kepala Sekolah</label>
-                        <input type="text" id="p-kasek-nama" class="excel-input" oninput="updateSignatures()">
+                        <input type="text" id="p-kasek-nama" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan nama Kepala Sekolah"><span class="field-hint">Silakan masukkan nama Kepala Sekolah.</span>
                     </div>
                     <div class="form-group">
                         <label>NIP Kepala Sekolah</label>
-                        <input type="text" id="p-kasek-nip" class="excel-input" oninput="updateSignatures()">
+                        <input type="text" id="p-kasek-nip" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan NIP Kepala Sekolah"><span class="field-hint">Silakan masukkan NIP Kepala Sekolah.</span>
                     </div>
                     <div class="form-group">
                         <label>Nama Bendahara</label>
-                        <input type="text" id="p-bendahara-nama" class="excel-input" oninput="updateSignatures()">
+                        <input type="text" id="p-bendahara-nama" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan nama Bendahara"><span class="field-hint">Silakan masukkan nama Bendahara.</span>
                     </div>
                     <div class="form-group">
                         <label>NIP Bendahara</label>
-                        <input type="text" id="p-bendahara-nip" class="excel-input" oninput="updateSignatures()">
+                        <input type="text" id="p-bendahara-nip" class="excel-input" oninput="updateSignatures()" placeholder="Silakan masukkan NIP Bendahara"><span class="field-hint">Silakan masukkan NIP Bendahara.</span>
                     </div>
                     <div class="form-group">
                         <label>Tempat Tanda Tangan</label>
@@ -629,9 +705,9 @@
                     <td><img id="sig-img-bendahara" class="sig-image" style="display:none;" alt="Tanda tangan Bendahara"></td>
                 </tr>
                 <tr class="text-bold">
-                    <td><span id="txt-sig-komite">AZWAR</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
-                    <td><span id="txt-sig-kasek-nama">SUHAIDIR, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
-                    <td><span id="txt-sig-bendahara-nama">DESSY MULYANI, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
+                    <td><span id="txt-sig-komite">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-kasek-nama">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-bendahara-nama">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. -</span></td>
                 </tr>
                 <tr><td colspan="3" style="height: 35px;"></td></tr>
 
@@ -641,74 +717,123 @@
 
     <!-- ==================== TAB 2: KELOLA MASTER DATA SEKOLAH ==================== -->
     <div id="master-view" class="view-container">
-        <div class="panel-block" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <h3 style="margin-top:0; color: var(--excel-green);">📂 Kelola Master Data Sekolah</h3>
-                <p style="font-size:12px; color:#555; margin-bottom:10px;">
-                    Format workbook: <b>NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa</b>.
-                    Bisa unggah Excel <b>.xlsx/.xls</b> atau CSV.
-                </p>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-                    <button class="excel-btn" onclick="downloadMasterTemplate()">📥 Download Template Excel</button>
-                    <button class="excel-btn" style="background:#fff0f0;color:#b00000;border-color:#d88;" onclick="deleteAllMasterDatabase()">🗑️ Hapus Seluruh Database</button>
-                </div>
-                <div style="display: flex; gap: 10px; align-items: center; flex-wrap:wrap;">
-                    <input type="file" id="upload-csv-file" accept=".xlsx,.xls,.csv,.txt">
-                    <button class="excel-btn btn-save" onclick="saveUploadedData()">💾 Simpan Data</button>
-                </div>
-                <div class="online-db-box" style="margin-top:14px;">
-                    <div style="font-weight:bold;margin-bottom:6px;">🔑 Pengaturan Login Admin</div>
-                    <div class="online-db-grid">
-                        <div><label>Username Admin Baru</label><input id="admin-login-username" type="text" placeholder="Username Admin"></div>
-                        <div><label>Password Admin Baru</label><div style="display:flex;gap:5px;"><input id="admin-login-password" type="password" placeholder="Password Admin" style="flex:1;"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('admin-login-password',this)">👁️ Lihat</button></div></div>
-                    </div>
-                    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                        <button class="excel-btn btn-save" onclick="adminSaveLoginCredentials()">💾 Simpan Username & Password Admin</button>
-                        <button class="excel-btn" onclick="adminLoadLoginCredentials()">👁️ Tampilkan Data Login</button>
-                    </div>
-                    <div id="admin-login-status" style="margin-top:7px;font-size:12px;color:#555;"></div>
-                </div>
+      <div class="master-page">
+        <div class="master-page-head">
+          <div>
+            <h2>📁 Kelola Master Data Sekolah</h2>
+            <div class="master-page-sub">Kelola semua data master aplikasi RKAS • Database ONLINE</div>
+            <div class="master-online-badge">● STATUS SUPABASE • TARIF SALUR TERSINKRON</div>
+          </div>
+          <div class="master-head-actions">
+            <button class="master-top-btn" onclick="downloadMasterTemplate()">📊 Download Template Excel</button>
+            <button class="master-top-btn danger" onclick="deleteAllMasterDatabase()">🗑️ Hapus Seluruh Database</button>
+          </div>
+        </div>
 
-                <div class="online-db-box" style="margin-top:14px;">
-                    <div style="font-weight:bold;margin-bottom:6px;">🔐 Manajemen Operator Sekolah</div>
-                    <div style="font-size:12px;color:#555;margin-bottom:10px;">Admin dapat menambah/mengubah sekolah dan menentukan password operator. Operator login hanya menggunakan NPSN + password ini.</div>
-                    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
-                        <div><label>NPSN</label><input id="admin-op-npsn" type="text" maxlength="8" placeholder="8 digit NPSN"></div>
-                        <div><label>Username Login Operator</label><input id="admin-op-username" type="text" placeholder="Username operator"></div>
-                        <div><label>Password Operator</label><div style="display:flex;gap:5px;"><input id="admin-op-password" type="password" placeholder="Password operator" style="flex:1;"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('admin-op-password',this)">👁️ Lihat</button></div></div>
-                        <div><label>Nama Sekolah</label><input id="admin-op-nama" type="text" placeholder="Nama sekolah"></div>
-                        <div><label>Kecamatan</label><input id="admin-op-kecamatan" type="text" placeholder="Kecamatan"></div>
-                        <div><label>Status</label><select id="admin-op-status"><option>Negeri</option><option>Swasta</option></select></div>
-                        <div><label>Jumlah Siswa</label><input id="admin-op-siswa" type="number" min="0" placeholder="0"></div>
-                    </div>
-                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                        <button class="excel-btn btn-save" onclick="adminSaveOperatorSchool()">💾 Tambah / Simpan Operator</button>
-                        <button class="excel-btn" onclick="loadOnlineOperatorAccounts(true).then(r=>{alert(`Data ONLINE berhasil dimuat.\n\nTotal akun sekolah terbaca: ${r.rows.length}\nSekolah baru masuk Master: ${r.merged}\nData dilewati karena NPSN tidak valid: ${r.skipped}\n\nJika seharusnya 176 sekolah tetapi angka di atas kurang dari 176, periksa RLS/Policy SELECT tabel rkas_operator_accounts di Supabase.`);}).catch(e=>alert('Gagal memuat data online.\n\n'+e.message))">☁️ Muat Sekolah Online</button>
-                        <button class="excel-btn" onclick="adminClearOperatorForm()">↺ Bersihkan</button>
-                    </div>
-                    <div id="admin-operator-status" style="margin-top:8px;font-size:12px;color:#555;"></div>
+        <div class="master-settings-grid">
+          <section class="master-setting-card operator-card">
+            <div class="setting-title"><span>👤</span><div><b>Manajemen Operator Sekolah</b><small>Kelola akun operator sekolah dan hak akses sistem.</small></div></div>
+            <div class="master-form-grid">
+              <div><label>NPSN *</label><input id="admin-op-npsn" type="text" maxlength="8" placeholder="Masukkan 8 digit NPSN"></div>
+              <div><label>Username Login *</label><input id="admin-op-username" type="text" placeholder="Username operator"></div>
+              <div><label>Password Operator *</label><div class="input-with-btn"><input id="admin-op-password" type="password" placeholder="Password operator"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('admin-op-password',this)">👁️ Lihat</button></div></div>
+              <div><label>Nama Sekolah *</label><input id="admin-op-nama" type="text" placeholder="Nama sekolah"></div>
+              <div><label>Kecamatan *</label><select id="admin-op-kecamatan"><option value="">Pilih Kecamatan</option><option>Lingga</option><option>Lingga Utara</option><option>Lingga Timur</option><option>Selayar</option><option>Kepulauan Posek</option><option>Bakung Serumpun</option><option>Katang Bidare</option><option>Senayang</option><option>Temiang Pesisir</option><option>Singkep</option><option>Singkep Barat</option><option>Singkep Selatan</option><option>Singkep Pesisir</option></select></div>
+              <div><label>Status *</label><select id="admin-op-status"><option>Negeri</option><option>Swasta</option></select></div>
+              <div><label>Jumlah Siswa</label><input id="admin-op-siswa" type="number" min="0" placeholder="0"></div>
+              <div class="master-tarif-box">
+                <div class="master-tarif-title">💰 Tarif Salur Nasional</div>
+                <div class="master-tarif-grid">
+                  <div><label>Tarif Salur Nasional SD (Rp / Anak)</label><input id="admin-op-tarif-sd" type="number" min="0" step="1" placeholder="1250000"></div>
+                  <div><label>Tarif Salur Nasional SMP (Rp / Anak)</label><input id="admin-op-tarif-smp" type="number" min="0" step="1" placeholder="1580000"></div>
                 </div>
+                <div class="master-tarif-help">Tarif yang diisi Admin disimpan ONLINE berdasarkan NPSN. Saat Operator memilih sekolah, tarif yang sesuai otomatis tampil pada RKAS dan digunakan menghitung Pagu Dana Definitif.</div>
+              </div>
             </div>
+            <div class="master-actions">
+              <button class="excel-btn btn-save" onclick="adminSaveOperatorSchool()">➕ Tambah / Simpan Operator</button>
+              <button class="excel-btn" onclick="loadOnlineOperatorAccounts(true).then(r=>{alert(`Data ONLINE berhasil dimuat.\n\nTotal akun sekolah terbaca: ${r.rows.length}\nSekolah baru masuk Master: ${r.merged}\nData dilewati karena NPSN tidak valid: ${r.skipped}`);}).catch(e=>alert('Gagal memuat data online.\n\n'+e.message))">☁️ Muat Sekolah Online</button>
+              <button class="excel-btn danger-lite" onclick="adminClearOperatorForm()">↺ Bersihkan</button>
+            </div>
+            <div id="admin-operator-status" class="setting-status"></div>
+          </section>
+
+          <section class="master-setting-card deadline-card">
+            <div class="setting-title"><span>⏰</span><div><b>Pengaturan Batas Input Operator</b><small>Atur periode waktu input data oleh operator sekolah.</small></div></div>
+            <div class="deadline-grid master-deadline-grid">
+              <div><label>Mulai Input (Tanggal & Jam)</label><input id="input-deadline-start" type="datetime-local"></div>
+              <div><label>Sampai Batas Input (Tanggal & Jam)</label><input id="input-deadline-end" type="datetime-local"></div>
+              <div><label>Status Batas Input</label><select id="input-deadline-enabled"><option value="true">Aktif</option><option value="false">Tidak Aktif</option></select></div>
+            </div>
+            <div class="master-actions">
+              <button class="excel-btn btn-save" onclick="adminSaveInputDeadline()">💾 Simpan Batas Input</button>
+              <button class="excel-btn" onclick="adminLoadInputDeadline()">🔄 Muat Pengaturan</button>
+            </div>
+            <div id="input-deadline-status" class="deadline-status setting-status">Batas input belum diatur.</div>
+            <div class="deadline-note">⚠️ Operator hanya dapat login dan menginput data selama periode waktu yang ditentukan.</div>
+          </section>
+
+          <section class="master-setting-card admin-login-card">
+            <div class="setting-title"><span>🛡️</span><div><b>Pengaturan Login Admin</b><small>Kelola akun dan keamanan login administrator sistem.</small></div></div>
+            <div class="master-form-grid one-col">
+              <div><label>Username Admin Baru *</label><input id="admin-login-username" type="text" placeholder="Username admin"></div>
+              <div><label>Password Admin Baru *</label><div class="input-with-btn"><input id="admin-login-password" type="password" placeholder="Password admin"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('admin-login-password',this)">👁️ Lihat</button></div></div>
+            </div>
+            <div class="master-actions">
+              <button class="excel-btn btn-save" onclick="adminSaveLoginCredentials()">💾 Simpan Username & Password Admin</button>
+              <button class="excel-btn" onclick="adminLoadLoginCredentials()">👁️ Tampilkan Data Login</button>
+            </div>
+            <div id="admin-login-status" class="setting-status"></div>
+          </section>
+
+          <section class="master-setting-card drive-card">
+            <div class="setting-title"><span>☁️</span><div><b>Pengaturan Google Drive Admin</b><small>Atur integrasi Google Drive untuk penyimpanan file RKAS per kecamatan.</small></div></div>
+            <div class="drive-grid">
+              <div><label>Link Folder Google Drive (Folder Utama)</label><input id="admin-drive-folder-url" type="url" placeholder="https://drive.google.com/drive/folders/..."></div>
+              <div><label>URL Web App Google Apps Script (Upload Otomatis)</label><input id="admin-drive-upload-endpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec"></div>
+            </div>
+            <div class="master-actions">
+              <button class="excel-btn btn-save" onclick="adminSaveDriveSettings()">💾 Simpan Pengaturan Drive</button>
+              <button class="excel-btn" onclick="bukaGoogleDriveAdmin()">📂 Buka Google Drive</button>
+            </div>
+            <div id="admin-drive-status" class="drive-status setting-status">Google Drive belum dikonfigurasi.</div>
+          </section>
         </div>
 
-        <div class="excel-sheet" style="padding: 20px;">
-            <h3 style="margin-top: 0;">📋 Database Sekolah Aktif Terdaftar</h3>
-            <table class="excel-grid">
-                <thead>
-                    <tr>
-                        <th>NPSN</th>
-                        <th>Kecamatan</th>
-                        <th>Status</th>
-                        <th>Nama Sekolah</th>
-                        <th>Jumlah Siswa</th>
-                        <th>Username Login</th>
-                        <th>Password Operator</th>
-                        <th style="width:210px;">Kelola</th>
-                    </tr>
-                </thead>
-                <tbody id="master-db-rows"></tbody>
-            </table>
-        </div>
+        <section class="master-setting-card import-card" style="grid-column:1/-1;">
+          <div class="setting-title"><span>📥</span><div><b>Unggah & Simpan Master Data Sekolah</b><small>Unggah Excel/CSV, tampilkan ke Database Sekolah, lalu simpan seluruh data ke Supabase Online.</small></div></div>
+          <div class="master-import-grid">
+            <div><label>File Master Sekolah (Excel/CSV)</label><input id="upload-csv-file" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"></div>
+            <div class="master-import-info"><b>Alur:</b> ① Pilih file → ② Unggah File → ③ Data masuk Database Sekolah → ④ Simpan Data Online.</div>
+          </div>
+          <div class="master-actions">
+            <button class="excel-btn" type="button" onclick="saveUploadedData()">📥 Unggah File</button>
+            <button class="excel-btn btn-save" type="button" onclick="saveMasterDatabaseOnlineAll()">☁️ Simpan Data ke Database Online</button>
+            <button class="excel-btn" type="button" onclick="loadMasterDatabaseOnline()">🔄 Muat Database Online</button>
+          </div>
+          <div id="master-import-status" class="setting-status">Belum ada file yang diunggah.</div>
+        </section>
+
+        <section class="master-card database-card">
+          <div class="master-header database-header">
+            <div><h3>🏫 Database Sekolah Aktif Terdaftar</h3><div class="sub">Daftar sekolah yang sudah terdaftar sebagai pengguna aplikasi RKAS.</div></div>
+            <div class="database-badge">🔐 Admin</div>
+          </div>
+          <div class="master-toolbar database-toolbar">
+            <div class="database-search-row">
+              <input id="master-school-search" type="search" placeholder="🔎 Cari nama sekolah atau NPSN..." oninput="renderMasterTable()">
+              <select id="master-kecamatan-filter" onchange="renderMasterTable()" style="min-width:220px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;background:#fff;"><option value="">Semua Kecamatan</option><option>Lingga</option><option>Lingga Utara</option><option>Lingga Timur</option><option>Selayar</option><option>Kepulauan Posek</option><option>Bakung Serumpun</option><option>Katang Bidare</option><option>Senayang</option><option>Temiang Pesisir</option><option>Singkep</option><option>Singkep Barat</option><option>Singkep Selatan</option><option>Singkep Pesisir</option></select>
+              <select id="master-status-filter" onchange="renderMasterTable()" style="min-width:140px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;background:#fff;"><option value="">Semua Status</option><option>Negeri</option><option>Swasta</option></select>
+              <button class="master-filter-btn" type="button" onclick="resetMasterFilters()">↻ Reset</button>
+            </div>
+            <div class="database-summary"><span id="master-school-count">Menampilkan 0 sekolah</span></div>
+          </div>
+          <div class="master-table-wrap"><table class="excel-grid master-data-table">
+            <thead><tr><th>No</th><th>NPSN</th><th>Kecamatan</th><th>Status</th><th>Nama Sekolah</th><th>Jumlah Siswa</th><th>Tarif Salur Nasional SD</th><th>Tarif Salur Nasional SMP</th><th>Username Login</th><th>Password Operator</th><th style="width:210px;">Kelola Akun</th></tr></thead>
+            <tbody id="master-db-rows"></tbody>
+          </table></div>
+        </section>
+      </div>
     </div>
 
     <!-- ==================== TAB 3: HASIL REKAP SELURUH SEKOLAH ==================== -->
@@ -764,32 +889,67 @@
     <script>
         // Database Sekolah Orisinil
         let masterSekolah = [
-            {npsn: "11001455", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 013 SENAYANG", siswa: 64},
-            {npsn: "11001407", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 001 SENAYANG", siswa: 108},
-            {npsn: "11001423", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 005 SENAYANG", siswa: 93},
-            {npsn: "11001442", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 010 SENAYANG", siswa: 138},
-            {npsn: "11001525", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SMP NEGERI 2 SENAYANG", siswa: 185},
-            {npsn: "11001426", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 006 SENAYANG", siswa: 102},
-            {npsn: "60730346", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SMP NEGERI 5 SENAYANG", siswa: 67}
+            {npsn: "11001455", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 013 SENAYANG", siswa: 64, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "11001407", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 001 SENAYANG", siswa: 108, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "11001423", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 005 SENAYANG", siswa: 93, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "11001442", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SD NEGERI 010 SENAYANG", siswa: 138, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "11001525", kecamatan: "Kec. Bakung Serumpun", status: "Negeri", nama: "SMP NEGERI 2 SENAYANG", siswa: 185, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "11001426", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SD NEGERI 006 SENAYANG", siswa: 102, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000},
+            {npsn: "60730346", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SMP NEGERI 5 SENAYANG", siswa: 67, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000}
         ];
 
-        // Object Penyimpanan Data Pejabat Terpisah antara Murni dan Perubahan
-        let dataPejabat = {
-            murni: { komite: "AZWAR (MURNI)", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" },
-            perubahan: { komite: "AZWAR", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" }
-        };
+        // Data pejabat/tanda tangan dibuat PER SEKOLAH (berdasarkan NPSN).
+        // Ini mencegah tanda tangan sekolah A ikut tampil ketika sekolah B dipilih.
+        const DEFAULT_PJ_MURNI = { komite: ".........)", komite_nip: "-", kasek: ".........", kasek_nip: "-", bendahara: ".........", bendahara_nip: "-", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_PERUBAHAN = { komite: ".........", komite_nip: "-", kasek: ".........", kasek_nip: "-", bendahara: ".........", bendahara_nip: "-", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        let dataPejabat = { murni: {...DEFAULT_PJ_MURNI}, perubahan: {...DEFAULT_PJ_PERUBAHAN} };
+        let schoolPejabatData = {};
+
+        function clonePejabatPair(pair){
+            return {
+                murni: {...DEFAULT_PJ_MURNI, ...(pair?.murni||{})},
+                perubahan: {...DEFAULT_PJ_PERUBAHAN, ...(pair?.perubahan||{})}
+            };
+        }
+        function clearSignatureImages(){
+            ['komite','kasek','bendahara'].forEach(k=>{
+                const img=document.getElementById('sig-img-'+k);
+                if(img){ img.removeAttribute('src'); img.style.display='none'; }
+                const input=document.getElementById('sig-upload-'+k);
+                if(input) input.value='';
+            });
+        }
+        function currentSchoolNpsn(){
+            const idx=getCurrentSchoolIndex();
+            return idx===null ? '' : String(masterSekolah[idx]?.npsn||'');
+        }
+        function saveCurrentSchoolPejabat(){
+            const npsn=currentSchoolNpsn();
+            if(!npsn) return;
+            schoolPejabatData[npsn]=clonePejabatPair(dataPejabat);
+            try{ localStorage.setItem('RKAS_PEJABAT_BY_SCHOOL_V1', JSON.stringify(schoolPejabatData)); }catch(e){}
+        }
+        function loadSchoolPejabat(npsn){
+            const key=String(npsn||'');
+            const saved=key ? schoolPejabatData[key] : null;
+            dataPejabat=clonePejabatPair(saved);
+            // Sekolah baru tidak boleh mewarisi foto tanda tangan sekolah lain.
+            if(!saved){
+                delete dataPejabat.murni.sig_komite; delete dataPejabat.murni.sig_kasek; delete dataPejabat.murni.sig_bendahara;
+                delete dataPejabat.perubahan.sig_komite; delete dataPejabat.perubahan.sig_kasek; delete dataPejabat.perubahan.sig_bendahara;
+            }
+            return dataPejabat;
+        }
+        try{
+            const bySchool=JSON.parse(localStorage.getItem('RKAS_PEJABAT_BY_SCHOOL_V1')||'{}');
+            if(bySchool && typeof bySchool==='object') schoolPejabatData=bySchool;
+        }catch(e){}
 
         // Data belanja modal dipisahkan per sekolah dan per sisi anggaran.
         // Format baru: {sekolahIndex:{murni:[], before:[], after:[]}}
         let kegiatanSuntikanModal = {};
         let editingModalIndex = null;
         let editingModalSide = null;
-        try {
-            const savedPejabat = JSON.parse(localStorage.getItem('RKAS_PEJABAT_DATA') || 'null');
-            if (savedPejabat && typeof savedPejabat === 'object') {
-                dataPejabat = { ...dataPejabat, ...savedPejabat };
-            }
-        } catch(e) {}
 
         function switchTab(tabId, el) {
             // Operator sekolah hanya boleh membuka Lembar Kerja RKAS.
@@ -834,16 +994,27 @@
         function canAccessSchool(idx){ if(!isLoggedIn()||!masterSekolah[idx])return false; return isAdmin()||String(masterSekolah[idx].npsn)===currentOperatorNpsn(); }
         function canAccessNpsn(npsn){ return isAdmin() || (isLoggedIn() && String(onlineUserProfile.npsn||'')===String(npsn||'')); }
 
-        function updateLoginPlaceholder(){
+        async function refreshLoginDeadlineDisplay(){
+ const el=document.getElementById('login-deadline-text'),box=document.getElementById('login-input-deadline'),btn=document.querySelector('#auth-overlay button[onclick="loginOnlineUser()"]'); const role=String(document.getElementById('auth-role')?.value||'operator');
+ if(role==='admin'){if(box)box.classList.add('hidden');if(btn){btn.disabled=false;btn.removeAttribute('aria-disabled');}return;} if(box)box.classList.remove('hidden');
+ loadInputDeadlineOnline().then(x=>{if(x.enabled&&x.start&&x.end){const open=isOperatorInputCurrentlyOpen(x);if(el)el.innerHTML=`Periode input: <b>${formatDeadlineForUser(x.start)}</b> sampai <b>${formatDeadlineForUser(x.end)}</b>.<br>${open?'Status: <b style="color:#107c41">SEDANG DIBUKA</b>':'Status: <b style="color:#b00000">DITUTUP</b>'}`;if(box){box.classList.toggle('open',open);box.classList.toggle('closed',!open)}if(btn)btn.disabled=!open}else{if(el)el.textContent='Batas input belum diaktifkan oleh Admin.';if(box)box.classList.remove('open','closed');if(btn)btn.disabled=false}}).catch(()=>{if(el)el.textContent='Pengaturan batas input belum dapat dibaca.'});
+}
+
+function updateLoginPlaceholder(){
             const role=String(document.getElementById('auth-role')?.value||'operator');
             const input=document.getElementById('auth-email'), label=document.getElementById('auth-username-label');
             const yearWrap=document.getElementById('auth-year')?.closest('.auth-field');
+            const deadlineBox=document.getElementById('login-input-deadline');
             if(role==='admin'){
+                const loginBtn=document.querySelector('#auth-overlay button[onclick="loginOnlineUser()"]');
+                if(loginBtn)loginBtn.disabled=false;
+                if(deadlineBox)deadlineBox.classList.add('hidden');
                 const c=getAdminCredentials();
                 if(label)label.textContent='Username Admin';
                 if(input){input.type='text';input.placeholder=c.username;input.value='';}
                 if(yearWrap)yearWrap.style.display='none';
             } else {
+                if(deadlineBox)deadlineBox.classList.remove('hidden');
                 if(label)label.textContent='NPSN / Username Operator';
                 if(input){input.type='text';input.placeholder='Masukkan NPSN atau username operator';input.value='';}
                 if(yearWrap)yearWrap.style.display='';
@@ -912,11 +1083,285 @@
             }
         }
 
+
+        // ============================================================
+        // BATAS INPUT OPERATOR + GOOGLE DRIVE ADMIN
+        // ============================================================
+        const INPUT_DEADLINE_STORAGE_KEY = 'RKAS_INPUT_DEADLINE_V1';
+        const DRIVE_SETTINGS_STORAGE_KEY = 'RKAS_GOOGLE_DRIVE_SETTINGS_V1';
+        const APP_SETTINGS_RECORD_KEY = '__RKAS_APP_SETTINGS__';
+
+        function getLocalInputDeadline(){
+            try{
+                const x=JSON.parse(localStorage.getItem(INPUT_DEADLINE_STORAGE_KEY)||'null');
+                return x && typeof x==='object' ? {...x,end:String(x.end||x.deadline||''),start:String(x.start||'')} : {enabled:false,start:'',end:''};
+            }catch(e){ return {enabled:false,start:'',end:''}; }
+        }
+        function saveLocalInputDeadline(data){
+            localStorage.setItem(INPUT_DEADLINE_STORAGE_KEY,JSON.stringify({
+                enabled:data?.enabled===true,
+                start:String(data?.start||''),
+                end:String(data?.end||data?.deadline||'')
+            }));
+        }
+        function isOperatorInputExpired(settings){
+            if(!settings || settings.enabled!==true) return false;
+            const now=Date.now(), start=new Date(settings.start||0).getTime(), end=new Date(settings.end||settings.deadline||0).getTime();
+            if(Number.isFinite(start)&&start&&now<start) return true;
+            if(Number.isFinite(end)&&end&&now>end) return true;
+            return false;
+        }
+        function isOperatorInputCurrentlyOpen(settings){
+            if(!settings || settings.enabled!==true) return false;
+            const now=Date.now(), start=new Date(settings.start||0).getTime(), end=new Date(settings.end||settings.deadline||0).getTime();
+            return (!start||now>=start)&&(!end||now<=end);
+        }
+        function formatDeadlineForUser(value){
+            if(!value) return '-';
+            const d=new Date(value);
+            if(Number.isNaN(d.getTime())) return value;
+            return d.toLocaleString('id-ID',{dateStyle:'full',timeStyle:'short'});
+        }
+        async function loadInputDeadlineOnline(){
+            const local=getLocalInputDeadline();
+            try{
+                const cfg=getOnlineDbConfig();
+                if(!cfg.url||!cfg.key) return local;
+                const q=encodeURIComponent(APP_SETTINGS_RECORD_KEY);
+                const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,rkas_payload&record_key=eq.'+q+'&limit=1';
+                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Pengaturan batas input');
+                const payload=Array.isArray(rows)&&rows[0]?.rkas_payload ? rows[0].rkas_payload : null;
+                const d=payload?.inputDeadline;
+                if(d && typeof d==='object'){
+                    const result={enabled:d.enabled===true,start:String(d.start||''),end:String(d.end||d.deadline||'')};
+                    saveLocalInputDeadline(result);
+                    return result;
+                }
+            }catch(e){ console.warn('Batas input online tidak dapat dibaca, memakai salinan lokal.',e); }
+            return local;
+        }
+        async function saveInputDeadlineOnline(settings){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) return false;
+            const now=new Date().toISOString();
+            const record={
+                record_key:APP_SETTINGS_RECORD_KEY,
+                npsn:'__SYSTEM__',
+                nama:'Pengaturan Aplikasi RKAS',
+                kecamatan:'-',
+                siswa:0,
+                mode:'perubahan',
+                tahun:getCurrentYear(),
+                sumber_dana:'-',
+                rkas_payload:{inputDeadline:settings},
+                rekap_snapshot:{},
+                saved_at:now,
+                updated_at:now
+            };
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key';
+            const res=await fetch(url,{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(record)});
+            if(!res.ok) throw new Error(await res.text());
+            return true;
+        }
+        async function adminSaveInputDeadline(){
+            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat mengatur batas input.');return;}
+            const start=String(document.getElementById('input-deadline-start')?.value||'').trim();
+            const end=String(document.getElementById('input-deadline-end')?.value||'').trim();
+            const enabled=String(document.getElementById('input-deadline-enabled')?.value||'false')==='true';
+            if(enabled&&(!start||!end)){alert('Tanggal dan jam mulai serta batas akhir wajib diisi.');return;}
+            if(start&&Number.isNaN(new Date(start).getTime())){alert('Tanggal/jam mulai tidak valid.');return;}
+            if(end&&Number.isNaN(new Date(end).getTime())){alert('Tanggal/jam akhir tidak valid.');return;}
+            if(start&&end&&new Date(start).getTime()>new Date(end).getTime()){alert('Tanggal mulai tidak boleh melewati tanggal akhir.');return;}
+            const settings={enabled,start,end,deadline:end};
+            saveLocalInputDeadline(settings);
+            try{
+                const onlineSaved=await saveInputDeadlineOnline(settings);
+                updateInputDeadlineStatus(settings,true,onlineSaved?'Periode batas input berhasil disimpan ONLINE.':'Periode batas input tersimpan di browser ini. Database online belum dikonfigurasi.');
+                refreshLoginDeadlineDisplay().catch(()=>{});
+            }catch(e){
+                updateInputDeadlineStatus(settings,false,'Tersimpan lokal, tetapi gagal disimpan ONLINE: '+e.message);
+            }
+        }
+        async function adminLoadInputDeadline(){
+            if(!isAdmin()){alert('Akses ditolak.');return;}
+            const settings=await loadInputDeadlineOnline();
+            const st=document.getElementById('input-deadline-start');
+            const enDt=document.getElementById('input-deadline-end');
+            const en=document.getElementById('input-deadline-enabled');
+            if(st)st.value=settings.start||'';
+            if(enDt)enDt.value=settings.end||settings.deadline||'';
+            if(en)en.value=settings.enabled?'true':'false';
+            updateInputDeadlineStatus(settings,true,'Pengaturan berhasil dimuat. '+(settings.enabled&&settings.end?('Periode: '+formatDeadlineForUser(settings.start)+' s/d '+formatDeadlineForUser(settings.end)): 'Batas input tidak aktif.'));
+        }
+        function updateInputDeadlineStatus(settings,ok,msg){
+            const el=document.getElementById('input-deadline-status');
+            if(el){
+                el.textContent=msg || (settings?.enabled&&settings?.end ? 'Periode: '+formatDeadlineForUser(settings.start)+' s/d '+formatDeadlineForUser(settings.end) : 'Batas input belum aktif.');
+                el.style.color=ok===false?'#9b0000':(isOperatorInputExpired(settings)?'#b00000':'#107c41');
+            }
+        }
+
+
+        async function loadDriveSettingsOnline(){
+            const local=getDriveSettings();
+            try{
+                const cfg=getOnlineDbConfig();
+                if(!cfg.url||!cfg.key) return local;
+                const q=encodeURIComponent('__RKAS_DRIVE_SETTINGS__');
+                const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,rkas_payload&record_key=eq.'+q+'&limit=1';
+                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Pengaturan Google Drive');
+                const s=Array.isArray(rows)&&rows[0]?.rkas_payload?.driveSettings;
+                if(s&&typeof s==='object'){
+                    const result={folderUrl:String(s.folderUrl||''),uploadEndpoint:String(s.uploadEndpoint||'')};
+                    saveDriveSettingsLocal(result);
+                    return result;
+                }
+            }catch(e){ console.warn('Pengaturan Drive online tidak dapat dibaca.',e); }
+            return local;
+        }
+
+        function getDriveSettings(){
+            try{
+                const x=JSON.parse(localStorage.getItem(DRIVE_SETTINGS_STORAGE_KEY)||'null');
+                if(x&&typeof x==='object') return {folderUrl:String(x.folderUrl||''),uploadEndpoint:String(x.uploadEndpoint||'')};
+            }catch(e){}
+            return {folderUrl:'',uploadEndpoint:''};
+        }
+        function saveDriveSettingsLocal(s){localStorage.setItem(DRIVE_SETTINGS_STORAGE_KEY,JSON.stringify(s||{}));}
+        function adminLoadDriveSettings(){
+            if(!isAdmin())return;
+            const s=getDriveSettings();
+            const f=document.getElementById('admin-drive-folder-url'), e=document.getElementById('admin-drive-upload-endpoint');
+            if(f)f.value=s.folderUrl||''; if(e)e.value=s.uploadEndpoint||'';
+            const st=document.getElementById('admin-drive-status');
+            if(st)st.textContent=s.folderUrl?'Pengaturan Google Drive tersimpan.':'Google Drive belum dikonfigurasi.';
+        }
+        async function adminSaveDriveSettings(){
+            if(!isAdmin()){alert('Akses ditolak.');return;}
+            const folderUrl=String(document.getElementById('admin-drive-folder-url')?.value||'').trim();
+            const uploadEndpoint=String(document.getElementById('admin-drive-upload-endpoint')?.value||'').trim();
+            if(folderUrl && !/^https:\/\/(drive|docs)\.google\.com\//i.test(folderUrl)){alert('Link Google Drive tidak valid.');return;}
+            if(uploadEndpoint && !/^https:\/\/script\.google\.com\//i.test(uploadEndpoint)){alert('URL Web App Google Apps Script tidak valid.');return;}
+            const s={folderUrl,uploadEndpoint};
+            saveDriveSettingsLocal(s);
+            try{
+                const cfg=getOnlineDbConfig();
+                if(cfg.url&&cfg.key){
+                    const now=new Date().toISOString();
+                    const record={record_key:'__RKAS_DRIVE_SETTINGS__',npsn:'__SYSTEM__',nama:'Pengaturan Google Drive RKAS',kecamatan:'-',siswa:0,mode:'perubahan',tahun:getCurrentYear(),sumber_dana:'-',rkas_payload:{driveSettings:s},rekap_snapshot:{},saved_at:now,updated_at:now};
+                    const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key';
+                    const res=await fetch(url,{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(record)});
+                    if(!res.ok)throw new Error(await res.text());
+                    document.getElementById('admin-drive-status').textContent='Pengaturan Google Drive berhasil disimpan ONLINE.';
+                }else{
+                    document.getElementById('admin-drive-status').textContent='Tersimpan di browser ini. Database online belum dikonfigurasi.';
+                }
+            }catch(e){
+                document.getElementById('admin-drive-status').textContent='Tersimpan lokal, tetapi gagal online: '+e.message;
+            }
+        }
+        async function bukaGoogleDriveAdmin(){
+            if(!isAdmin()){alert('Akses ditolak. Google Drive Admin hanya dapat dibuka oleh Admin.');return;}
+            await loadDriveSettingsOnline();
+            const s=getDriveSettings();
+            if(!s.folderUrl){alert('Admin belum memasukkan Link Folder Google Drive pada Kelola Master Data.');return;}
+            window.open(s.folderUrl,'_blank','noopener');
+        }
+        function setSubmitRkasStatus(msg,ok=true){
+            const el=document.getElementById('submit-rkas-status');
+            if(el){el.textContent=msg;el.style.color=ok?'#107c41':'#b00000';}
+        }
+        function blobToBase64(blob){
+            return new Promise((resolve,reject)=>{
+                const r=new FileReader();
+                r.onload=()=>resolve(String(r.result||'').split(',')[1]||'');
+                r.onerror=reject;
+                r.readAsDataURL(blob);
+            });
+        }
+        function buildCurrentSchoolRkasPdf(){
+            const idx=getCurrentSchoolIndex(); if(idx===null) throw new Error('Silakan pilih Sekolah Target terlebih dahulu.');
+            const s=masterSekolah[idx], mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            const data=ensureSchoolModalData(idx), items=mode==='murni'?(data.murni||[]):(data.after||[]);
+            const esc=v=>String(v??'').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
+            const wrap=(txt,n)=>{const out=[];let x=String(txt||'');while(x.length>n){out.push(x.slice(0,n));x=x.slice(n);}out.push(x);return out;};
+            const pages=[]; let page=[];
+            const add=(txt,size=8,bold=false)=>page.push({txt:String(txt),size,bold});
+            const header=()=>{add('RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS)',14,true);add(mode==='murni'?'RKAS MURNI':'RKAS PERUBAHAN',10,true);add(`Nama Sekolah : ${s.nama||'-'}`,8);add(`NPSN : ${s.npsn||'-'}    Kecamatan : ${s.kecamatan||'-'}`,8);add(`Tahun Anggaran : ${rkasYear}    Sumber Dana : ${rkasSource||'-'}`,8);add(`Tarif Salur Nasional : Rp ${getTarifSalurSekolah(s).toLocaleString('id-ID')} / Anak`,8);add('');add('KODE REKENING | URAIAN | VOLUME | SATUAN | HARGA SATUAN | JUMLAH',7,true);};
+            header();
+            items.forEach((m)=>{const jumlah=(Number(m.vol)||0)*(Number(m.harga)||0);const txt=`${String(m.rekening||'').slice(0,16)} | ${String(m.uraian||'').replace(/[\r\n]+/g,' ').slice(0,58)} | ${Number(m.vol)||0} | ${m.satuan||''} | ${Number(m.harga||0).toLocaleString('id-ID')} | ${jumlah.toLocaleString('id-ID')}`; if(page.length>44){pages.push(page);page=[];add(`RKAS ${s.nama||''} - LANJUTAN`,10,true);add('');} wrap(txt,112).forEach(x=>add(x,7));});
+            add(''); add(`TOTAL BELANJA MODAL : ${Number(calculateSideTotals(items).total||0).toLocaleString('id-ID')}`,9,true); pages.push(page);
+            const objs=[]; const pageRefs=[], contentRefs=[]; let n=1; const catalog=1,pagesObj=2,font1=3,font2=4; objs[catalog]='<< /Type /Catalog /Pages 2 0 R >>'; objs[font1]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'; objs[font2]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>'; n=4;
+            pages.forEach((pg,pi)=>{const lines=['BT']; let y=555; pg.forEach((o)=>{if(o.txt===''){y-=7;return;} lines.push(`/F${o.bold?2:1} ${o.size} Tf 36 ${y} Td (${esc(o.txt)}) Tj`); y-=Math.max(11,o.size+4);}); lines.push('ET'); const content=lines.join('\n'); const cidx=++n,pidx=++n; objs[cidx]=`<< /Length ${content.length} >>\nstream\n${content}\nendstream`; objs[pidx]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${cidx} 0 R >>`; contentRefs.push(cidx);pageRefs.push(pidx);}); objs[pagesObj]=`<< /Type /Pages /Kids [${pageRefs.map(x=>x+' 0 R').join(' ')}] /Count ${pageRefs.length} >>`;
+            let pdf='%PDF-1.4\n',offs=Array(objs.length).fill(0); for(let i=1;i<objs.length;i++){offs[i]=pdf.length;pdf+=`${i} 0 obj\n${objs[i]}\nendobj\n`;} const xref=pdf.length;pdf+=`xref\n0 ${objs.length}\n0000000000 65535 f \n`;for(let i=1;i<objs.length;i++)pdf+=String(offs[i]).padStart(10,'0')+' 00000 n \n';pdf+=`trailer\n<< /Size ${objs.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;return new TextEncoder().encode(pdf);
+        }
+
+        function buildCurrentSchoolRkasWorkbook(){
+            if(typeof XLSX==='undefined') throw new Error('Modul Excel belum tersedia.');
+            const idx=getCurrentSchoolIndex();
+            if(idx===null) throw new Error('Silakan pilih Sekolah Target terlebih dahulu.');
+            const s=masterSekolah[idx], mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            const data=ensureSchoolModalData(idx);
+            const items=mode==='murni'?(data.murni||[]):(data.after||[]);
+            const rows=[
+                ['RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS)',mode==='murni'?'MURNI':'PERUBAHAN'],
+                ['Nama Sekolah',s.nama||'-'],['NPSN',s.npsn||'-'],['Kecamatan',s.kecamatan||'-'],
+                ['Jumlah Siswa',Number(s.siswa)||0],['Tarif Salur Nasional',getTarifSalurSekolah(s)],['Tahun Anggaran',Number(rkasYear)||getCurrentYear()],['Sumber Dana',rkasSource||'-'],
+                [],['KODE REKENING','URAIAN','VOLUME','SATUAN','HARGA SATUAN','JUMLAH']
+            ];
+            (items||[]).forEach(m=>rows.push([m.rekening||'',m.uraian||'',Number(m.vol)||0,m.satuan||'',Number(m.harga)||0,(Number(m.vol)||0)*(Number(m.harga)||0)]));
+            const totals=calculateSideTotals(items);
+            rows.push([],['TOTAL BELANJA MODAL','','','','',totals.total||0]);
+            const ws=XLSX.utils.aoa_to_sheet(rows);
+            ws['!cols']=[{wch:18},{wch:42},{wch:12},{wch:14},{wch:18},{wch:18}];
+            const wb=XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb,ws,mode==='murni'?'RKAS Murni':'RKAS Perubahan');
+            return XLSX.write(wb,{bookType:'xlsx',type:'array'});
+        }
+        async function kirimFileRkasKeAdmin(){
+            if(!isLoggedIn()){alert('Silakan login terlebih dahulu.');return;}
+            if(isAdmin()){alert('Tombol ini ditujukan untuk Operator Sekolah.');return;}
+            const settings=await loadInputDeadlineOnline();
+            if(isOperatorInputExpired(settings)){
+                alert('anda tidak bisa login,karena melewati batas input,silakan hubungi admin');
+                return;
+            }
+            await loadDriveSettingsOnline();
+            const drive=getDriveSettings();
+            if(!drive.folderUrl){alert('Admin belum mengatur Link Folder Google Drive.');return;}
+            if(!drive.uploadEndpoint){
+                alert('Link Google Drive sudah tersedia, tetapi URL Web App Google Apps Script untuk upload otomatis belum diatur Admin. Silakan hubungi Admin.');
+                bukaGoogleDriveAdmin();
+                return;
+            }
+            try{
+                setSubmitRkasStatus('⏳ Membuat file RKAS...');
+                const idx=getCurrentSchoolIndex();
+                const s=masterSekolah[idx];
+                const bytes=buildCurrentSchoolRkasPdf();
+                const blob=new Blob([bytes],{type:'application/pdf'});
+                const base64=await blobToBase64(blob);
+                const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+                const fileName=`RKAS_${String(s.npsn)}_${String(s.nama||'Sekolah').replace(/[^\w\-]+/g,'_')}_${rkasYear}_${stamp}.pdf`;
+                const payload={fileName,mimeType:'application/pdf',base64,folderUrl:drive.folderUrl,npsn:String(s.npsn),namaSekolah:String(s.nama||''),kecamatan:String(s.kecamatan||''),tahun:Number(rkasYear)||getCurrentYear(),mode:document.getElementById('rkas-type-selector')?.value||'perubahan',sentAt:new Date().toISOString()};
+                const res=await fetch(drive.uploadEndpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+                const out=await res.json().catch(()=>({}));
+                if(!res.ok || out.success===false) throw new Error(out.message||('Upload gagal ('+res.status+').'));
+                setSubmitRkasStatus('✅ File berhasil dikirim ke Google Drive Admin.',true);
+                alert('File RKAS berhasil dikirim ke Google Drive Admin.');
+            }catch(e){
+                console.error(e);
+                setSubmitRkasStatus('❌ Gagal mengirim file: '+e.message,false);
+                alert('File RKAS gagal dikirim ke Google Drive.\n\n'+e.message);
+            }
+        }
+
         async function loginOnlineUser(){
             const identifier=String(document.getElementById('auth-email')?.value||'').trim();
             const role=String(document.getElementById('auth-role')?.value||'operator').toLowerCase();
             const password=String(document.getElementById('auth-password')?.value||'');
             const loginYear=role==='admin'?getCurrentYear():Number(document.getElementById('auth-year')?.value||getCurrentYear());
+            if(role==='operator'){ const deadline=await loadInputDeadlineOnline(); if(isOperatorInputExpired(deadline)){authStatus('anda tidak bisa login,karena di luar batas input,silakan hubungi admin');return;} }
             if(!identifier||!password){authStatus('Username/NPSN dan password wajib diisi.');return;}
             if(role==='admin'){
                 const admin=getAdminCredentials();
@@ -925,6 +1370,12 @@
                 rkasYear=getCurrentYear();
                 try{ await loadOnlineOperatorAccounts(true); }catch(e){ console.warn('Gagal memuat akun operator online:',e); }
             }else{
+                const loginDeadline=await loadInputDeadlineOnline();
+                if(loginDeadline.enabled && !isOperatorInputCurrentlyOpen(loginDeadline)){
+                    authStatus('Batas input Operator saat ini sudah DITUTUP. Silakan hubungi Admin.');
+                    refreshLoginDeadlineDisplay().catch(()=>{});
+                    return;
+                }
                 if(!/^\d{8}$/.test(identifier)){
                     // Username operator boleh digunakan selain NPSN.
                 }
@@ -935,13 +1386,19 @@
                     acc=Object.values(accounts).find(a=>String(a.username||a.npsn||'')===identifier || String(a.npsn||'')===identifier) || null;
                 }
                 if(!acc || acc.active===false){authStatus('Akun operator tidak ditemukan atau sedang nonaktif.');return;}
+                const inputDeadline=await loadInputDeadlineOnline();
+                if(isOperatorInputExpired(inputDeadline)){
+                    authStatus('anda tidak bisa login,karena melewati batas input,silakan hubungi admin');
+                    return;
+                }
                 if(String(acc.password)!==password){authStatus('Password operator salah. Silakan hubungi Admin.');return;}
                 const npsn=String(acc.npsn||'');
                 let school=masterSekolah.find(s=>String(s.npsn)===npsn);
                 if(!school){
-                    school={npsn,nama:acc.nama_sekolah||('Sekolah '+npsn),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0};
+                    school={npsn,nama:acc.nama_sekolah||('Sekolah '+npsn),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0,tarif_salur_sd:Number(acc.tarif_salur_sd)||1250000,tarif_salur_smp:Number(acc.tarif_salur_smp)||1580000};
                     masterSekolah.push(school); localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
                 }
+                try{const tarif=await loadTarifSalurOnline(npsn);if(tarif){school.tarif_salur_sd=tarif.tarif_salur_sd||school.tarif_salur_sd||1250000;school.tarif_salur_smp=tarif.tarif_salur_smp||school.tarif_salur_smp||1580000;}}catch(e){console.warn('Tarif Salur online tidak dapat dibaca saat login:',e);}
                 onlineUserProfile={role:'operator',npsn, nama:school.nama, username:String(acc.username||identifier)};
                 rkasYear=loginYear;
             }
@@ -957,6 +1414,8 @@
         function applyRoleAccessUI(){
             const masterTab=document.getElementById('master-nav-tab'), rekapTab=document.getElementById('rekap-nav-tab'), selector=document.getElementById('school-selector');
             if(masterTab)masterTab.style.display=isAdmin()?'':'none';
+            const driveBtn=document.getElementById('btn-open-drive-admin'); if(driveBtn)driveBtn.style.display=isAdmin()?'':'none';
+            const sendBox=document.getElementById('operator-submit-rkas-box'); if(sendBox)sendBox.style.display=isAdmin()?'none':'';
             if(rekapTab)rekapTab.style.display=isAdmin()?'':'none';
             if(selector){ const current=selector.value; selector.innerHTML='<option value="">-- Pilih Lembaga --</option>'; masterSekolah.forEach((s,idx)=>{if(!canAccessSchool(idx))return;const op=document.createElement('option');op.value=idx;op.textContent=`${s.nama} (${s.npsn})`;selector.appendChild(op);}); if([...selector.options].some(o=>o.value===current))selector.value=current; }
             const label=document.getElementById('logged-user-label');
@@ -975,6 +1434,7 @@
             initApp(); applyRoleAccessUI();
             if(!isAdmin()){const rows=loadHasilRekap().filter(r=>canAccessNpsn(r?.npsn));localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(rows));}
             authStatus('Login berhasil.',true);
+            resetAutoLogoutTimer();
         }
         async function tryRestoreLogin(){
             const saved=getAuthSession(); if(!saved?.role){authStatus('Silakan login.');return;}
@@ -983,8 +1443,16 @@
                 const npsn=String(saved.npsn||''); let accounts=getOperatorAccounts(), acc=accounts[npsn];
                 if(!acc){try{acc=await fetchOnlineOperatorAccount(npsn);}catch(e){console.warn('Gagal membaca akun operator online:',e);}}
                 let school=masterSekolah.find(s=>String(s.npsn)===npsn);
-                if(!school && acc){school={npsn,nama:acc.nama_sekolah||('Sekolah '+npsn),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0};masterSekolah.push(school);localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));}
+                if(!school && acc){school={npsn,nama:acc.nama_sekolah||('Sekolah '+npsn),kecamatan:acc.kecamatan||'',status:acc.status||'Negeri',siswa:Number(acc.siswa)||0,tarif_salur_sd:Number(acc.tarif_salur_sd)||1250000,tarif_salur_smp:Number(acc.tarif_salur_smp)||1580000};masterSekolah.push(school);localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));}
+                try{const tarif=await loadTarifSalurOnline(npsn);if(tarif&&school){school.tarif_salur_sd=tarif.tarif_salur_sd||school.tarif_salur_sd||1250000;school.tarif_salur_smp=tarif.tarif_salur_smp||school.tarif_salur_smp||1580000;}}catch(e){console.warn('Tarif Salur online tidak dapat dibaca saat pemulihan sesi:',e);}
                 if(!acc||acc.active===false||!school){setAuthSession(null);authStatus('Sesi operator tidak dapat dipulihkan. Silakan login kembali.');return;}
+                const restoreDeadline=await loadInputDeadlineOnline();
+                if(isOperatorInputExpired(restoreDeadline)){
+                    setAuthSession(null);
+                    onlineUserProfile=null;
+                    authStatus('anda tidak bisa login,karena melewati batas input,silakan hubungi admin');
+                    return;
+                }
                 accounts[npsn]=acc;saveOperatorAccounts(accounts); onlineUserProfile={role:'operator',npsn,nama:school.nama,username:npsn};
             }
             rkasYear=Number(saved.year)||2026;
@@ -995,6 +1463,44 @@
         function adminOperatorAccountFor(npsn){ return getOperatorAccounts()[String(npsn)]||null; }
         function adminLoadLoginCredentials(){ if(!isAdmin())return; const c=getAdminCredentials(); const u=document.getElementById('admin-login-username'),p=document.getElementById('admin-login-password'); if(u)u.value=c.username; if(p)p.value=c.password; const st=document.getElementById('admin-login-status'); if(st)st.textContent='Username dan password Admin saat ini ditampilkan. Data tersimpan di browser ini.'; }
         function adminSaveLoginCredentials(){ if(!isAdmin()){alert('Akses ditolak.');return;} const u=String(document.getElementById('admin-login-username')?.value||'').trim(),p=String(document.getElementById('admin-login-password')?.value||''); if(!u){alert('Username Admin wajib diisi.');return;} if(p.length<4){alert('Password Admin minimal 4 karakter.');return;} saveAdminCredentials(u,p); onlineUserProfile.username=u; setAuthSession({...getAuthSession(),username:u,role:'admin',year:getCurrentYear()}); applyRoleAccessUI(); const st=document.getElementById('admin-login-status'); if(st)st.textContent='Username dan password Admin berhasil diubah. Login berikutnya menggunakan data baru.'; alert('Username dan password Admin berhasil diubah.'); }
+        // ============================================================
+        // TARIF SALUR NASIONAL
+        // Disimpan pada tabel rkas_online sebagai payload master tarif,
+        // sehingga tidak membutuhkan kolom baru pada rkas_operator_accounts.
+        // ============================================================
+        const TARIF_SALUR_RECORD_PREFIX='__TARIF_SALUR__';
+        function getDefaultTarifSalur(s){return String(s?.nama||'').toUpperCase().includes('SMP')?1580000:1250000;}
+        function getTarifSalurSekolah(s){
+            if(!s)return 0;
+            const isSmp=String(s.nama||'').toUpperCase().includes('SMP');
+            const custom=Number(isSmp?s.tarif_salur_smp:s.tarif_salur_sd);
+            return custom>0?custom:getDefaultTarifSalur(s);
+        }
+        function normalizeTarifValue(v,fallback){const n=Math.max(0,Number(String(v??'').replace(/[^\d]/g,''))||0);return n>0?n:fallback;}
+        async function saveTarifSalurOnline(npsn,nama,kecamatan,siswa,tarifSd,tarifSmp){
+            const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key)return {configured:false};
+            const now=new Date().toISOString();
+            const record={record_key:TARIF_SALUR_RECORD_PREFIX+String(npsn),npsn:String(npsn),nama:String(nama||'-'),kecamatan:String(kecamatan||'-'),siswa:Number(siswa)||0,mode:'perubahan',tahun:getCurrentYear(),sumber_dana:'-',rkas_payload:{tarif_salur_sd:Number(tarifSd)||0,tarif_salur_smp:Number(tarifSmp)||0},rekap_snapshot:{},saved_at:now,updated_at:now};
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key';
+            const res=await fetch(url,{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(record)});
+            if(!res.ok)throw new Error(await res.text()); return {configured:true,record};
+        }
+        async function loadTarifSalurOnline(npsn){
+            const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key)return null;
+            const key=encodeURIComponent(TARIF_SALUR_RECORD_PREFIX+String(npsn));
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,rkas_payload,updated_at&record_key=eq.'+key+'&limit=1';
+            const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Tarif Salur Nasional'); const r=Array.isArray(rows)?rows[0]:null;
+            if(!r)return null; const p=r.rkas_payload||{}; return {tarif_salur_sd:Number(p.tarif_salur_sd)||0,tarif_salur_smp:Number(p.tarif_salur_smp)||0,updated_at:r.updated_at||''};
+        }
+        async function loadAllTarifSalurOnline(){
+            const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key)return 0;
+            const like=encodeURIComponent(TARIF_SALUR_RECORD_PREFIX+'%25');
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,rkas_payload,updated_at&record_key=like.'+like+'&limit=2000';
+            const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Memuat Tarif Salur Nasional'); let merged=0;
+            (Array.isArray(rows)?rows:[]).forEach(r=>{const n=normalizeNpsnValue(r.npsn),s=masterSekolah.find(x=>String(x.npsn)===n);if(!s)return;const p=r.rkas_payload||{};if(Number(p.tarif_salur_sd)>0)s.tarif_salur_sd=Number(p.tarif_salur_sd);if(Number(p.tarif_salur_smp)>0)s.tarif_salur_smp=Number(p.tarif_salur_smp);merged++;});
+            if(merged)localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); return merged;
+        }
+
         async function adminFillOperatorForm(idx){
             if(!isAdmin())return;
             const s=masterSekolah[idx]; if(!s)return;
@@ -1008,6 +1514,7 @@
                     saveOperatorAccounts(accounts);
                 }
             }catch(e){ console.warn('Password online tidak dapat dimuat:',e); }
+            try{const onlineTarif=await loadTarifSalurOnline(s.npsn);if(onlineTarif){s.tarif_salur_sd=onlineTarif.tarif_salur_sd||s.tarif_salur_sd||1250000;s.tarif_salur_smp=onlineTarif.tarif_salur_smp||s.tarif_salur_smp||1580000;}}catch(e){console.warn('Tarif Salur online tidak dapat dimuat:',e);}
             const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??'';};
             set('admin-op-npsn',s.npsn);
             set('admin-op-username',a.username||s.npsn);
@@ -1016,27 +1523,31 @@
             set('admin-op-kecamatan',a.kecamatan||s.kecamatan);
             set('admin-op-status',a.status||s.status||'Negeri');
             set('admin-op-siswa',Number(a.siswa ?? s.siswa)||0);
-            document.getElementById('admin-operator-status').textContent='Mode edit: '+s.nama+(a.password?' • password terbaru dari online':'');
+            set('admin-op-tarif-sd',Number(s.tarif_salur_sd)||1250000);
+            set('admin-op-tarif-smp',Number(s.tarif_salur_smp)||1580000);
+            document.getElementById('admin-operator-status').textContent='Mode edit: '+s.nama+(a.password?' • password terbaru dari online':'')+' • tarif salur siap diedit';
         }
-        function adminClearOperatorForm(){['admin-op-npsn','admin-op-username','admin-op-password','admin-op-nama','admin-op-kecamatan','admin-op-siswa'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const st=document.getElementById('admin-op-status');if(st)st.value='Negeri';const m=document.getElementById('admin-operator-status');if(m)m.textContent='';}
+        function adminClearOperatorForm(){['admin-op-npsn','admin-op-username','admin-op-password','admin-op-nama','admin-op-kecamatan','admin-op-siswa','admin-op-tarif-sd','admin-op-tarif-smp'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const st=document.getElementById('admin-op-status');if(st)st.value='Negeri';const m=document.getElementById('admin-operator-status');if(m)m.textContent='';}
         async function adminSaveOperatorSchool(){
             if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat mengelola Operator Sekolah.');return;}
-            const npsn=String(document.getElementById('admin-op-npsn')?.value||'').replace(/\D/g,''); const username=String(document.getElementById('admin-op-username')?.value||npsn).trim(); const password=String(document.getElementById('admin-op-password')?.value||'');
-            const nama=String(document.getElementById('admin-op-nama')?.value||'').trim(), kec=String(document.getElementById('admin-op-kecamatan')?.value||'').trim(), status=String(document.getElementById('admin-op-status')?.value||'Negeri'), siswa=Math.max(0,parseInt(document.getElementById('admin-op-siswa')?.value||'0',10)||0);
+            const npsn=String(document.getElementById('admin-op-npsn')?.value||'').replace(/\D/g,'');
+            const username=String(document.getElementById('admin-op-username')?.value||npsn).trim();
+            const password=String(document.getElementById('admin-op-password')?.value||'');
+            const nama=String(document.getElementById('admin-op-nama')?.value||'').trim();
+            const kec=String(document.getElementById('admin-op-kecamatan')?.value||'').trim();
+            const status=String(document.getElementById('admin-op-status')?.value||'Negeri');
+            const siswa=Math.max(0,parseInt(document.getElementById('admin-op-siswa')?.value||'0',10)||0);
+            const tarifSd=normalizeTarifValue(document.getElementById('admin-op-tarif-sd')?.value,1250000);
+            const tarifSmp=normalizeTarifValue(document.getElementById('admin-op-tarif-smp')?.value,1580000);
             if(!/^\d{8}$/.test(npsn)){alert('NPSN harus 8 digit.');return;} if(!username){alert('Username operator wajib diisi.');return;} if(!password){alert('Password operator wajib ditentukan Admin.');return;} if(!nama){alert('Nama sekolah wajib diisi.');return;}
-            let idx=masterSekolah.findIndex(s=>String(s.npsn)===npsn); if(idx<0){masterSekolah.push({npsn,kecamatan:kec,status,nama,siswa});idx=masterSekolah.length-1;}else{Object.assign(masterSekolah[idx],{kecamatan:kec,status,nama,siswa});}
+            let idx=masterSekolah.findIndex(s=>String(s.npsn)===npsn); const schoolData={npsn,kecamatan:kec,status,nama,siswa,tarif_salur_sd:tarifSd,tarif_salur_smp:tarifSmp};
+            if(idx<0){masterSekolah.push(schoolData);idx=masterSekolah.length-1;}else{Object.assign(masterSekolah[idx],schoolData);}
             const oldAccount=adminOperatorAccountFor(npsn)||{}; const account={npsn,username,password,active:true,updated_at:new Date().toISOString(),nama_sekolah:nama,kecamatan:kec,status,siswa};
-            const accounts=getOperatorAccounts(); accounts[npsn]=account; saveOperatorAccounts(accounts); localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp(); adminFillOperatorForm(idx);
-            try{
-                await upsertOnlineOperatorAccount(account);
-                if(oldAccount.username && String(oldAccount.username)!==String(account.username)){
-                    try{ const cfg=getOnlineDbConfig(); const q=encodeURIComponent(String(oldAccount.username)); await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?username=eq.'+q,{method:'DELETE',headers:onlineDbHeaders(cfg)}); }catch(e){ console.warn('Username lama tidak dapat dihapus:',e); }
-                }
-                alert('Data sekolah dan password operator berhasil disimpan DI ONLINE. Operator dapat login dari laptop/Chrome lain.');
-            }catch(e){
-                console.error(e);
-                alert('Data berhasil disimpan di laptop ini, tetapi GAGAL disimpan ke database online.\n\n'+e.message);
-            }
+            const accounts=getOperatorAccounts(); accounts[npsn]={...account,tarif_salur_sd:tarifSd,tarif_salur_smp:tarifSmp}; saveOperatorAccounts(accounts); localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp(); adminFillOperatorForm(idx);
+            try{await upsertOnlineOperatorAccount(account);await saveTarifSalurOnline(npsn,nama,kec,siswa,tarifSd,tarifSmp);
+                if(oldAccount.username&&String(oldAccount.username)!==String(account.username)){try{const cfg=getOnlineDbConfig();const q=encodeURIComponent(String(oldAccount.username));await fetch(cfg.url+'/rest/v1/rkas_operator_accounts?username=eq.'+q,{method:'DELETE',headers:onlineDbHeaders(cfg)});}catch(e){console.warn('Username lama tidak dapat dihapus:',e);}}
+                localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); if(getCurrentSchoolIndex()===idx)handleSchoolChange(); alert('Data sekolah, akun operator, dan Tarif Salur Nasional SD/SMP berhasil disimpan DI ONLINE.');
+            }catch(e){console.error(e);alert('Data sekolah dan tarif tersimpan di laptop ini, tetapi ada bagian yang GAGAL disimpan ke database online.\n\n'+e.message);}
         }
         async function adminDisableOperator(npsn){
             if(!isAdmin())return;
@@ -1048,6 +1559,7 @@
         }
 
         function initApp() {
+            refreshLoginDeadlineDisplay().catch(()=>{});
             const selector = document.getElementById('school-selector');
             if (!selector) return;
             selector.innerHTML = '<option value="">-- Pilih Lembaga --</option>';
@@ -1059,17 +1571,30 @@
             });
             renderMasterTable();
             populateRekapYearSelector();
+            if(isAdmin()){ adminLoadInputDeadline(); adminLoadDriveSettings(); }
+            loadInputDeadlineOnline();
+            loadDriveSettingsOnline();
             loadRkasSettings();
             loadPejabatInputs();
             updateModalSideUI();
         }
 
-        function renderMasterTable() {
-            const tbody=document.getElementById('master-db-rows'); if(!tbody)return; tbody.innerHTML=''; const accounts=getOperatorAccounts();
-            masterSekolah.forEach((s,idx)=>{ const tr=document.createElement('tr'); const a=accounts[String(s.npsn)]||{}; const state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat');
-                tr.innerHTML=`<td>${escapeHtml(s.npsn)}</td><td>${escapeHtml(s.kecamatan)}</td><td>${escapeHtml(s.status)}</td><td class="text-bold">${escapeHtml(s.nama)}</td><td class="text-center"><input type="number" min="0" value="${Number(s.siswa)||0}" title="Jumlah siswa dapat diedit" style="width:75px;text-align:center;padding:3px;border:1px solid #8a8886;border-radius:2px;" onchange="editMasterSiswa(${idx},this.value)"></td><td class="text-center">${escapeHtml(a.username||s.npsn)}</td><td class="text-center"><span style="font-weight:bold;color:${a.password&&a.active!==false?'#107c41':'#a15c00'}">${a.password?'••••••':'Belum ditentukan'}</span><br><small>${state}</small></td><td class="text-center"><button class="mini-btn" onclick="adminFillOperatorForm(${idx})">✏️ Edit / Password</button> <button class="mini-btn" onclick="adminDisableOperator('${escapeJs(String(s.npsn))}')">${a.active===false?'▶️ Aktifkan':'⛔ Nonaktifkan'}</button></td>`; tbody.appendChild(tr); });
+        function renderMasterTable(){
+            const tbody=document.getElementById('master-db-rows');if(!tbody)return;tbody.innerHTML='';const accounts=getOperatorAccounts();
+            const query=String(document.getElementById('master-school-search')?.value||'').trim().toLowerCase();
+            const kecFilter=String(document.getElementById('master-kecamatan-filter')?.value||'').trim().toLowerCase();
+            const statusFilter=String(document.getElementById('master-status-filter')?.value||'').trim().toLowerCase();
+            const normalizeKec=v=>String(v||'').replace(/^kec\.?\s*/i,'').trim().toLowerCase();
+            const filtered=masterSekolah.map((s,idx)=>({s,idx})).filter(({s})=>{
+                const matchText=!query||String(s.nama||'').toLowerCase().includes(query)||String(s.npsn||'').toLowerCase().includes(query);
+                const matchKec=!kecFilter||normalizeKec(s.kecamatan)===normalizeKec(kecFilter);
+                const matchStatus=!statusFilter||String(s.status||'').toLowerCase()===statusFilter;
+                return matchText&&matchKec&&matchStatus;
+            });
+            const count=document.getElementById('master-school-count');if(count)count.textContent=`Menampilkan ${filtered.length} dari ${masterSekolah.length} sekolah`;
+            filtered.forEach(({s,idx},rowNo)=>{const tr=document.createElement('tr'),a=accounts[String(s.npsn)]||{},state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat'),tarifSd=Number(s.tarif_salur_sd)||1250000,tarifSmp=Number(s.tarif_salur_smp)||1580000;
+                tr.innerHTML=`<td class="text-center">${rowNo+1}</td><td>${escapeHtml(s.npsn)}</td><td>${escapeHtml(s.kecamatan)}</td><td>${escapeHtml(s.status)}</td><td class="text-bold">${escapeHtml(s.nama)}</td><td class="text-center"><input type="number" min="0" value="${Number(s.siswa)||0}" title="Jumlah siswa dapat diedit" style="width:75px;text-align:center;padding:3px;border:1px solid #8a8886;border-radius:2px;" onchange="editMasterSiswa(${idx},this.value)"></td><td class="tarif-cell">Rp ${tarifSd.toLocaleString('id-ID')}<small>SD / Anak</small></td><td class="tarif-cell">Rp ${tarifSmp.toLocaleString('id-ID')}<small>SMP / Anak</small></td><td class="text-center">${escapeHtml(a.username||s.npsn)}</td><td class="text-center"><span style="font-weight:bold;color:${a.password&&a.active!==false?'#107c41':'#a15c00'}">${a.password?'••••••':'Belum ditentukan'}</span><br><small>${state}</small></td><td class="text-center"><button class="mini-btn" onclick="adminFillOperatorForm(${idx})">✏️ Edit / Password / Tarif</button> <button class="mini-btn" onclick="adminDisableOperator('${escapeJs(String(s.npsn))}')">${a.active===false?'▶️ Aktifkan':'⛔ Nonaktifkan'}</button></td>`;tbody.appendChild(tr);});
         }
-
         function editMasterSiswa(idx, value) {
             if (!isAdmin()) { alert('Akses ditolak. Hanya Admin yang dapat mengubah Master Data Sekolah.'); return; }
             if (!masterSekolah[idx]) return;
@@ -1115,6 +1640,16 @@
         }
 
         function loadPejabatInputs() {
+            const idx=getCurrentSchoolIndex();
+            // Jangan pernah menampilkan tanda tangan sekolah sebelumnya.
+            clearSignatureImages();
+            if(idx===null){
+                dataPejabat=clonePejabatPair(null);
+                ['p-komite-nama','p-komite-nip','p-kasek-nama','p-kasek-nip','p-bendahara-nama','p-bendahara-nip','p-tempat','p-tanggal'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+                return;
+            }
+            const school=masterSekolah[idx];
+            loadSchoolPejabat(school?.npsn);
             const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
             const current = dataPejabat[mode];
             if (!current) return;
@@ -1129,26 +1664,43 @@
                 'p-tanggal': current.tanggal || '2026-09-04'
             };
             Object.entries(fields).forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.value=val||''; });
-            renderSignatureImages(current); updateSignatures();
+            renderSignatureImages(current);
             const title=document.getElementById('pejabat-title');
             if(title) title.innerText=`✍️ Penandatangan Dokumen (Versi ${mode.toUpperCase()})`;
-            updateSignatures();
+            updateSignatures(false);
         }
 
-        function updateSignatures() {
+        function updateSignatures(persist=true) {
             const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
             const d = dataPejabat[mode]; if (!d) return;
             const map = {komite:['p-komite-nama','p-komite-nip','txt-sig-komite','txt-sig-komite-nip'],kasek:['p-kasek-nama','p-kasek-nip','txt-sig-kasek-nama','txt-sig-kasek-nip'],bendahara:['p-bendahara-nama','p-bendahara-nip','txt-sig-bendahara-nama','txt-sig-bendahara-nip']};
             Object.entries(map).forEach(([key,ids])=>{
                 d[key]=document.getElementById(ids[0])?.value ?? d[key]; d[key+'_nip']=document.getElementById(ids[1])?.value ?? d[key+'_nip'];
-                if(dataPejabat.murni&&dataPejabat.perubahan){ dataPejabat.murni[key]=d[key]; dataPejabat.murni[key+'_nip']=d[key+'_nip']; dataPejabat.perubahan[key]=d[key]; dataPejabat.perubahan[key+'_nip']=d[key+'_nip']; }
                 const n=document.getElementById(ids[2]); if(n)n.innerText=d[key]||''; const nip=document.getElementById(ids[3]); if(nip)nip.innerText=d[key+'_nip']?'NIP. '+d[key+'_nip']:'';
             });
             renderSignatureImages(d);
-            try{localStorage.setItem('RKAS_PEJABAT_DATA',JSON.stringify(dataPejabat));}catch(e){}
+            if(persist) saveCurrentSchoolPejabat();
         }
         function renderSignatureImages(d){ ['komite','kasek','bendahara'].forEach(k=>{ const img=document.getElementById('sig-img-'+k); if(!img)return; if(d&&d['sig_'+k]){img.src=d['sig_'+k];img.style.display='inline-block';}else{img.removeAttribute('src');img.style.display='none';} }); }
-        function handleSignatureUpload(key,input){ const file=input?.files?.[0]; if(!file)return; if(!/^image\/(png|jpeg|jpg)$/i.test(file.type)){alert('Tanda tangan harus berupa PNG/JPG.');input.value='';return;} if(file.size>2*1024*1024){alert('Ukuran gambar maksimal 2 MB.');input.value='';return;} const reader=new FileReader(); reader.onload=()=>{ const val=String(reader.result||''); const mode=document.getElementById('rkas-type-selector')?.value||'perubahan'; dataPejabat[mode]['sig_'+key]=val; if(dataPejabat.murni&&dataPejabat.perubahan){dataPejabat.murni['sig_'+key]=val;dataPejabat.perubahan['sig_'+key]=val;} renderSignatureImages(dataPejabat[mode]); try{localStorage.setItem('RKAS_PEJABAT_DATA',JSON.stringify(dataPejabat));}catch(e){} }; reader.readAsDataURL(file); }
+        function handleSignatureUpload(key,input){
+            const idx=getCurrentSchoolIndex();
+            if(idx===null){alert('Pilih Sekolah terlebih dahulu sebelum mengunggah tanda tangan.'); if(input) input.value=''; return;}
+            const file=input?.files?.[0]; if(!file)return;
+            if(!/^image\/(png|jpeg|jpg)$/i.test(file.type)){alert('Tanda tangan harus berupa PNG/JPG.');input.value='';return;}
+            if(file.size>2*1024*1024){alert('Ukuran gambar maksimal 2 MB.');input.value='';return;}
+            const reader=new FileReader();
+            reader.onload=()=>{
+                const val=String(reader.result||'');
+                const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+                dataPejabat[mode]['sig_'+key]=val;
+                // Murni dan Perubahan milik SEKOLAH YANG SAMA, bukan seluruh sekolah.
+                dataPejabat.murni['sig_'+key]=val;
+                dataPejabat.perubahan['sig_'+key]=val;
+                renderSignatureImages(dataPejabat[mode]);
+                saveCurrentSchoolPejabat();
+            };
+            reader.readAsDataURL(file);
+        }
 
         function formatTanggalIndonesia(iso) {
             if (!iso) return '';
@@ -1168,7 +1720,7 @@
             const date = document.getElementById('sig-date');
             if (place) place.innerText = d.tempat || '';
             if (date) date.innerText = formatTanggalIndonesia(d.tanggal);
-            try { localStorage.setItem('RKAS_PEJABAT_DATA', JSON.stringify(dataPejabat)); } catch(e) {}
+            saveCurrentSchoolPejabat();
         }
 
         function updateEmptySignatureBlocks() {
@@ -1285,10 +1837,13 @@
         }
 
         function handleSchoolChange() {
+            // Setiap perpindahan sekolah langsung membersihkan foto sekolah sebelumnya.
+            clearSignatureImages();
             const idx=getCurrentSchoolIndex();
-            if(idx===null) return;
+            if(idx===null){ loadPejabatInputs(); return; }
             const s=masterSekolah[idx];
-            const rate=s.nama.includes('SMP')?1580000:1250000;
+            loadPejabatInputs();
+            const rate=getTarifSalurSekolah(s);
             const set=(id,val)=>{const el=document.getElementById(id);if(el)el.innerText=val;};
             set('lbl-nama',s.nama); set('lbl-npsn',s.npsn); set('lbl-kecamatan',s.kecamatan); set('lbl-status',s.status);
             set('lbl-siswa',`${s.siswa} Siswa`); set('lbl-tarif',`Rp ${rate.toLocaleString('id-ID')} / Anak`);
@@ -1700,7 +2255,7 @@
             if (idx === null) return;
 
             const s = masterSekolah[idx];
-            const rate = s.nama.includes('SMP') ? 1580000 : 1250000;
+            const rate = getTarifSalurSekolah(s);
             const pagu = s.siswa * rate;
             const data = ensureSchoolModalData(idx);
 
@@ -1930,7 +2485,7 @@
                     savedAt: new Date().toISOString(),
                     schoolIndex: idx,
                     kegiatan: ensureSchoolModalData(idx),
-                    pejabat: dataPejabat,
+                    pejabat: clonePejabatPair(dataPejabat),
                     rkasSettings: { year: rkasYear, source: rkasSource }
                 };
                 localStorage.setItem(getRkasStorageKey(), JSON.stringify(payload));
@@ -1944,48 +2499,39 @@
         }
 
         async function loadRkasData(){
-            if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
+            if(!isLoggedIn()){alert('Silakan login terlebih dahulu.');return;}
             const rawSelector=document.getElementById('school-selector')?.value;
-            if(rawSelector!=='' && rawSelector!=null && !canAccessSchool(Number(rawSelector))){ alert('AKSES DITOLAK. Anda hanya dapat memuat data sekolah yang ditugaskan kepada akun Anda.'); return; }
+            if(rawSelector!==''&&rawSelector!=null&&!canAccessSchool(Number(rawSelector))){alert('AKSES DITOLAK. Anda hanya dapat memuat data sekolah yang ditugaskan kepada akun Anda.');return;}
             const idx=getCurrentSchoolIndex();
-            if(idx===null){ alert('Silakan pilih Sekolah Target terlebih dahulu.'); return; }
+            if(idx===null){alert('Silakan pilih Sekolah Target terlebih dahulu.');return;}
             const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
             const year=Number(rkasYear)||2026;
             try{
                 const online=await loadCurrentRkasOnline(idx,mode,year);
                 if(online){
                     applyOnlineRkasPayload(idx,online);
+                    setSubmitRkasStatus(`✅ RKAS ${mode==='murni'?'Murni':'Perubahan'} ${year} berhasil dimuat dari DATABASE ONLINE.`,true);
                     alert(`Data RKAS tahun ${year} (${mode==='murni'?'Murni':'Perubahan'}) berhasil dimuat dari DATABASE ONLINE.`);
                     return;
                 }
-            }catch(err){ console.warn('Muat RKAS online gagal, mencoba salinan lokal:',err); }
-            try{
-                let raw=localStorage.getItem(getRkasStorageKey(year));
-                if(!raw && year===2026) raw=localStorage.getItem(`RKAS_DATA_${idx}_${mode}`);
-                if(!raw){ alert(`Belum ada data RKAS tersimpan untuk sekolah, mode, dan tahun ${year}.`); return; }
-                const payload=JSON.parse(raw);
-                if(payload.kegiatan) kegiatanSuntikanModal[idx]=payload.kegiatan;
-                if(payload.pejabat) dataPejabat=payload.pejabat;
-                if(payload.rkasSettings) applyRkasSettings({...payload.rkasSettings,year});
-                else applyRkasSettings({year,source:rkasSource});
-                persistRkasSettings();
-                loadPejabatInputs(); calculateRkasMath();
-                alert(`Data RKAS tahun ${year} berhasil dimuat dari penyimpanan lokal.`);
+                setSubmitRkasStatus('⚠️ Data RKAS online belum ditemukan.',false);
+                alert(`Data RKAS tahun ${year} (${mode==='murni'?'Murni':'Perubahan'}) belum ditemukan di DATABASE ONLINE.`);
             }catch(err){
                 console.error(err);
-                alert('Data RKAS gagal dimuat: '+err.message);
+                setSubmitRkasStatus('❌ Gagal membaca DATABASE ONLINE: '+err.message,false);
+                alert('Gagal memuat RKAS dari DATABASE ONLINE.\n\n'+err.message);
             }
         }
 
         function downloadMasterTemplate(){
             const rows = [
-                ['NPSN','Kecamatan','Status','Nama Sekolah','Jumlah Siswa'],
-                ['11000000','Kec. Contoh','Negeri','SD NEGERI CONTOH',100]
+                ['NPSN','Kecamatan','Status','Nama Sekolah','Jumlah Siswa','Tarif Salur Nasional SD','Tarif Salur Nasional SMP'],
+                ['11000000','Kec. Contoh','Negeri','SD NEGERI CONTOH',100,1250000,1580000]
             ];
             try{
                 if(window.XLSX){
                     const ws = XLSX.utils.aoa_to_sheet(rows);
-                    ws['!cols'] = [{wch:14},{wch:24},{wch:14},{wch:35},{wch:16}];
+                    ws['!cols'] = [{wch:14},{wch:24},{wch:14},{wch:35},{wch:16},{wch:24},{wch:26}];
                     const wb = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(wb, ws, 'Master Sekolah');
                     XLSX.writeFile(wb, 'TEMPLATE_MASTER_DATA_SEKOLAH.xlsx');
@@ -2018,14 +2564,16 @@
                 kecamatan:['kecamatan'],
                 status:['status'],
                 nama:['nama sekolah','nama_sekolah','sekolah','nama'],
-                siswa:['jumlah siswa','jumlah_siswa','siswa','jumlah siswa terdata']
+                siswa:['jumlah siswa','jumlah_siswa','siswa','jumlah siswa terdata'],
+                tarif_salur_sd:['tarif salur nasional sd','tarif_salur_nasional_sd','tarif salur sd','tarif sd'],
+                tarif_salur_smp:['tarif salur nasional smp','tarif_salur_nasional_smp','tarif salur smp','tarif smp']
             };
             const col = {};
             Object.keys(aliases).forEach(key=>{
                 col[key] = headers.findIndex(h=>aliases[key].includes(h));
             });
             if(col.npsn<0 || col.kecamatan<0 || col.status<0 || col.nama<0 || col.siswa<0){
-                throw new Error('Kolom wajib tidak lengkap. Gunakan template: NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa.');
+                throw new Error('Kolom wajib tidak lengkap. Gunakan template: NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa. Kolom Tarif Salur SD/SMP bersifat opsional.');
             }
             const result=[];
             for(let i=1;i<rows.length;i++){
@@ -2036,9 +2584,11 @@
                 const status=String(r[col.status]??'').trim();
                 const nama=String(r[col.nama]??'').trim();
                 const siswa=Number(String(r[col.siswa]??'').replace(/[^\d-]/g,''))||0;
+                const tarif_salur_sd=Number(String(col.tarif_salur_sd>=0?r[col.tarif_salur_sd]??'':'').replace(/[^\d-]/g,''))||0;
+                const tarif_salur_smp=Number(String(col.tarif_salur_smp>=0?r[col.tarif_salur_smp]??'':'').replace(/[^\d-]/g,''))||0;
                 if(!npsn && !nama) continue;
                 if(!npsn || !nama) continue;
-                result.push({npsn,kecamatan,status,nama,siswa});
+                result.push({npsn,kecamatan,status,nama,siswa,tarif_salur_sd,tarif_salur_smp});
             }
             return result;
         }
@@ -2052,6 +2602,8 @@
                     existing.status=incoming.status;
                     existing.nama=incoming.nama;
                     existing.siswa=incoming.siswa;
+                    if(Number(incoming.tarif_salur_sd)>0) existing.tarif_salur_sd=Number(incoming.tarif_salur_sd);
+                    if(Number(incoming.tarif_salur_smp)>0) existing.tarif_salur_smp=Number(incoming.tarif_salur_smp);
                     countUpdated++;
                 }else{
                     masterSekolah.push(incoming);
@@ -2063,9 +2615,83 @@
 
         async function saveUploadedDataOnline(items){
             const sent=await syncMasterItemsOnline(items);
+            for(const item of items){
+                const sd=Number(item.tarif_salur_sd)||Number(masterSekolah.find(s=>String(s.npsn)===String(item.npsn))?.tarif_salur_sd)||1250000;
+                const smp=Number(item.tarif_salur_smp)||Number(masterSekolah.find(s=>String(s.npsn)===String(item.npsn))?.tarif_salur_smp)||1580000;
+                try{await saveTarifSalurOnline(item.npsn,item.nama,item.kecamatan,item.siswa,sd,smp);}catch(e){console.warn('Tarif Salur '+item.npsn+' gagal disimpan online:',e);}
+            }
             localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
             renderMasterTable(); initApp();
             return sent;
+        }
+
+        function resetMasterFilters(){
+            const q=document.getElementById('master-school-search'); if(q) q.value='';
+            const k=document.getElementById('master-kecamatan-filter'); if(k) k.value='';
+            const st=document.getElementById('master-status-filter'); if(st) st.value='';
+            renderMasterTable();
+        }
+
+        function setMasterImportStatus(msg,ok=true){
+            const el=document.getElementById('master-import-status');
+            if(el){el.textContent=msg;el.style.color=ok?'#107c41':'#b00000';}
+        }
+
+        function buildMasterOnlineRecord(s){
+            return {
+                record_key:'MASTER_SEKOLAH__'+String(s.npsn||''),
+                npsn:String(s.npsn||''), nama:String(s.nama||''), kecamatan:String(s.kecamatan||''),
+                siswa:Number(s.siswa)||0, mode:'perubahan', tahun:getCurrentYear(), sumber_dana:'-',
+                rkas_payload:{status:String(s.status||'Negeri'),tarif_salur_sd:Number(s.tarif_salur_sd)||1250000,tarif_salur_smp:Number(s.tarif_salur_smp)||1580000},
+                rekap_snapshot:{}, saved_at:new Date().toISOString(), updated_at:new Date().toISOString()
+            };
+        }
+
+        async function saveMasterDatabaseOnlineAll(showAlert=true){
+            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat menyimpan Master Data.');return false;}
+            if(!masterSekolah.length){alert('Database sekolah belum memiliki data. Unggah file atau tambah sekolah terlebih dahulu.');return false;}
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key){setMasterImportStatus('Database Supabase belum terhubung.',false);if(showAlert)alert('Supabase belum terhubung.');return false;}
+            try{
+                setMasterImportStatus('⏳ Menyimpan seluruh Master Data Sekolah ke Supabase...');
+                const records=masterSekolah.map(buildMasterOnlineRecord);
+                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key',{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(records)});
+                if(!res.ok)throw new Error(await res.text());
+                // Akun operator yang sudah ada juga disinkronkan tanpa mengirim kolom status yang bermasalah pada database lama.
+                const accounts=getOperatorAccounts();
+                for(const s of masterSekolah){const a=accounts[String(s.npsn)];if(a&&a.username&&a.password){try{await upsertOnlineOperatorAccount({...a,nama_sekolah:s.nama,kecamatan:s.kecamatan,siswa:s.siswa});}catch(e){console.warn('Akun '+s.npsn+' gagal disinkronkan:',e);}}}
+                updateOnlineDbStatus('ONLINE — Master Data Sekolah tersimpan.',true);
+                setMasterImportStatus('✅ '+records.length+' data sekolah berhasil disimpan ke DATABASE SUPABASE ONLINE.');
+                if(showAlert)alert('Berhasil!\n\n'+records.length+' data Master Sekolah tersimpan di Database Supabase Online.');
+                return true;
+            }catch(e){
+                console.error(e);
+                updateOnlineDbStatus('OFFLINE / gagal menyimpan Master Data.',false);
+                const detail=String(e?.message||e||'');
+                const friendly=/rkas_online_mode_check|23514/i.test(detail)
+                    ? 'Struktur database lama membatasi nilai mode. Aplikasi sudah menggunakan mode yang kompatibel, silakan ulangi Simpan Data Online.'
+                    : detail;
+                setMasterImportStatus('❌ Gagal menyimpan online: '+friendly,false);
+                if(showAlert)alert('Master Data tersimpan di browser, tetapi gagal disimpan ke Supabase.\n\n'+friendly+'\n\nDetail server: '+detail);
+                return false;
+            }
+        }
+
+        async function loadMasterDatabaseOnline(){
+            if(!isAdmin()){alert('Akses ditolak.');return;}
+            const cfg=getOnlineDbConfig();if(!cfg.url||!cfg.key){alert('Supabase belum terhubung.');return;}
+            try{
+                setMasterImportStatus('⏳ Memuat Master Data Sekolah dari Supabase...');
+                const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,nama,kecamatan,siswa,mode,rkas_payload,updated_at&record_key=like.MASTER_SEKOLAH__%25&order=kecamatan.asc,nama.asc&limit=5000';
+                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Master Data Sekolah');
+                let count=0;
+                (Array.isArray(rows)?rows:[]).forEach(r=>{
+                    const n=normalizeNpsnValue(r.npsn);if(!/^\d{8}$/.test(n))return;
+                    const p=r.rkas_payload||{};const incoming={npsn:n,nama:String(r.nama||''),kecamatan:String(r.kecamatan||''),status:String(p.status||'Negeri'),siswa:Number(r.siswa)||0,tarif_salur_sd:Number(p.tarif_salur_sd)||1250000,tarif_salur_smp:Number(p.tarif_salur_smp)||1580000};
+                    const idx=masterSekolah.findIndex(s=>String(s.npsn)===n);if(idx>=0)Object.assign(masterSekolah[idx],incoming);else masterSekolah.push(incoming);count++;
+                });
+                localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));renderMasterTable();initApp();updateOnlineDbStatus('ONLINE — Master Data berhasil dimuat.',true);setMasterImportStatus('✅ '+count+' data sekolah dimuat dari DATABASE SUPABASE ONLINE.');alert('Master Data Online berhasil dimuat.\n\nData diproses: '+count+' sekolah.');
+            }catch(e){console.error(e);setMasterImportStatus('❌ Gagal memuat online: '+e.message,false);updateOnlineDbStatus('OFFLINE / gagal memuat Master Data.',false);alert('Gagal memuat Master Data dari Supabase.\n\n'+e.message);}
         }
 
         function saveUploadedData(){
@@ -2087,10 +2713,12 @@
                     if(!items.length)throw new Error('Tidak ada data sekolah yang valid pada file.');
                     const result=mergeMasterData(items);
                     localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp();
+                    setMasterImportStatus('✅ File berhasil dibaca: '+items.length+' sekolah ('+result.countAdded+' baru, '+result.countUpdated+' diperbarui).');
                     const cfg=getOnlineDbConfig();
                     if(!cfg.url||!cfg.key){fileInput.value='';alert(`Data lokal berhasil disimpan: ${result.countAdded} baru, ${result.countUpdated} diperbarui.\n\nDatabase online belum dikonfigurasi, jadi data BELUM dikirim ke server.`);return;}
                     const sent=await saveUploadedDataOnline(items);
                     fileInput.value='';
+                    setMasterImportStatus('✅ File berhasil disimpan ke DATABASE SUPABASE ONLINE: '+sent+' data sekolah.');
                     alert(`BERHASIL DISIMPAN ONLINE!\n\n${sent} data sekolah dari file sudah dikirim ke database online.\n\nKlik ☁️ Muat Sekolah Online untuk memastikan seluruh data server terbaca.`);
                 }catch(err){console.error(err);alert('Gagal menyimpan data: '+err.message);}
             };
@@ -2601,6 +3229,7 @@
                     if(existing) Object.assign(existing,data); else {masterSekolah.push(data);merged++;}
                 }
             });
+            try{await loadAllTarifSalurOnline();}catch(e){console.warn('Tarif Salur online tidak dapat dimuat massal:',e);}
             saveOperatorAccounts(accounts);
             if(mergeToMaster) localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
             renderMasterTable(); initApp();
@@ -2684,7 +3313,7 @@
         function applyOnlineRkasPayload(idx,record){
             const payload=record?.rkas_payload||{};
             if(payload.kegiatan) kegiatanSuntikanModal[idx]=payload.kegiatan;
-            if(payload.pejabat) dataPejabat=payload.pejabat;
+            if(payload.pejabat){ dataPejabat=clonePejabatPair(payload.pejabat); saveCurrentSchoolPejabat(); }
             const year=Number(record.tahun)||rkasYear;
             applyRkasSettings({year,source:record.sumber_dana||payload.rkasSettings?.source||'Bos Reguler'});
             try{ localStorage.setItem(getRkasStorageKey(year),JSON.stringify(payload)); }catch(e){}
@@ -2715,7 +3344,11 @@
             const res=await fetch(url,{headers:onlineDbHeaders(cfg)});
             if(!res.ok) throw new Error(await res.text());
             const data=await res.json();
-            return Array.isArray(data)?data:[];
+            if(!Array.isArray(data)) return [];
+            return data.filter(r=>{
+                const key=String(r?.record_key||'');
+                return !key.startsWith('MASTER_SEKOLAH__') && !key.startsWith('__TARIF_SALUR__');
+            });
         }
 
         async function muatRekapOnline(yearOverride){
@@ -2780,14 +3413,39 @@
             if(tabId === 'rekap-view') renderHasilRekap();
         };
 
+        let supabaseHeartbeatTimer=null;
+        async function refreshSupabaseOnlineStatus(silent=true){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key){updateOnlineDbStatus('OFFLINE — Supabase belum dikonfigurasi.',false);return false;}
+            try{
+                const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),7000);
+                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=id&limit=1',{headers:onlineDbHeaders(cfg),signal:ctl.signal});clearTimeout(timer);
+                if(!res.ok)throw new Error('HTTP '+res.status);
+                updateOnlineDbStatus('ONLINE — Supabase terhubung',true);const badge=document.getElementById('global-supabase-status');if(badge){badge.textContent='● SUPABASE ONLINE';badge.classList.add('online');badge.classList.remove('offline');}return true;
+            }catch(e){
+                updateOnlineDbStatus('OFFLINE — koneksi Supabase tidak tersedia.',false);const badge=document.getElementById('global-supabase-status');if(badge){badge.textContent='● SUPABASE OFFLINE';badge.classList.add('offline');badge.classList.remove('online');}if(!silent)console.warn(e);return false;
+            }
+        }
+        function startSupabaseHeartbeat(){
+            refreshSupabaseOnlineStatus(true);if(supabaseHeartbeatTimer)clearInterval(supabaseHeartbeatTimer);supabaseHeartbeatTimer=setInterval(()=>refreshSupabaseOnlineStatus(true),15000);
+        }
+
+        const AUTO_LOGOUT_MS=5*60*1000;let autoLogoutTimer=null;let lastActivityAt=Date.now();
+        function resetAutoLogoutTimer(){
+            lastActivityAt=Date.now();if(autoLogoutTimer)clearTimeout(autoLogoutTimer);if(isLoggedIn())autoLogoutTimer=setTimeout(()=>{if(isLoggedIn()){alert('Aplikasi otomatis keluar karena tidak ada aktivitas selama 5 menit.');logoutOnlineUser();}},AUTO_LOGOUT_MS);
+        }
+        ['click','keydown','mousemove','mousedown','scroll','touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,()=>resetAutoLogoutTimer(),{passive:true}));
+
         async function initOnlineAuthApp(){
+            startSupabaseHeartbeat();
             document.body.classList.add('auth-locked');
             updateLoginPlaceholder();
+            refreshLoginDeadlineDisplay().catch(()=>{});
             populateRekapYearSelector();
             const ry=document.getElementById('rekap-year-selector'); if(ry)ry.value=String(getCurrentYear());
             await tryRestoreLogin();
         }
         window.onload = initOnlineAuthApp;
     </script>
-</body>
+<script>setInterval(function(){if(document.getElementById('auth-overlay'))refreshLoginDeadlineDisplay()},30000);</script></body>
 </html>
