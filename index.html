@@ -705,9 +705,9 @@
                     <td><img id="sig-img-bendahara" class="sig-image" style="display:none;" alt="Tanda tangan Bendahara"></td>
                 </tr>
                 <tr class="text-bold">
-                    <td><span id="txt-sig-komite">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
-                    <td><span id="txt-sig-kasek-nama">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
-                    <td><span id="txt-sig-bendahara-nama">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
+                    <td><span id="txt-sig-komite"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-kasek-nama"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
+                    <td><span id="txt-sig-bendahara-nama"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
                 </tr>
                 <tr><td colspan="3" style="height: 35px;"></td></tr>
 
@@ -886,6 +886,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script>
         // Database Sekolah Orisinil
         let masterSekolah = [
@@ -900,7 +902,7 @@
 
         // Data pejabat/tanda tangan dibuat PER SEKOLAH (berdasarkan NPSN).
         // Ini mencegah tanda tangan sekolah A ikut tampil ketika sekolah B dipilih.
-        const DEFAULT_PJ_MURNI = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_MURNI = { komite: " ", komite_nip: " ", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
         const DEFAULT_PJ_PERUBAHAN = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
         let dataPejabat = { murni: {...DEFAULT_PJ_MURNI}, perubahan: {...DEFAULT_PJ_PERUBAHAN} };
         let schoolPejabatData = {};
@@ -970,7 +972,7 @@
         const AUTH_SESSION_KEY = 'RKAS_CUSTOM_AUTH_SESSION_V1';
         const OPERATOR_ACCOUNTS_KEY = 'RKAS_OPERATOR_ACCOUNTS_V1';
         const ADMIN_USERNAME = 'admin';
-        const ADMIN_PASSWORD = '080723';
+        const ADMIN_PASSWORD = '160816';
         const ADMIN_CREDENTIALS_KEY = 'RKAS_ADMIN_CREDENTIALS_V1';
         function getAdminCredentials(){
             try{ const x=JSON.parse(localStorage.getItem(ADMIN_CREDENTIALS_KEY)||'null'); if(x&&x.username&&x.password) return {username:String(x.username),password:String(x.password)}; }catch(e){}
@@ -1279,21 +1281,93 @@ function updateLoginPlaceholder(){
                 r.readAsDataURL(blob);
             });
         }
-        function buildCurrentSchoolRkasPdf(){
-            const idx=getCurrentSchoolIndex(); if(idx===null) throw new Error('Silakan pilih Sekolah Target terlebih dahulu.');
-            const s=masterSekolah[idx], mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
-            const data=ensureSchoolModalData(idx), items=mode==='murni'?(data.murni||[]):(data.after||[]);
-            const esc=v=>String(v??'').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
-            const wrap=(txt,n)=>{const out=[];let x=String(txt||'');while(x.length>n){out.push(x.slice(0,n));x=x.slice(n);}out.push(x);return out;};
-            const pages=[]; let page=[];
-            const add=(txt,size=8,bold=false)=>page.push({txt:String(txt),size,bold});
-            const header=()=>{add('RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS)',14,true);add(mode==='murni'?'RKAS MURNI':'RKAS PERUBAHAN',10,true);add(`Nama Sekolah : ${s.nama||'-'}`,8);add(`NPSN : ${s.npsn||'-'}    Kecamatan : ${s.kecamatan||'-'}`,8);add(`Tahun Anggaran : ${rkasYear}    Sumber Dana : ${rkasSource||'-'}`,8);add(`Tarif Salur Nasional : Rp ${getTarifSalurSekolah(s).toLocaleString('id-ID')} / Anak`,8);add('');add('KODE REKENING | URAIAN | VOLUME | SATUAN | HARGA SATUAN | JUMLAH',7,true);};
-            header();
-            items.forEach((m)=>{const jumlah=(Number(m.vol)||0)*(Number(m.harga)||0);const txt=`${String(m.rekening||'').slice(0,16)} | ${String(m.uraian||'').replace(/[\r\n]+/g,' ').slice(0,58)} | ${Number(m.vol)||0} | ${m.satuan||''} | ${Number(m.harga||0).toLocaleString('id-ID')} | ${jumlah.toLocaleString('id-ID')}`; if(page.length>44){pages.push(page);page=[];add(`RKAS ${s.nama||''} - LANJUTAN`,10,true);add('');} wrap(txt,112).forEach(x=>add(x,7));});
-            add(''); add(`TOTAL BELANJA MODAL : ${Number(calculateSideTotals(items).total||0).toLocaleString('id-ID')}`,9,true); pages.push(page);
-            const objs=[]; const pageRefs=[], contentRefs=[]; let n=1; const catalog=1,pagesObj=2,font1=3,font2=4; objs[catalog]='<< /Type /Catalog /Pages 2 0 R >>'; objs[font1]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'; objs[font2]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>'; n=4;
-            pages.forEach((pg,pi)=>{const lines=['BT']; let y=555; pg.forEach((o)=>{if(o.txt===''){y-=7;return;} lines.push(`/F${o.bold?2:1} ${o.size} Tf 36 ${y} Td (${esc(o.txt)}) Tj`); y-=Math.max(11,o.size+4);}); lines.push('ET'); const content=lines.join('\n'); const cidx=++n,pidx=++n; objs[cidx]=`<< /Length ${content.length} >>\nstream\n${content}\nendstream`; objs[pidx]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${cidx} 0 R >>`; contentRefs.push(cidx);pageRefs.push(pidx);}); objs[pagesObj]=`<< /Type /Pages /Kids [${pageRefs.map(x=>x+' 0 R').join(' ')}] /Count ${pageRefs.length} >>`;
-            let pdf='%PDF-1.4\n',offs=Array(objs.length).fill(0); for(let i=1;i<objs.length;i++){offs[i]=pdf.length;pdf+=`${i} 0 obj\n${objs[i]}\nendobj\n`;} const xref=pdf.length;pdf+=`xref\n0 ${objs.length}\n0000000000 65535 f \n`;for(let i=1;i<objs.length;i++)pdf+=String(offs[i]).padStart(10,'0')+' 00000 n \n';pdf+=`trailer\n<< /Size ${objs.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;return new TextEncoder().encode(pdf);
+        async function buildCurrentSchoolRkasPdf(){
+            const idx=getCurrentSchoolIndex();
+            if(idx===null) throw new Error('Silakan pilih Sekolah Target terlebih dahulu.');
+
+            // Pastikan seluruh input terbaru, perhitungan, nama/NIP dan tanda tangan
+            // sudah benar-benar tampil sebelum dokumen dikirim ke Admin.
+            try{ updateSignatures(false); }catch(e){ console.warn('Gagal memperbarui tanda tangan sebelum PDF:',e); }
+            try{ updateSignaturePlaceDate(); }catch(e){}
+            try{ calculateRkasMath(); }catch(e){ console.warn('Gagal menghitung RKAS sebelum PDF:',e); }
+
+            const sheet=document.querySelector('#rkas-view .excel-sheet');
+            if(!sheet) throw new Error('Dokumen RKAS tidak ditemukan. Silakan buka Lembar Kerja RKAS terlebih dahulu.');
+            if(typeof html2canvas==='undefined') throw new Error('Modul pembuat PDF belum tersedia. Pastikan perangkat terhubung internet lalu buka ulang aplikasi.');
+            if(!window.jspdf || !window.jspdf.jsPDF) throw new Error('Modul PDF belum tersedia. Pastikan perangkat terhubung internet lalu buka ulang aplikasi.');
+
+            // Render tampilan RKAS yang benar-benar terlihat di aplikasi, termasuk tabel,
+            // hasil perhitungan, nama/NIP, dan foto tanda tangan. Dengan cara ini file PDF
+            // yang diterima Admin sama dengan hasil input sekolah, bukan PDF teks kosong.
+            const old={
+                position:sheet.style.position,
+                left:sheet.style.left,
+                top:sheet.style.top,
+                width:sheet.style.width,
+                margin:sheet.style.margin,
+                background:sheet.style.background,
+                transform:sheet.style.transform
+            };
+            const oldScrollX=window.scrollX, oldScrollY=window.scrollY;
+            try{
+                sheet.style.position='relative';
+                sheet.style.left='auto';
+                sheet.style.top='auto';
+                sheet.style.width='1100px';
+                sheet.style.margin='0 auto';
+                sheet.style.background='#ffffff';
+                sheet.style.transform='none';
+
+                // Tunggu satu frame agar gambar tanda tangan yang baru diunggah selesai dirender.
+                await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+                const canvas=await html2canvas(sheet,{
+                    scale:2,
+                    useCORS:true,
+                    allowTaint:false,
+                    backgroundColor:'#ffffff',
+                    logging:false,
+                    imageTimeout:10000,
+                    windowWidth:Math.max(document.documentElement.clientWidth,1200),
+                    scrollX:0,
+                    scrollY:-window.scrollY
+                });
+
+                const {jsPDF}=window.jspdf;
+                const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
+                const pageW=297, pageH=210;
+                const margin=5;
+                const maxW=pageW-margin*2, maxH=pageH-margin*2;
+                let imgW=maxW;
+                let imgH=imgW*(canvas.height/canvas.width);
+
+                if(imgH<=maxH){
+                    const x=(pageW-imgW)/2, y=(pageH-imgH)/2;
+                    pdf.addImage(canvas.toDataURL('image/jpeg',0.95),'JPEG',x,y,imgW,imgH,undefined,'FAST');
+                }else{
+                    // Jika dokumen lebih tinggi dari satu halaman, potong proporsional
+                    // menjadi beberapa halaman A4 landscape tanpa menghilangkan isi.
+                    const pagePxH=Math.floor(canvas.width*(maxH/maxW));
+                    let offset=0, first=true;
+                    while(offset<canvas.height){
+                        if(!first) pdf.addPage();
+                        first=false;
+                        const sliceH=Math.min(pagePxH,canvas.height-offset);
+                        const slice=document.createElement('canvas');
+                        slice.width=canvas.width;
+                        slice.height=sliceH;
+                        const ctx=slice.getContext('2d');
+                        ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,slice.width,slice.height);
+                        ctx.drawImage(canvas,0,offset,canvas.width,sliceH,0,0,canvas.width,sliceH);
+                        const h=maxW*(sliceH/slice.width);
+                        pdf.addImage(slice.toDataURL('image/jpeg',0.95),'JPEG',margin,margin,maxW,h,undefined,'FAST');
+                        offset+=sliceH;
+                    }
+                }
+                return new Uint8Array(pdf.output('arraybuffer'));
+            }finally{
+                Object.entries(old).forEach(([k,v])=>{sheet.style[k]=v;});
+                window.scrollTo(oldScrollX,oldScrollY);
+            }
         }
 
         function buildCurrentSchoolRkasWorkbook(){
@@ -1338,7 +1412,7 @@ function updateLoginPlaceholder(){
                 setSubmitRkasStatus('⏳ Membuat file RKAS...');
                 const idx=getCurrentSchoolIndex();
                 const s=masterSekolah[idx];
-                const bytes=buildCurrentSchoolRkasPdf();
+                const bytes=await buildCurrentSchoolRkasPdf();
                 const blob=new Blob([bytes],{type:'application/pdf'});
                 const base64=await blobToBase64(blob);
                 const stamp=new Date().toISOString().replace(/[:.]/g,'-');
