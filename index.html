@@ -115,9 +115,9 @@
         .text-right { text-align: right; }
         .text-bold { font-weight: bold; }
 
-        .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; }
-        .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33%; vertical-align: top; position:relative; }
-        .sig-image{width:300px;height:125px;object-fit:contain;margin:-38px auto -62px;position:relative;z-index:20;display:inline-block;pointer-events:none;}
+        .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; table-layout: fixed; }
+        .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33.3333%; vertical-align: top; position:relative; overflow: visible; }
+        .sig-image{width:255px;height:110px;max-width:100%;object-fit:contain;margin:-30px auto -55px;position:relative;z-index:20;display:block;pointer-events:none;}
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
         .form-group { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
@@ -256,7 +256,7 @@
             #rkas-view .rkas-title-block{background:#eaf4ef !important;border:1.5px solid #2f6f4e !important;color:#183d2b !important;font-weight:800 !important;padding:8px !important;}
             #rkas-view .meta-table td{border-color:#9aa8a0 !important;}
             #rkas-view .meta-table tr:nth-child(even) td{background:#f7faf8 !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-            #rkas-view .sig-image{width:300px !important;height:125px !important;margin:-38px auto -62px !important;z-index:20 !important;pointer-events:none !important;}
+            #rkas-view .sig-image{width:255px !important;height:110px !important;max-width:100% !important;margin:-30px auto -55px !important;z-index:20 !important;pointer-events:none !important;}
         }
 
     
@@ -705,9 +705,9 @@
                     <td><img id="sig-img-bendahara" class="sig-image" style="display:none;" alt="Tanda tangan Bendahara"></td>
                 </tr>
                 <tr class="text-bold">
-                    <td><span id="txt-sig-komite">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
-                    <td><span id="txt-sig-kasek-nama">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. -</span></td>
-                    <td><span id="txt-sig-bendahara-nama">.........</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-komite">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-kasek-nama">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
+                    <td><span id="txt-sig-bendahara-nama">......</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
                 </tr>
                 <tr><td colspan="3" style="height: 35px;"></td></tr>
 
@@ -900,8 +900,8 @@
 
         // Data pejabat/tanda tangan dibuat PER SEKOLAH (berdasarkan NPSN).
         // Ini mencegah tanda tangan sekolah A ikut tampil ketika sekolah B dipilih.
-        const DEFAULT_PJ_MURNI = { komite: ".........)", komite_nip: "-", kasek: ".........", kasek_nip: "-", bendahara: ".........", bendahara_nip: "-", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
-        const DEFAULT_PJ_PERUBAHAN = { komite: ".........", komite_nip: "-", kasek: ".........", kasek_nip: "-", bendahara: ".........", bendahara_nip: "-", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_MURNI = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_PERUBAHAN = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
         let dataPejabat = { murni: {...DEFAULT_PJ_MURNI}, perubahan: {...DEFAULT_PJ_PERUBAHAN} };
         let schoolPejabatData = {};
 
@@ -970,7 +970,7 @@
         const AUTH_SESSION_KEY = 'RKAS_CUSTOM_AUTH_SESSION_V1';
         const OPERATOR_ACCOUNTS_KEY = 'RKAS_OPERATOR_ACCOUNTS_V1';
         const ADMIN_USERNAME = 'admin';
-        const ADMIN_PASSWORD = '160816';
+        const ADMIN_PASSWORD = '080723';
         const ADMIN_CREDENTIALS_KEY = 'RKAS_ADMIN_CREDENTIALS_V1';
         function getAdminCredentials(){
             try{ const x=JSON.parse(localStorage.getItem(ADMIN_CREDENTIALS_KEY)||'null'); if(x&&x.username&&x.password) return {username:String(x.username),password:String(x.password)}; }catch(e){}
@@ -1692,10 +1692,12 @@ function updateLoginPlaceholder(){
             reader.onload=()=>{
                 const val=String(reader.result||'');
                 const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
-                dataPejabat[mode]['sig_'+key]=val;
-                // Murni dan Perubahan milik SEKOLAH YANG SAMA, bukan seluruh sekolah.
-                dataPejabat.murni['sig_'+key]=val;
-                dataPejabat.perubahan['sig_'+key]=val;
+                // Tanda tangan hanya untuk JABATAN yang dipilih (komite/kasek/bendahara)
+                // dan hanya untuk SEKOLAH/NPSN yang sedang aktif. Jangan pernah menyalin
+                // foto Kepala Sekolah ke kolom Bendahara atau sebaliknya.
+                const sigField='sig_'+key;
+                dataPejabat.murni[sigField]=val;
+                dataPejabat.perubahan[sigField]=val;
                 renderSignatureImages(dataPejabat[mode]);
                 saveCurrentSchoolPejabat();
             };
