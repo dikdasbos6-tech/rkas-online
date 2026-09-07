@@ -705,9 +705,9 @@
                     <td><img id="sig-img-bendahara" class="sig-image" style="display:none;" alt="Tanda tangan Bendahara"></td>
                 </tr>
                 <tr class="text-bold">
-                    <td><span id="txt-sig-komite"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
-                    <td><span id="txt-sig-kasek-nama"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
-                    <td><span id="txt-sig-bendahara-nama"> </span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
+                    <td><span id="txt-sig-komite">AZWAR</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-komite-nip">NIP. -</span></td>
+                    <td><span id="txt-sig-kasek-nama">SUHAIDIR, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-kasek-nip">NIP. 19731009 200312 1 005</span></td>
+                    <td><span id="txt-sig-bendahara-nama">DESSY MULYANI, S. Pd</span><br><span style="font-weight:normal; font-size:11px;" id="txt-sig-bendahara-nip">NIP. 19931224 201903 2 006</span></td>
                 </tr>
                 <tr><td colspan="3" style="height: 35px;"></td></tr>
 
@@ -902,8 +902,8 @@
 
         // Data pejabat/tanda tangan dibuat PER SEKOLAH (berdasarkan NPSN).
         // Ini mencegah tanda tangan sekolah A ikut tampil ketika sekolah B dipilih.
-        const DEFAULT_PJ_MURNI = { komite: " ", komite_nip: " ", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
-        const DEFAULT_PJ_PERUBAHAN = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_MURNI = { komite: "AZWAR (MURNI)", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
+        const DEFAULT_PJ_PERUBAHAN = { komite: "AZWAR", komite_nip: "-", kasek: "SUHAIDIR, S. Pd", kasek_nip: "19731009 200312 1 005", bendahara: "DESSY MULYANI, S. Pd", bendahara_nip: "19931224 201903 2 006", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
         let dataPejabat = { murni: {...DEFAULT_PJ_MURNI}, perubahan: {...DEFAULT_PJ_PERUBAHAN} };
         let schoolPejabatData = {};
 
