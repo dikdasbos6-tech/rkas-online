@@ -3691,7 +3691,7 @@ function updateLoginPlaceholder(){
         window.onload = initOnlineAuthApp;
     
         // ============================================================
-        // STATUS SUPABASE REAL-TIME + AUTO LOGOUT 5 MENIT
+        // STATUS SUPABASE REAL-TIME + AUTO LOGOUT 15 MENIT
         // ============================================================
         function setGlobalDatabaseStatus(state,msg){
             const text=msg|| (state==='online'?'DATABASE SUPABASE: ONLINE':state==='offline'?'DATABASE SUPABASE: OFFLINE':'DATABASE SUPABASE: MEMERIKSA...');
@@ -3716,14 +3716,14 @@ function updateLoginPlaceholder(){
         }
         setInterval(()=>{ if(isLoggedIn()) checkSupabaseOnlineStatus(true); },60000);
 
-        const AUTO_LOGOUT_MS=5*60*1000;
+        const AUTO_LOGOUT_MS=15*60*1000;
         let inactivityTimer=null;
         function resetInactivityTimer(){
             if(!isLoggedIn())return;
             clearTimeout(inactivityTimer);
             inactivityTimer=setTimeout(()=>{
                 if(isLoggedIn()){
-                    alert('Aplikasi otomatis logout karena tidak ada aktivitas selama 5 menit. Silakan login kembali.');
+                    alert('Aplikasi otomatis logout karena tidak ada aktivitas selama 15 menit. Silakan login kembali.');
                     logoutOnlineUser();
                 }
             },AUTO_LOGOUT_MS);
