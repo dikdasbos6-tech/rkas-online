@@ -115,9 +115,9 @@
         .text-right { text-align: right; }
         .text-bold { font-weight: bold; }
 
-        .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; table-layout: fixed; }
-        .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33.3333%; vertical-align: top; position:relative; overflow: visible; }
-        .sig-image{width:255px;height:110px;max-width:100%;object-fit:contain;margin:-30px auto -55px;position:relative;z-index:20;display:block;pointer-events:none;}
+        .sig-block { width: 100%; margin-top: 40px; border-collapse: collapse; }
+        .sig-block td { border: none !important; padding: 10px; text-align: center; width: 33%; vertical-align: top; position:relative; }
+        .sig-image{width:160px;height:65px;object-fit:contain;margin:-8px auto -28px;position:relative;z-index:3;display:inline-block;}
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
         .form-group { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
@@ -256,12 +256,11 @@
             #rkas-view .rkas-title-block{background:#eaf4ef !important;border:1.5px solid #2f6f4e !important;color:#183d2b !important;font-weight:800 !important;padding:8px !important;}
             #rkas-view .meta-table td{border-color:#9aa8a0 !important;}
             #rkas-view .meta-table tr:nth-child(even) td{background:#f7faf8 !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-            #rkas-view .sig-image{width:255px !important;height:110px !important;max-width:100% !important;margin:-30px auto -55px !important;z-index:20 !important;pointer-events:none !important;}
+            #rkas-view .sig-image{width:160px !important;height:65px !important;margin:-8px auto -28px !important;}
         }
 
     
 
-        .global-supabase-status{display:inline-flex;align-items:center;margin-left:10px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;background:#fff1f1;color:#b42318;border:1px solid #f3b5b5;vertical-align:middle;} .global-supabase-status.online{background:#eaf8ef;color:#087443;border-color:#9ed7b5;} .global-supabase-status.offline{background:#fff1f1;color:#b42318;border-color:#f3b5b5;} .master-import-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;align-items:end;} .master-import-grid input[type=file]{width:100%;box-sizing:border-box;padding:9px;border:1px dashed #9db4c9;border-radius:8px;background:#f8fbff;} .master-import-info{padding:12px;border-radius:8px;background:#f3f8fc;color:#415466;font-size:12px;line-height:1.5;} .database-search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;} @media(max-width:800px){.master-import-grid{grid-template-columns:1fr;}.global-supabase-status{margin:5px 0 0;}}
         /* ================= DATABASE ONLINE ================= */
         .online-db-box{margin-top:12px;padding:12px;border:1px solid #cfd8e3;border-radius:6px;background:#f8fbff;}
         .online-db-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -353,6 +352,31 @@
         /* ================= LOGIN & HAK AKSES ================= */
         body.auth-locked > *:not(#auth-overlay){display:none !important;}
         #auth-overlay{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#eef7f1,#f7fbff);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;}
+        #auth-overlay{
+            background-image:
+                linear-gradient(rgba(5,35,25,.48),rgba(10,55,45,.58)),
+                url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2200&q=85');
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+        }
+        .auth-login-brand{
+            font-size:12px;
+            line-height:1.45;
+            color:#52606d;
+            margin:-2px 0 14px;
+            font-weight:600;
+        }
+        #auth-overlay .auth-card{
+            background:rgba(255,255,255,.96);
+            backdrop-filter:blur(7px);
+            -webkit-backdrop-filter:blur(7px);
+            border:1px solid rgba(255,255,255,.85);
+            box-shadow:0 18px 55px rgba(0,0,0,.28);
+        }
+        #auth-overlay .auth-title{font-size:24px;letter-spacing:.2px;}
+        #auth-overlay .auth-subtitle{line-height:1.55;}
+
         .auth-card{width:min(460px,100%);background:#fff;border:1px solid #cfd8e3;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:24px;box-sizing:border-box;}
         .auth-title{font-size:20px;font-weight:700;color:var(--excel-green);margin:0 0 6px;}
         .auth-subtitle{font-size:12px;color:#666;margin-bottom:18px;}
@@ -368,26 +392,49 @@
         .auth-password-box .auth-field{margin-bottom:9px;}
         .auth-year-select{width:100%;box-sizing:border-box;padding:10px;border:1px solid #aaa;border-radius:5px;background:#fff;}
 
+
+        /* ===== RKAS PROFESSIONAL UI ===== */
+        body{background:radial-gradient(circle at top left,#f7fffa 0,#eef5f2 38%,#edf3f8 100%);color:#243447;}
+        .excel-ribbon{background:linear-gradient(135deg,#075d34,#0b8a4b 55%,#145a9c);box-shadow:0 3px 12px rgba(0,0,0,.12);min-height:48px;box-sizing:border-box;}
+        .ribbon-title{letter-spacing:.1px;}
+        .nav-tabs{background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border-bottom:1px solid #d8e2ea;box-shadow:0 2px 8px rgba(20,40,70,.05);}
+        .nav-tab{background:#f8fafc;border:1px solid #d8e2ea;color:#405466;font-weight:600;transition:.2s;}
+        .nav-tab:hover{background:#eef8f2;color:#075d34;transform:translateY(-1px)}
+        .nav-tab.active{background:#fff;border-color:#cbd8e3;color:#075d34;box-shadow:0 -2px 8px rgba(20,80,50,.06);}
+        .panel-block,.excel-sheet,.master-setting-card,.master-card{box-shadow:0 5px 18px rgba(27,55,80,.08);}
+        .excel-toolbar{background:linear-gradient(135deg,#f8fbfd,#eef8f3);border:1px solid #dce6ed;border-radius:10px;box-shadow:0 3px 12px rgba(25,55,80,.06);}
+        .global-db-status{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-weight:800;font-size:10px;letter-spacing:.2px;background:#fff;color:#b42318;border:1px solid rgba(255,255,255,.45)}
+        .global-db-status.online{color:#087443;background:#eafff2;border-color:#a7dfbd}.global-db-status.offline{color:#a33a00;background:#fff4e8;border-color:#f0c58d}.global-db-status.checking{color:#155e75;background:#ecfeff;border-color:#a5f3fc}
+        .login-db-status{margin:-8px 0 15px;padding:8px 10px;border-radius:7px;font-size:11px;font-weight:800}.login-db-status.online{background:#eafaf0;color:#087443;border:1px solid #b9e1c7}.login-db-status.offline{background:#fff4e8;color:#9a4b00;border:1px solid #f0c58d}.login-db-status.checking{background:#eef8ff;color:#155e75;border:1px solid #b9d8f2}
+        .database-filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.database-filter-row input{flex:1;min-width:260px}.database-filter-row select{min-width:170px;height:35px}.master-upload-card{background:linear-gradient(135deg,#ffffff,#f2fbf7)!important}.master-upload-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:10px;align-items:end}.upload-file-box{padding:10px;border:1px dashed #8ec8a6;border-radius:8px;background:#fff}.upload-file-box label{display:block;font-weight:800;font-size:11px;margin-bottom:6px}.upload-file-box input{width:100%;box-sizing:border-box}.upload-help{font-size:10px;line-height:1.55;color:#5b6770;padding:10px;border-radius:8px;background:#f7fafc;border:1px solid #dfe7ef}.setting-status{margin-top:7px;font-size:11px;font-weight:700;color:#52606d}
+        .master-data-table tbody tr:nth-child(even){background:#fbfdfe}.master-data-table tbody tr:hover{background:#eaf8f0!important}.master-online-badge{box-shadow:0 2px 8px rgba(20,120,70,.08)}
+        @media(max-width:760px){.master-upload-grid{grid-template-columns:1fr}.database-filter-row input{min-width:100%}.database-filter-row select{flex:1;min-width:150px}}
+        .sig-block td{overflow:visible}.sig-image{width:285px!important;height:125px!important;object-fit:contain;position:absolute!important;left:50%;top:8px;transform:translateX(-50%);margin:0!important;z-index:20;pointer-events:none;display:block;}
+        .sig-block tr:has(.sig-image){height:58px!important}.sig-block tr.text-bold td{position:relative;z-index:1}.sig-block .sig-image[style*="display:none"]{display:none!important}
+        @media print{#rkas-view .sig-image{width:285px!important;height:125px!important;top:10px!important;z-index:20!important}.sig-block tr:has(.sig-image){height:72px!important}}
+        #rekap-data-view .rekap-sheet{background:#fff;border-radius:8px;box-shadow:0 4px 14px rgba(20,70,50,.08)}
+        #rekap-data-table th{background:linear-gradient(135deg,#107c41,#159447);color:#fff;position:sticky;top:0;z-index:2;white-space:nowrap}
+        #rekap-data-table td{white-space:nowrap;font-size:11px}
+        #rekap-data-table tbody tr:nth-child(even){background:#f8fcfa}
+        #rekap-data-table tbody tr:hover{background:#eaf8f0}
+        .rkas-pdf-render{position:fixed;left:-100000px;top:0;width:1200px;background:#fff;z-index:-1;padding:0;margin:0;box-sizing:border-box}
+        .rkas-pdf-render .excel-sheet{box-shadow:none!important;border:none!important;margin:0!important;width:100%!important;box-sizing:border-box!important;overflow:visible!important}
+        .rkas-pdf-render .sig-image{display:block!important}
+
     
-        /* ================= REKAP DATA ================= */
-        .rekap-data-panel{background:linear-gradient(135deg,#ffffff 0%,#f4fbf7 100%);border:1px solid #cfe6d9;border-radius:12px;padding:16px;box-shadow:0 4px 16px rgba(0,80,50,.08);}
-        .rekap-data-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
-        .rekap-data-actions{display:flex;gap:8px;flex-wrap:wrap;}
-        .rekap-data-table-wrap{overflow:auto;border:1px solid #d8e4dc;border-radius:9px;background:#fff;}
-        .rekap-data-table{min-width:1150px;width:100%;border-collapse:collapse;}
-        .rekap-data-table th{background:linear-gradient(180deg,#087f4f,#05663f);color:#fff;padding:9px 8px;font-size:11px;white-space:nowrap;position:sticky;top:0;z-index:1;}
-        .rekap-data-table td{padding:8px;border-bottom:1px solid #e5ece8;font-size:11px;vertical-align:top;}
-        .rekap-data-table tr:nth-child(even){background:#f8fcfa;}
-        .rekap-data-status{padding:9px 12px;border-radius:8px;background:#eef8f2;color:#116b43;font-size:12px;font-weight:600;margin-bottom:10px;}
-        .rekap-data-empty{padding:28px;text-align:center;color:#777;}
+        .rekap-status-legend{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;font-size:11px;font-weight:700}
+        .rekap-status-legend span{padding:5px 9px;border-radius:6px;border:1px solid rgba(0,0,0,.12)}
+        .rekap-status-legend .belum{background:#ff0000;color:#000}
+        .rekap-status-legend .tetap{background:#00ff00;color:#000}
+        .rekap-status-legend .berubah{background:#ffff00;color:#000}
 </style>
 </head>
 <body class="auth-locked">
 
     <div id="auth-overlay">
         <div class="auth-card">
-            <div class="auth-title">🔐 Login RKAS Online</div>
-            <div class="auth-subtitle"><b>Operator Sekolah</b> login menggunakan NPSN dan password yang ditentukan Admin. <b>Admin</b> login menggunakan username <b>admin</b>.</div>
+            <div class="auth-title">🔐 Pengelola BOS</div><div class="auth-login-brand">Rencana Kegiatan dan Anggaran Sekolah (RKAS) Se-Kabupaten Lingga</div><div id="login-db-status" class="login-db-status offline">● DATABASE SUPABASE: MEMERIKSA KONEKSI...</div>
+            <div class="auth-subtitle"><b>Operator Sekolah</b> login menggunakan NPSN dan password yang ditentukan Pengelola BOS. <b>Pengelola BOS</b> menggunakan akun pengelola yang bersifat rahasia.</div>
             <div class="auth-field"><label>Login Sebagai</label><select id="auth-role" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid #aaa;border-radius:5px;" onchange="updateLoginPlaceholder()"><option value="operator">Operator Sekolah</option><option value="admin">Admin</option></select></div>
             <div class="auth-field"><label id="auth-username-label">NPSN</label><input id="auth-email" type="text" autocomplete="username" placeholder="Masukkan NPSN sekolah"></div>
             <div class="auth-field"><label>Tahun Anggaran</label><select id="auth-year" class="auth-year-select">
@@ -421,15 +468,15 @@
     </div>
 
     <div class="excel-ribbon no-print">
-        <div class="ribbon-title">Rencana Kegiatan dan Anggaran Sekolah (RKAS) Se-Kabupaten Lingga</div><div id="global-supabase-status" class="global-supabase-status offline">● SUPABASE OFFLINE</div>
-        <div class="user-badge"><span id="logged-user-label">Belum login</span> <button class="excel-btn" style="padding:4px 8px;" onclick="logoutOnlineUser()">🚪 Keluar</button> <span>Tahun Anggaran <span id="ribbon-year">2026</span></span></div>
+        <div class="ribbon-title">Rencana Kegiatan dan Anggaran Sekolah (RKAS) Se-Kabupaten Lingga</div>
+        <div class="user-badge"><span id="global-db-status" class="global-db-status offline">● DATABASE: MEMERIKSA...</span><span id="logged-user-label">Belum login</span> <button class="excel-btn" style="padding:4px 8px;" onclick="logoutOnlineUser()">🚪 Keluar</button> <span>Tahun Anggaran <span id="ribbon-year">2026</span></span></div>
     </div>
 
     <div class="nav-tabs no-print">
         <div class="nav-tab active" onclick="switchTab('rkas-view', this)">📊 Lembar Kerja RKAS</div>
         <div id="master-nav-tab" class="nav-tab" onclick="switchTab('master-view', this)">⚙️ Kelola Master Data Sekolah</div>
         <div id="rekap-nav-tab" class="nav-tab" onclick="switchTab('rekap-view', this)">📊 Hasil Rekap Seluruh Sekolah</div>
-        <div id="rekap-data-nav-tab" class="nav-tab" onclick="switchTab('rekap-data-view', this); renderRekapData()">📋 Rekap Data</div>
+        <div id="rekap-data-nav-tab" class="nav-tab" onclick="switchTab('rekap-data-view', this)">📋 Rekap Data</div>
     </div>
 
     <!-- ==================== TAB 1: LEMBAR KERJA RKAS ==================== -->
@@ -517,9 +564,9 @@
                         <label>Tanggal Tanda Tangan</label>
                         <input type="date" id="p-tanggal" class="excel-input" oninput="updateSignaturePlaceDate()">
                     </div>
-                    <div class="form-group"><label>Unggah Tanda Tangan Komite</label><input type="file" id="sig-upload-komite" accept="image/png,image/jpeg" onchange="handleSignatureUpload('komite',this)"></div>
-                    <div class="form-group"><label>Unggah Tanda Tangan Kepala Sekolah</label><input type="file" id="sig-upload-kasek" accept="image/png,image/jpeg" onchange="handleSignatureUpload('kasek',this)"></div>
-                    <div class="form-group"><label>Unggah Tanda Tangan Bendahara</label><input type="file" id="sig-upload-bendahara" accept="image/png,image/jpeg" onchange="handleSignatureUpload('bendahara',this)"></div>
+                    <div class="form-group"><label>Unggah Tanda Tangan Komite</label><input type="file" id="sig-upload-komite" accept="image/png,image/jpeg" onchange="handleSignatureUpload('komite',this)"><span class="field-hint">PNG/JPG maks. 2 MB • tersimpan khusus sekolah yang dipilih.</span></div>
+                    <div class="form-group"><label>Unggah Tanda Tangan Kepala Sekolah</label><input type="file" id="sig-upload-kasek" accept="image/png,image/jpeg" onchange="handleSignatureUpload('kasek',this)"><span class="field-hint">PNG/JPG maks. 2 MB • tersimpan khusus sekolah yang dipilih.</span></div>
+                    <div class="form-group"><label>Unggah Tanda Tangan Bendahara</label><input type="file" id="sig-upload-bendahara" accept="image/png,image/jpeg" onchange="handleSignatureUpload('bendahara',this)"><span class="field-hint">PNG/JPG maks. 2 MB • tersimpan khusus sekolah yang dipilih.</span></div>
                 </div>
             </div>
 
@@ -735,7 +782,7 @@
           <div>
             <h2>📁 Kelola Master Data Sekolah</h2>
             <div class="master-page-sub">Kelola semua data master aplikasi RKAS • Database ONLINE</div>
-            <div class="master-online-badge">● STATUS SUPABASE • TARIF SALUR TERSINKRON</div>
+            <div class="master-online-badge">● DATABASE ONLINE • TARIF SALUR TERSINKRON</div>
           </div>
           <div class="master-head-actions">
             <button class="master-top-btn" onclick="downloadMasterTemplate()">📊 Download Template Excel</button>
@@ -751,7 +798,7 @@
               <div><label>Username Login *</label><input id="admin-op-username" type="text" placeholder="Username operator"></div>
               <div><label>Password Operator *</label><div class="input-with-btn"><input id="admin-op-password" type="password" placeholder="Password operator"><button type="button" class="mini-btn" onclick="togglePasswordVisibility('admin-op-password',this)">👁️ Lihat</button></div></div>
               <div><label>Nama Sekolah *</label><input id="admin-op-nama" type="text" placeholder="Nama sekolah"></div>
-              <div><label>Kecamatan *</label><select id="admin-op-kecamatan"><option value="">Pilih Kecamatan</option><option>Lingga</option><option>Lingga Utara</option><option>Lingga Timur</option><option>Selayar</option><option>Kepulauan Posek</option><option>Bakung Serumpun</option><option>Katang Bidare</option><option>Senayang</option><option>Temiang Pesisir</option><option>Singkep</option><option>Singkep Barat</option><option>Singkep Selatan</option><option>Singkep Pesisir</option></select></div>
+              <div><label>Kecamatan *</label><select id="admin-op-kecamatan" class="excel-select"><option value="">Pilih Kecamatan</option><option value="Kec. Lingga">Kec. Lingga</option><option value="Kec. Lingga Utara">Kec. Lingga Utara</option><option value="Kec. Lingga Timur">Kec. Lingga Timur</option><option value="Kec. Selayar">Kec. Selayar</option><option value="Kec. Kepulauan Posek">Kec. Kepulauan Posek</option><option value="Kec. Bakung Serumpun">Kec. Bakung Serumpun</option><option value="Kec. Katang Bidare">Kec. Katang Bidare</option><option value="Kec. Senayang">Kec. Senayang</option><option value="Kec. Temiang Pesisir">Kec. Temiang Pesisir</option><option value="Kec. Singkep">Kec. Singkep</option><option value="Kec. Singkep Barat">Kec. Singkep Barat</option><option value="Kec. Singkep Selatan">Kec. Singkep Selatan</option><option value="Kec. Singkep Pesisir">Kec. Singkep Pesisir</option></select></div>
               <div><label>Status *</label><select id="admin-op-status"><option>Negeri</option><option>Swasta</option></select></div>
               <div><label>Jumlah Siswa</label><input id="admin-op-siswa" type="number" min="0" placeholder="0"></div>
               <div class="master-tarif-box">
@@ -813,18 +860,19 @@
           </section>
         </div>
 
-        <section class="master-setting-card import-card" style="grid-column:1/-1;">
-          <div class="setting-title"><span>📥</span><div><b>Unggah & Simpan Master Data Sekolah</b><small>Unggah Excel/CSV, tampilkan ke Database Sekolah, lalu simpan seluruh data ke Supabase Online.</small></div></div>
-          <div class="master-import-grid">
-            <div><label>File Master Sekolah (Excel/CSV)</label><input id="upload-csv-file" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"></div>
-            <div class="master-import-info"><b>Alur:</b> ① Pilih file → ② Unggah File → ③ Data masuk Database Sekolah → ④ Simpan Data Online.</div>
+        <section class="master-setting-card master-upload-card" style="margin-bottom:14px;">
+          <div class="setting-title"><span>📤</span><div><b>Unggah & Simpan Master Data Sekolah</b><small>Import Excel/CSV, simpan data sekolah, kecamatan, jumlah siswa dan Tarif Salur Nasional.</small></div></div>
+          <div class="master-upload-grid">
+            <div class="upload-file-box"><label>Pilih File Excel / CSV Master Data</label><input id="upload-csv-file" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"></div>
+            <div class="upload-help"><b>Kolom wajib:</b> NPSN, Kecamatan, Status, Nama Sekolah, Jumlah Siswa.<br><b>Kolom opsional:</b> Tarif Salur Nasional SD dan SMP.</div>
           </div>
-          <div class="master-actions">
-            <button class="excel-btn" type="button" onclick="saveUploadedData()">📥 Unggah File</button>
-            <button class="excel-btn btn-save" type="button" onclick="saveMasterDatabaseOnlineAll()">☁️ Simpan Data ke Database Online</button>
-            <button class="excel-btn" type="button" onclick="loadMasterDatabaseOnline()">🔄 Muat Database Online</button>
+          <div class="master-actions" style="margin-top:10px;">
+            <button class="excel-btn btn-save" onclick="saveUploadedData()">💾 Simpan Data Master</button>
+            <button class="excel-btn" onclick="downloadMasterTemplate()">📊 Download Template Excel</button>
+            <button class="excel-btn btn-load" onclick="this.disabled=true;this.textContent='⏳ Memuat...';loadOnlineOperatorAccounts(true).then(r=>alert(`DATA ONLINE BERHASIL DIMUAT\n\nTotal akun sekolah: ${r.rows.length}\nSekolah baru: ${r.merged}\n\nTabel Database Sekolah sudah diperbarui.`)).catch(e=>alert('Gagal memuat data online.\n\n'+e.message)).finally(()=>{this.disabled=false;this.textContent='☁️ Muat Data Online';})">☁️ Muat Data Online</button>
+            <button class="excel-btn danger-lite" onclick="document.getElementById('upload-csv-file').value=''">🧹 Bersihkan File</button>
           </div>
-          <div id="master-import-status" class="setting-status">Belum ada file yang diunggah.</div>
+          <div id="master-upload-status" class="setting-status">Belum ada file yang diunggah.</div>
         </section>
 
         <section class="master-card database-card">
@@ -833,11 +881,11 @@
             <div class="database-badge">🔐 Admin</div>
           </div>
           <div class="master-toolbar database-toolbar">
-            <div class="database-search-row">
+            <div class="database-filter-row">
               <input id="master-school-search" type="search" placeholder="🔎 Cari nama sekolah atau NPSN..." oninput="renderMasterTable()">
-              <select id="master-kecamatan-filter" onchange="renderMasterTable()" style="min-width:220px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;background:#fff;"><option value="">Semua Kecamatan</option><option>Lingga</option><option>Lingga Utara</option><option>Lingga Timur</option><option>Selayar</option><option>Kepulauan Posek</option><option>Bakung Serumpun</option><option>Katang Bidare</option><option>Senayang</option><option>Temiang Pesisir</option><option>Singkep</option><option>Singkep Barat</option><option>Singkep Selatan</option><option>Singkep Pesisir</option></select>
-              <select id="master-status-filter" onchange="renderMasterTable()" style="min-width:140px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;background:#fff;"><option value="">Semua Status</option><option>Negeri</option><option>Swasta</option></select>
-              <button class="master-filter-btn" type="button" onclick="resetMasterFilters()">↻ Reset</button>
+              <select id="master-kecamatan-filter" class="excel-select" onchange="renderMasterTable()"><option value="">Semua Kecamatan</option><option value="Kec. Lingga">Kec. Lingga</option><option value="Kec. Lingga Utara">Kec. Lingga Utara</option><option value="Kec. Lingga Timur">Kec. Lingga Timur</option><option value="Kec. Selayar">Kec. Selayar</option><option value="Kec. Kepulauan Posek">Kec. Kepulauan Posek</option><option value="Kec. Bakung Serumpun">Kec. Bakung Serumpun</option><option value="Kec. Katang Bidare">Kec. Katang Bidare</option><option value="Kec. Senayang">Kec. Senayang</option><option value="Kec. Temiang Pesisir">Kec. Temiang Pesisir</option><option value="Kec. Singkep">Kec. Singkep</option><option value="Kec. Singkep Barat">Kec. Singkep Barat</option><option value="Kec. Singkep Selatan">Kec. Singkep Selatan</option><option value="Kec. Singkep Pesisir">Kec. Singkep Pesisir</option></select>
+              <select id="master-status-filter" class="excel-select" onchange="renderMasterTable()"><option value="">Semua Status</option><option value="Negeri">Negeri</option><option value="Swasta">Swasta</option><option value="Aktif">Aktif</option><option value="Nonaktif">Nonaktif</option></select>
+              <button class="master-filter-btn" type="button" onclick="resetMasterFilters()">↻ Reset Filter</button>
             </div>
             <div class="database-summary"><span id="master-school-count">Menampilkan 0 sekolah</span></div>
           </div>
@@ -855,7 +903,7 @@
             <div class="rekap-toolbar">
                 <div>
                     <h3 style="margin:0 0 5px 0; color:var(--excel-green);">📊 Hasil Rekap Seluruh Sekolah</h3>
-                    <div style="font-size:12px;color:#666;">Data diambil dari Lembar Kerja RKAS dan masuk setelah tombol <b>💾 Simpan RKAS</b> ditekan.</div>
+                    <div style="font-size:12px;color:#666;">Data diambil dari Lembar Kerja RKAS. Setiap sekolah hanya menampilkan data pejabat <b>terakhir disimpan</b>.</div>
                 </div>
                 <div class="rekap-filter-wrap">
                     <label for="rekap-year-selector"><b>Tahun:</b></label>
@@ -898,39 +946,48 @@
         </div>
     </div>
 
+
     <!-- ==================== TAB 4: REKAP DATA ==================== -->
     <div id="rekap-data-view" class="view-container">
-        <div class="rekap-data-panel">
-            <div class="rekap-data-toolbar">
+        <div class="panel-block rekap-panel">
+            <div class="rekap-toolbar">
                 <div>
-                    <h3 style="margin:0 0 5px;color:var(--excel-green);">📋 Rekap Data Sekolah</h3>
-                    <div style="font-size:12px;color:#666;">Data penandatangan sekolah yang tersimpan saat Operator menekan <b>💾 Simpan RKAS</b>.</div>
+                    <h3 style="margin:0 0 5px 0;color:var(--excel-green);">📋 Rekap Data Sekolah</h3>
+                    <div style="font-size:12px;color:#666;">Rekap identitas penandatangan yang tersimpan dari RKAS sekolah. Data dapat dimuat langsung dari database online Supabase.</div>
                 </div>
-                <div class="rekap-data-actions">
-                    <button class="excel-btn btn-load" type="button" onclick="loadRekapDataOnline()">☁️ Muat Data Online</button>
-                    <button class="excel-btn btn-save" type="button" onclick="downloadRekapDataExcel()">📥 Unduh File Excel</button>
-                    <button class="excel-btn" type="button" onclick="renderRekapData()">🔄 Refresh</button>
+                <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;">
+                    <select id="rekap-data-year" class="excel-select"></select>
+                    <button class="excel-btn btn-load" onclick="muatRekapDataOnline()" title="Khusus Rekap Data: hanya membaca identitas sekolah dan data penandatangan yang tersimpan operator.">☁️ Muat Data Online</button>
+                    <button class="excel-btn btn-save" onclick="downloadRekapDataWorkbook()">📥 Unduh File Excel</button>
                 </div>
             </div>
-            <div id="rekap-data-status" class="rekap-data-status">Belum ada data Rekap Data.</div>
-            <div class="database-search-row" style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                <input id="rekap-data-search" type="search" placeholder="🔎 Cari nama sekolah, NPSN, kecamatan..." oninput="renderRekapData()" style="flex:1;min-width:280px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;">
-                <select id="rekap-data-kecamatan" onchange="renderRekapData()" style="min-width:220px;padding:9px 11px;border:1px solid #b8c7d8;border-radius:7px;background:#fff;">
-                    <option value="">Semua Kecamatan</option><option>Lingga</option><option>Lingga Utara</option><option>Lingga Timur</option><option>Selayar</option><option>Kepulauan Posek</option><option>Bakung Serumpun</option><option>Katang Bidare</option><option>Senayang</option><option>Temiang Pesisir</option><option>Singkep</option><option>Singkep Barat</option><option>Singkep Selatan</option><option>Singkep Pesisir</option>
-                </select>
+            <div class="database-filter-row no-print" style="margin:10px 0;">
+                <input id="rekap-data-search" class="excel-input" placeholder="🔎 Cari NPSN, nama sekolah, kecamatan, komite, kepala sekolah, bendahara..." oninput="renderRekapDataTable()">
+                <select id="rekap-data-kecamatan" class="excel-select" onchange="renderRekapDataTable()"><option value="">Semua Kecamatan</option></select>
+                <button class="excel-btn" onclick="resetRekapDataFilter()">↺ Reset Filter</button>
             </div>
-            <div class="rekap-data-table-wrap">
-                <table class="excel-grid rekap-data-table" id="rekap-data-table">
-                    <thead><tr><th>No</th><th>NPSN</th><th>Kecamatan</th><th>Nama Sekolah</th><th>Nama Komite</th><th>NIP Komite</th><th>Nama Kepala Sekolah</th><th>NIP Kepala Sekolah</th><th>Nama Bendahara</th><th>NIP Bendahara</th><th>Tahun</th><th>Jenis RKAS</th></tr></thead>
-                    <tbody id="rekap-data-body"></tbody>
-                </table>
+            <div id="rekap-data-status" class="setting-status">Belum memuat data.</div>
+            <div class="excel-sheet rekap-sheet" style="margin-top:10px;">
+                <div style="overflow-x:auto;">
+                    <table class="excel-grid rekap-grid" id="rekap-data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th><th>Kecamatan</th><th>Nama Sekolah</th>
+                                <th>Nama Komite</th><th>NIP Komite</th>
+                                <th>Nama Kepala Sekolah</th><th>NIP Kepala Sekolah</th>
+                                <th>Nama Bendahara</th><th>NIP Bendahara</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rekap-data-body"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
     <script>
         // Database Sekolah Orisinil
         let masterSekolah = [
@@ -943,58 +1000,69 @@
             {npsn: "60730346", kecamatan: "Kec. Katang Bidare", status: "Negeri", nama: "SMP NEGERI 5 SENAYANG", siswa: 67, tarif_salur_sd: 1250000, tarif_salur_smp: 1580000}
         ];
 
-        // Data pejabat/tanda tangan dibuat PER SEKOLAH (berdasarkan NPSN).
-        // Ini mencegah tanda tangan sekolah A ikut tampil ketika sekolah B dipilih.
-        const DEFAULT_PJ_MURNI = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
-        const DEFAULT_PJ_PERUBAHAN = { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" };
-        let dataPejabat = { murni: {...DEFAULT_PJ_MURNI}, perubahan: {...DEFAULT_PJ_PERUBAHAN} };
-        let schoolPejabatData = {};
+        // Object Penyimpanan Data Pejabat Terpisah antara Murni dan Perubahan
+        let dataPejabat = {
+            murni: { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" },
+            perubahan: { komite: " ", komite_nip: "-", kasek: " ", kasek_nip: " ", bendahara: " ", bendahara_nip: " ", tempat: "Kabupaten Lingga", tanggal: "2026-09-04" }
+        };
 
-        function clonePejabatPair(pair){
-            return {
-                murni: {...DEFAULT_PJ_MURNI, ...(pair?.murni||{})},
-                perubahan: {...DEFAULT_PJ_PERUBAHAN, ...(pair?.perubahan||{})}
-            };
+        // ============================================================
+        // TANDA TANGAN PER SEKOLAH
+        // Setiap NPSN mempunyai penyimpanan tanda tangan sendiri.
+        // Jadi tanda tangan Sekolah A tidak akan muncul saat Sekolah B login.
+        // ============================================================
+        const SCHOOL_SIGNATURE_STORAGE_KEY = 'RKAS_SIGNATURES_BY_SCHOOL_V1';
+        function getSchoolSignatureStore(){
+            try{ const x=JSON.parse(localStorage.getItem(SCHOOL_SIGNATURE_STORAGE_KEY)||'{}'); return x&&typeof x==='object'?x:{}; }catch(e){ return {}; }
         }
-        function clearSignatureImages(){
-            ['komite','kasek','bendahara'].forEach(k=>{
-                const img=document.getElementById('sig-img-'+k);
-                if(img){ img.removeAttribute('src'); img.style.display='none'; }
-                const input=document.getElementById('sig-upload-'+k);
-                if(input) input.value='';
+        function saveSchoolSignatureStore(store){ try{ localStorage.setItem(SCHOOL_SIGNATURE_STORAGE_KEY,JSON.stringify(store||{})); }catch(e){} }
+        function getSchoolSignatureKey(idx){
+            const i=idx==null?getCurrentSchoolIndex():idx;
+            const s=(i!=null&&masterSekolah[i])?masterSekolah[i]:null;
+            return s?.npsn ? String(s.npsn) : '';
+        }
+        function clearSignatureFields(obj){
+            if(!obj||typeof obj!=='object')return obj;
+            ['komite','kasek','bendahara'].forEach(k=>{ delete obj['sig_'+k]; });
+            return obj;
+        }
+        function loadSchoolSignatures(idx){
+            const key=getSchoolSignatureKey(idx);
+            const store=getSchoolSignatureStore();
+            const saved=key&&store[key]?store[key]:{};
+            ['murni','perubahan'].forEach(mode=>{
+                if(!dataPejabat[mode])dataPejabat[mode]={};
+                ['komite','kasek','bendahara'].forEach(k=>{
+                    const v=String(saved['sig_'+k]||'');
+                    if(v)dataPejabat[mode]['sig_'+k]=v; else delete dataPejabat[mode]['sig_'+k];
+                });
             });
         }
-        function currentSchoolNpsn(){
-            const idx=getCurrentSchoolIndex();
-            return idx===null ? '' : String(masterSekolah[idx]?.npsn||'');
+        function saveSchoolSignatures(idx){
+            const key=getSchoolSignatureKey(idx); if(!key)return;
+            const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            const d=dataPejabat[mode]||{};
+            const store=getSchoolSignatureStore();
+            const out=store[key]||{};
+            ['komite','kasek','bendahara'].forEach(k=>{
+                if(d['sig_'+k])out['sig_'+k]=d['sig_'+k]; else delete out['sig_'+k];
+            });
+            store[key]=out; saveSchoolSignatureStore(store);
         }
-        function saveCurrentSchoolPejabat(){
-            const npsn=currentSchoolNpsn();
-            if(!npsn) return;
-            schoolPejabatData[npsn]=clonePejabatPair(dataPejabat);
-            try{ localStorage.setItem('RKAS_PEJABAT_BY_SCHOOL_V1', JSON.stringify(schoolPejabatData)); }catch(e){}
-        }
-        function loadSchoolPejabat(npsn){
-            const key=String(npsn||'');
-            const saved=key ? schoolPejabatData[key] : null;
-            dataPejabat=clonePejabatPair(saved);
-            // Sekolah baru tidak boleh mewarisi foto tanda tangan sekolah lain.
-            if(!saved){
-                delete dataPejabat.murni.sig_komite; delete dataPejabat.murni.sig_kasek; delete dataPejabat.murni.sig_bendahara;
-                delete dataPejabat.perubahan.sig_komite; delete dataPejabat.perubahan.sig_kasek; delete dataPejabat.perubahan.sig_bendahara;
-            }
-            return dataPejabat;
-        }
-        try{
-            const bySchool=JSON.parse(localStorage.getItem('RKAS_PEJABAT_BY_SCHOOL_V1')||'{}');
-            if(bySchool && typeof bySchool==='object') schoolPejabatData=bySchool;
-        }catch(e){}
 
         // Data belanja modal dipisahkan per sekolah dan per sisi anggaran.
         // Format baru: {sekolahIndex:{murni:[], before:[], after:[]}}
         let kegiatanSuntikanModal = {};
         let editingModalIndex = null;
         let editingModalSide = null;
+        try {
+            const savedPejabat = JSON.parse(localStorage.getItem('RKAS_PEJABAT_DATA') || 'null');
+            if (savedPejabat && typeof savedPejabat === 'object') {
+                dataPejabat = { ...dataPejabat, ...savedPejabat };
+                // Tanda tangan tidak lagi global; gambar selalu dimuat berdasarkan NPSN sekolah.
+                ['murni','perubahan'].forEach(m=>clearSignatureFields(dataPejabat[m]));
+            }
+        } catch(e) {}
 
         function switchTab(tabId, el) {
             // Operator sekolah hanya boleh membuka Lembar Kerja RKAS.
@@ -1007,7 +1075,6 @@
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
             if (el) el.classList.add('active');
-            if(tabId==='rekap-data-view') renderRekapData();
         }
 
         // ============================================================
@@ -1055,9 +1122,8 @@ function updateLoginPlaceholder(){
                 const loginBtn=document.querySelector('#auth-overlay button[onclick="loginOnlineUser()"]');
                 if(loginBtn)loginBtn.disabled=false;
                 if(deadlineBox)deadlineBox.classList.add('hidden');
-                const c=getAdminCredentials();
-                if(label)label.textContent='Username Admin';
-                if(input){input.type='text';input.placeholder=c.username;input.value='';}
+                if(label)label.textContent='Akun Pengelola';
+                if(input){input.type='text';input.placeholder='Masukkan akun pengelola';input.value='';input.autocomplete='off';}
                 if(yearWrap)yearWrap.style.display='none';
             } else {
                 if(deadlineBox)deadlineBox.classList.remove('hidden');
@@ -1328,89 +1394,52 @@ function updateLoginPlaceholder(){
         async function buildCurrentSchoolRkasPdf(){
             const idx=getCurrentSchoolIndex();
             if(idx===null) throw new Error('Silakan pilih Sekolah Target terlebih dahulu.');
-
-            // Pastikan seluruh input terbaru, perhitungan, nama/NIP dan tanda tangan
-            // sudah benar-benar tampil sebelum dokumen dikirim ke Admin.
-            try{ updateSignatures(false); }catch(e){ console.warn('Gagal memperbarui tanda tangan sebelum PDF:',e); }
-            try{ updateSignaturePlaceDate(); }catch(e){}
-            try{ calculateRkasMath(); }catch(e){ console.warn('Gagal menghitung RKAS sebelum PDF:',e); }
-
-            const sheet=document.querySelector('#rkas-view .excel-sheet');
-            if(!sheet) throw new Error('Dokumen RKAS tidak ditemukan. Silakan buka Lembar Kerja RKAS terlebih dahulu.');
-            if(typeof html2canvas==='undefined') throw new Error('Modul pembuat PDF belum tersedia. Pastikan perangkat terhubung internet lalu buka ulang aplikasi.');
-            if(!window.jspdf || !window.jspdf.jsPDF) throw new Error('Modul PDF belum tersedia. Pastikan perangkat terhubung internet lalu buka ulang aplikasi.');
-
-            // Render tampilan RKAS yang benar-benar terlihat di aplikasi, termasuk tabel,
-            // hasil perhitungan, nama/NIP, dan foto tanda tangan. Dengan cara ini file PDF
-            // yang diterima Admin sama dengan hasil input sekolah, bukan PDF teks kosong.
-            const old={
-                position:sheet.style.position,
-                left:sheet.style.left,
-                top:sheet.style.top,
-                width:sheet.style.width,
-                margin:sheet.style.margin,
-                background:sheet.style.background,
-                transform:sheet.style.transform
-            };
-            const oldScrollX=window.scrollX, oldScrollY=window.scrollY;
+            if(typeof html2canvas==='undefined' || !window.jspdf?.jsPDF){
+                throw new Error('Modul PDF belum termuat. Pastikan perangkat terhubung ke internet, lalu coba lagi.');
+            }
+            calculateRkasMath();
+            updateSignatures();
+            updateSignaturePlaceDate();
+            const source=document.querySelector('#rkas-view .excel-sheet');
+            if(!source) throw new Error('Lembar RKAS tidak ditemukan.');
+            const clone=source.cloneNode(true);
+            clone.classList.add('rkas-pdf-render');
+            clone.querySelectorAll('.no-print').forEach(el=>el.remove());
+            clone.querySelectorAll('input,select,button,textarea').forEach(el=>{
+                const span=document.createElement('span'); span.textContent=el.value||''; el.replaceWith(span);
+            });
+            document.body.appendChild(clone);
             try{
-                sheet.style.position='relative';
-                sheet.style.left='auto';
-                sheet.style.top='auto';
-                sheet.style.width='1100px';
-                sheet.style.margin='0 auto';
-                sheet.style.background='#ffffff';
-                sheet.style.transform='none';
-
-                // Tunggu satu frame agar gambar tanda tangan yang baru diunggah selesai dirender.
-                await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-                const canvas=await html2canvas(sheet,{
-                    scale:2,
-                    useCORS:true,
-                    allowTaint:false,
-                    backgroundColor:'#ffffff',
-                    logging:false,
-                    imageTimeout:10000,
-                    windowWidth:Math.max(document.documentElement.clientWidth,1200),
-                    scrollX:0,
-                    scrollY:-window.scrollY
-                });
-
+                // Pastikan gambar tanda tangan benar-benar selesai dimuat sebelum dirender.
+                const imgs=[...clone.querySelectorAll('img')];
+                await Promise.all(imgs.map(img=>new Promise(resolve=>{
+                    if(img.complete) return resolve();
+                    img.onload=resolve; img.onerror=resolve;
+                })));
+                await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+                const canvas=await html2canvas(clone,{scale:2,backgroundColor:'#ffffff',useCORS:true,allowTaint:true,logging:false,windowWidth:1200});
                 const {jsPDF}=window.jspdf;
                 const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
-                const pageW=297, pageH=210;
-                const margin=5;
-                const maxW=pageW-margin*2, maxH=pageH-margin*2;
-                let imgW=maxW;
-                let imgH=imgW*(canvas.height/canvas.width);
-
-                if(imgH<=maxH){
-                    const x=(pageW-imgW)/2, y=(pageH-imgH)/2;
-                    pdf.addImage(canvas.toDataURL('image/jpeg',0.95),'JPEG',x,y,imgW,imgH,undefined,'FAST');
-                }else{
-                    // Jika dokumen lebih tinggi dari satu halaman, potong proporsional
-                    // menjadi beberapa halaman A4 landscape tanpa menghilangkan isi.
-                    const pagePxH=Math.floor(canvas.width*(maxH/maxW));
-                    let offset=0, first=true;
-                    while(offset<canvas.height){
-                        if(!first) pdf.addPage();
-                        first=false;
-                        const sliceH=Math.min(pagePxH,canvas.height-offset);
-                        const slice=document.createElement('canvas');
-                        slice.width=canvas.width;
-                        slice.height=sliceH;
-                        const ctx=slice.getContext('2d');
-                        ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,slice.width,slice.height);
-                        ctx.drawImage(canvas,0,offset,canvas.width,sliceH,0,0,canvas.width,sliceH);
-                        const h=maxW*(sliceH/slice.width);
-                        pdf.addImage(slice.toDataURL('image/jpeg',0.95),'JPEG',margin,margin,maxW,h,undefined,'FAST');
-                        offset+=sliceH;
-                    }
+                const pageW=297, pageH=210, margin=5;
+                const usableW=pageW-margin*2;
+                const pxPerMm=canvas.width/usableW;
+                const pageCanvasHeight=Math.floor((pageH-margin*2)*pxPerMm);
+                let offset=0, pageNo=0;
+                while(offset<canvas.height){
+                    const sliceH=Math.min(pageCanvasHeight,canvas.height-offset);
+                    const slice=document.createElement('canvas');
+                    slice.width=canvas.width; slice.height=sliceH;
+                    const ctx=slice.getContext('2d');
+                    ctx.fillStyle='#fff'; ctx.fillRect(0,0,slice.width,slice.height);
+                    ctx.drawImage(canvas,0,offset,canvas.width,sliceH,0,0,canvas.width,sliceH);
+                    if(pageNo>0) pdf.addPage('a4','landscape');
+                    const hMm=sliceH/pxPerMm;
+                    pdf.addImage(slice.toDataURL('image/jpeg',0.94),'JPEG',margin,margin,usableW,hMm,undefined,'FAST');
+                    offset+=sliceH; pageNo++;
                 }
                 return new Uint8Array(pdf.output('arraybuffer'));
             }finally{
-                Object.entries(old).forEach(([k,v])=>{sheet.style[k]=v;});
-                window.scrollTo(oldScrollX,oldScrollY);
+                clone.remove();
             }
         }
 
@@ -1552,7 +1581,6 @@ function updateLoginPlaceholder(){
             initApp(); applyRoleAccessUI();
             if(!isAdmin()){const rows=loadHasilRekap().filter(r=>canAccessNpsn(r?.npsn));localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(rows));}
             authStatus('Login berhasil.',true);
-            resetAutoLogoutTimer();
         }
         async function tryRestoreLogin(){
             const saved=getAuthSession(); if(!saved?.role){authStatus('Silakan login.');return;}
@@ -1598,7 +1626,7 @@ function updateLoginPlaceholder(){
         async function saveTarifSalurOnline(npsn,nama,kecamatan,siswa,tarifSd,tarifSmp){
             const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key)return {configured:false};
             const now=new Date().toISOString();
-            const record={record_key:TARIF_SALUR_RECORD_PREFIX+String(npsn),npsn:String(npsn),nama:String(nama||'-'),kecamatan:String(kecamatan||'-'),siswa:Number(siswa)||0,mode:'perubahan',tahun:getCurrentYear(),sumber_dana:'-',rkas_payload:{tarif_salur_sd:Number(tarifSd)||0,tarif_salur_smp:Number(tarifSmp)||0},rekap_snapshot:{},saved_at:now,updated_at:now};
+            const record={record_key:TARIF_SALUR_RECORD_PREFIX+String(npsn),npsn:String(npsn),nama:String(nama||'-'),kecamatan:String(kecamatan||'-'),siswa:Number(siswa)||0,mode:'murni',tahun:getCurrentYear(),sumber_dana:'-',rkas_payload:{tarif_salur_sd:Number(tarifSd)||0,tarif_salur_smp:Number(tarifSmp)||0},rekap_snapshot:{},saved_at:now,updated_at:now};
             const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key';
             const res=await fetch(url,{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(record)});
             if(!res.ok)throw new Error(await res.text()); return {configured:true,record};
@@ -1698,21 +1726,32 @@ function updateLoginPlaceholder(){
         }
 
         function renderMasterTable(){
-            const tbody=document.getElementById('master-db-rows');if(!tbody)return;tbody.innerHTML='';const accounts=getOperatorAccounts();
+            const tbody=document.getElementById('master-db-rows'); if(!tbody)return; tbody.innerHTML='';
+            const accounts=getOperatorAccounts();
             const query=String(document.getElementById('master-school-search')?.value||'').trim().toLowerCase();
             const kecFilter=String(document.getElementById('master-kecamatan-filter')?.value||'').trim().toLowerCase();
             const statusFilter=String(document.getElementById('master-status-filter')?.value||'').trim().toLowerCase();
-            const normalizeKec=v=>String(v||'').replace(/^kec\.?\s*/i,'').trim().toLowerCase();
             const filtered=masterSekolah.map((s,idx)=>({s,idx})).filter(({s})=>{
-                const matchText=!query||String(s.nama||'').toLowerCase().includes(query)||String(s.npsn||'').toLowerCase().includes(query);
-                const matchKec=!kecFilter||normalizeKec(s.kecamatan)===normalizeKec(kecFilter);
-                const matchStatus=!statusFilter||String(s.status||'').toLowerCase()===statusFilter;
-                return matchText&&matchKec&&matchStatus;
+                const a=accounts[String(s.npsn)]||{};
+                const state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat');
+                const textOk=!query||String(s.nama||'').toLowerCase().includes(query)||String(s.npsn||'').toLowerCase().includes(query);
+                const kecOk=!kecFilter||String(s.kecamatan||'').toLowerCase()===kecFilter;
+                const statusOk=!statusFilter||String(s.status||'').toLowerCase()===statusFilter||state.toLowerCase()===statusFilter;
+                return textOk&&kecOk&&statusOk;
             });
-            const count=document.getElementById('master-school-count');if(count)count.textContent=`Menampilkan ${filtered.length} dari ${masterSekolah.length} sekolah`;
-            filtered.forEach(({s,idx},rowNo)=>{const tr=document.createElement('tr'),a=accounts[String(s.npsn)]||{},state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat'),tarifSd=Number(s.tarif_salur_sd)||1250000,tarifSmp=Number(s.tarif_salur_smp)||1580000;
-                tr.innerHTML=`<td class="text-center">${rowNo+1}</td><td>${escapeHtml(s.npsn)}</td><td>${escapeHtml(s.kecamatan)}</td><td>${escapeHtml(s.status)}</td><td class="text-bold">${escapeHtml(s.nama)}</td><td class="text-center"><input type="number" min="0" value="${Number(s.siswa)||0}" title="Jumlah siswa dapat diedit" style="width:75px;text-align:center;padding:3px;border:1px solid #8a8886;border-radius:2px;" onchange="editMasterSiswa(${idx},this.value)"></td><td class="tarif-cell">Rp ${tarifSd.toLocaleString('id-ID')}<small>SD / Anak</small></td><td class="tarif-cell">Rp ${tarifSmp.toLocaleString('id-ID')}<small>SMP / Anak</small></td><td class="text-center">${escapeHtml(a.username||s.npsn)}</td><td class="text-center"><span style="font-weight:bold;color:${a.password&&a.active!==false?'#107c41':'#a15c00'}">${a.password?'••••••':'Belum ditentukan'}</span><br><small>${state}</small></td><td class="text-center"><button class="mini-btn" onclick="adminFillOperatorForm(${idx})">✏️ Edit / Password / Tarif</button> <button class="mini-btn" onclick="adminDisableOperator('${escapeJs(String(s.npsn))}')">${a.active===false?'▶️ Aktifkan':'⛔ Nonaktifkan'}</button></td>`;tbody.appendChild(tr);});
+            const count=document.getElementById('master-school-count'); if(count)count.textContent=`Menampilkan ${filtered.length} dari ${masterSekolah.length} sekolah`;
+            filtered.forEach(({s,idx},rowNo)=>{
+                const tr=document.createElement('tr'),a=accounts[String(s.npsn)]||{},state=a.active===false?'Nonaktif':(a.password?'Aktif':'Belum dibuat'),tarifSd=Number(s.tarif_salur_sd)||1250000,tarifSmp=Number(s.tarif_salur_smp)||1580000;
+                tr.innerHTML=`<td class="text-center">${rowNo+1}</td><td>${escapeHtml(s.npsn)}</td><td><span class="kec-badge">${escapeHtml(s.kecamatan||'-')}</span></td><td>${escapeHtml(s.status||'Negeri')}</td><td class="text-bold">${escapeHtml(s.nama)}</td><td class="text-center"><input type="number" min="0" value="${Number(s.siswa)||0}" title="Jumlah siswa dapat diedit" style="width:75px;text-align:center;padding:3px;border:1px solid #8a8886;border-radius:2px;" onchange="editMasterSiswa(${idx},this.value)"></td><td class="tarif-cell">Rp ${tarifSd.toLocaleString('id-ID')}<small>SD / Anak</small></td><td class="tarif-cell">Rp ${tarifSmp.toLocaleString('id-ID')}<small>SMP / Anak</small></td><td class="text-center">${escapeHtml(a.username||s.npsn)}</td><td class="text-center"><span style="font-weight:bold;color:${a.password&&a.active!==false?'#107c41':'#a15c00'}">${a.password?'••••••':'Belum ditentukan'}</span><br><small>${state}</small></td><td class="text-center"><button class="mini-btn" onclick="adminFillOperatorForm(${idx})">✏️ Edit / Password / Tarif</button> <button class="mini-btn" onclick="adminDisableOperator('${escapeJs(String(s.npsn))}')">${a.active===false?'▶️ Aktifkan':'⛔ Nonaktifkan'}</button></td>`;
+                tbody.appendChild(tr);
+            });
         }
+        function resetMasterFilters(){
+            ['master-school-search','master-kecamatan-filter','master-status-filter'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+            renderMasterTable();
+        }
+        function filterMasterByKecamatan(value){ const e=document.getElementById('master-kecamatan-filter'); if(e)e.value=value||''; renderMasterTable(); }
+
         function editMasterSiswa(idx, value) {
             if (!isAdmin()) { alert('Akses ditolak. Hanya Admin yang dapat mengubah Master Data Sekolah.'); return; }
             if (!masterSekolah[idx]) return;
@@ -1758,16 +1797,6 @@ function updateLoginPlaceholder(){
         }
 
         function loadPejabatInputs() {
-            const idx=getCurrentSchoolIndex();
-            // Jangan pernah menampilkan tanda tangan sekolah sebelumnya.
-            clearSignatureImages();
-            if(idx===null){
-                dataPejabat=clonePejabatPair(null);
-                ['p-komite-nama','p-komite-nip','p-kasek-nama','p-kasek-nip','p-bendahara-nama','p-bendahara-nip','p-tempat','p-tanggal'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-                return;
-            }
-            const school=masterSekolah[idx];
-            loadSchoolPejabat(school?.npsn);
             const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
             const current = dataPejabat[mode];
             if (!current) return;
@@ -1782,42 +1811,44 @@ function updateLoginPlaceholder(){
                 'p-tanggal': current.tanggal || '2026-09-04'
             };
             Object.entries(fields).forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.value=val||''; });
-            renderSignatureImages(current);
+            renderSignatureImages(current); updateSignatures();
             const title=document.getElementById('pejabat-title');
             if(title) title.innerText=`✍️ Penandatangan Dokumen (Versi ${mode.toUpperCase()})`;
-            updateSignatures(false);
+            updateSignatures();
         }
 
-        function updateSignatures(persist=true) {
+        function updateSignatures() {
             const mode = document.getElementById('rkas-type-selector')?.value || 'perubahan';
             const d = dataPejabat[mode]; if (!d) return;
             const map = {komite:['p-komite-nama','p-komite-nip','txt-sig-komite','txt-sig-komite-nip'],kasek:['p-kasek-nama','p-kasek-nip','txt-sig-kasek-nama','txt-sig-kasek-nip'],bendahara:['p-bendahara-nama','p-bendahara-nip','txt-sig-bendahara-nama','txt-sig-bendahara-nip']};
             Object.entries(map).forEach(([key,ids])=>{
                 d[key]=document.getElementById(ids[0])?.value ?? d[key]; d[key+'_nip']=document.getElementById(ids[1])?.value ?? d[key+'_nip'];
+                if(dataPejabat.murni&&dataPejabat.perubahan){ dataPejabat.murni[key]=d[key]; dataPejabat.murni[key+'_nip']=d[key+'_nip']; dataPejabat.perubahan[key]=d[key]; dataPejabat.perubahan[key+'_nip']=d[key+'_nip']; }
                 const n=document.getElementById(ids[2]); if(n)n.innerText=d[key]||''; const nip=document.getElementById(ids[3]); if(nip)nip.innerText=d[key+'_nip']?'NIP. '+d[key+'_nip']:'';
             });
             renderSignatureImages(d);
-            if(persist) saveCurrentSchoolPejabat();
+            try{localStorage.setItem('RKAS_PEJABAT_DATA',JSON.stringify(dataPejabat));}catch(e){}
         }
         function renderSignatureImages(d){ ['komite','kasek','bendahara'].forEach(k=>{ const img=document.getElementById('sig-img-'+k); if(!img)return; if(d&&d['sig_'+k]){img.src=d['sig_'+k];img.style.display='inline-block';}else{img.removeAttribute('src');img.style.display='none';} }); }
         function handleSignatureUpload(key,input){
             const idx=getCurrentSchoolIndex();
-            if(idx===null){alert('Pilih Sekolah terlebih dahulu sebelum mengunggah tanda tangan.'); if(input) input.value=''; return;}
+            if(idx===null){alert('Silakan pilih Sekolah Target terlebih dahulu. Tanda tangan akan disimpan khusus untuk sekolah yang dipilih.');if(input)input.value='';return;}
             const file=input?.files?.[0]; if(!file)return;
             if(!/^image\/(png|jpeg|jpg)$/i.test(file.type)){alert('Tanda tangan harus berupa PNG/JPG.');input.value='';return;}
             if(file.size>2*1024*1024){alert('Ukuran gambar maksimal 2 MB.');input.value='';return;}
             const reader=new FileReader();
             reader.onload=()=>{
                 const val=String(reader.result||'');
+                ['murni','perubahan'].forEach(m=>{if(!dataPejabat[m])dataPejabat[m]={};dataPejabat[m]['sig_'+key]=val;});
+                saveSchoolSignatures(idx);
                 const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
-                // Tanda tangan hanya untuk JABATAN yang dipilih (komite/kasek/bendahara)
-                // dan hanya untuk SEKOLAH/NPSN yang sedang aktif. Jangan pernah menyalin
-                // foto Kepala Sekolah ke kolom Bendahara atau sebaliknya.
-                const sigField='sig_'+key;
-                dataPejabat.murni[sigField]=val;
-                dataPejabat.perubahan[sigField]=val;
                 renderSignatureImages(dataPejabat[mode]);
-                saveCurrentSchoolPejabat();
+                // Hanya menyimpan metadata pejabat lokal; gambar disimpan pada penyimpanan NPSN.
+                try{
+                    const clean=JSON.parse(JSON.stringify(dataPejabat));
+                    ['murni','perubahan'].forEach(m=>clearSignatureFields(clean[m]));
+                    localStorage.setItem('RKAS_PEJABAT_DATA',JSON.stringify(clean));
+                }catch(e){}
             };
             reader.readAsDataURL(file);
         }
@@ -1840,7 +1871,7 @@ function updateLoginPlaceholder(){
             const date = document.getElementById('sig-date');
             if (place) place.innerText = d.tempat || '';
             if (date) date.innerText = formatTanggalIndonesia(d.tanggal);
-            saveCurrentSchoolPejabat();
+            try { localStorage.setItem('RKAS_PEJABAT_DATA', JSON.stringify(dataPejabat)); } catch(e) {}
         }
 
         function updateEmptySignatureBlocks() {
@@ -1957,11 +1988,11 @@ function updateLoginPlaceholder(){
         }
 
         function handleSchoolChange() {
-            // Setiap perpindahan sekolah langsung membersihkan foto sekolah sebelumnya.
-            clearSignatureImages();
             const idx=getCurrentSchoolIndex();
-            if(idx===null){ loadPejabatInputs(); return; }
+            if(idx===null) return;
             const s=masterSekolah[idx];
+            // Muat tanda tangan khusus sekolah ini. Sekolah lain otomatis kosong jika belum memiliki tanda tangan.
+            loadSchoolSignatures(idx);
             loadPejabatInputs();
             const rate=getTarifSalurSekolah(s);
             const set=(id,val)=>{const el=document.getElementById(id);if(el)el.innerText=val;};
@@ -2595,46 +2626,23 @@ function updateLoginPlaceholder(){
             return `RKAS_DATA_${idx===null?'none':idx}_${mode}_${year}`;
         }
 
-        async function saveRkasData(){
+        function saveRkasData(){
             if(!isLoggedIn()){ alert('Silakan login terlebih dahulu.'); return; }
             const idx = getCurrentSchoolIndex();
             if(idx === null){ alert('Silakan pilih Sekolah Target terlebih dahulu.'); return; }
             try{
-                const mode=document.getElementById('rkas-type-selector')?.value || 'perubahan';
                 const payload = {
-                    version: 3,
+                    version: 2,
                     savedAt: new Date().toISOString(),
                     schoolIndex: idx,
-                    npsn: String(masterSekolah[idx]?.npsn||''),
                     kegiatan: ensureSchoolModalData(idx),
-                    pejabat: clonePejabatPair(dataPejabat),
+                    pejabat: dataPejabat,
                     rkasSettings: { year: rkasYear, source: rkasSource }
                 };
                 localStorage.setItem(getRkasStorageKey(), JSON.stringify(payload));
-                saveCurrentSchoolPejabat();
-
-                // Selalu masuk ke dua rekap lokal: Hasil Rekap dan Rekap Data.
-                saveSchoolToHasilRekap(idx, mode);
-                saveSchoolToRekapData(idx, mode);
-
-                // Simpan otomatis ke Supabase. Jika koneksi belum tersedia, data lokal tetap aman.
-                let onlineMessage='';
-                try{
-                    const cfg=getOnlineDbConfig();
-                    if(cfg.url && cfg.key){
-                        const result=await saveCurrentRkasOnline(idx,mode);
-                        onlineMessage=result?.configured?' dan berhasil tersimpan di DATABASE ONLINE Supabase.':' tetapi DATABASE ONLINE belum dikonfigurasi.';
-                    }else{
-                        onlineMessage=' tetapi DATABASE ONLINE belum dikonfigurasi.';
-                    }
-                }catch(onlineErr){
-                    console.error('Simpan RKAS online gagal:',onlineErr);
-                    updateOnlineDbStatus('OFFLINE / gagal menyimpan RKAS.',false);
-                    onlineMessage=' tetapi gagal tersimpan ke DATABASE ONLINE: '+onlineErr.message;
-                }
-                const status=document.getElementById('rekap-data-status');
-                if(status) status.textContent='✅ Data sekolah sudah masuk Rekap Data'+onlineMessage;
-                alert('Data RKAS berhasil disimpan.\n\n✅ Masuk Hasil Rekap Seluruh Sekolah.\n✅ Masuk Rekap Data.\n'+(onlineMessage.includes('berhasil tersimpan')?'✅ RKAS berhasil tersimpan di Database Online Supabase.':'⚠️ '+onlineMessage.trim()));
+                // Setiap penyimpanan RKAS langsung memperbarui Rekap Seluruh Sekolah.
+                saveSchoolToHasilRekap(idx, document.getElementById('rkas-type-selector')?.value || 'perubahan');
+                alert('Data RKAS berhasil disimpan di browser dan masuk ke Hasil Rekap Seluruh Sekolah.');
             }catch(err){
                 console.error(err);
                 alert('Data gagal disimpan: ' + err.message);
@@ -2768,75 +2776,6 @@ function updateLoginPlaceholder(){
             return sent;
         }
 
-        function resetMasterFilters(){
-            const q=document.getElementById('master-school-search'); if(q) q.value='';
-            const k=document.getElementById('master-kecamatan-filter'); if(k) k.value='';
-            const st=document.getElementById('master-status-filter'); if(st) st.value='';
-            renderMasterTable();
-        }
-
-        function setMasterImportStatus(msg,ok=true){
-            const el=document.getElementById('master-import-status');
-            if(el){el.textContent=msg;el.style.color=ok?'#107c41':'#b00000';}
-        }
-
-        function buildMasterOnlineRecord(s){
-            return {
-                record_key:'MASTER_SEKOLAH__'+String(s.npsn||''),
-                npsn:String(s.npsn||''), nama:String(s.nama||''), kecamatan:String(s.kecamatan||''),
-                siswa:Number(s.siswa)||0, mode:'perubahan', tahun:getCurrentYear(), sumber_dana:'-',
-                rkas_payload:{status:String(s.status||'Negeri'),tarif_salur_sd:Number(s.tarif_salur_sd)||1250000,tarif_salur_smp:Number(s.tarif_salur_smp)||1580000},
-                rekap_snapshot:{}, saved_at:new Date().toISOString(), updated_at:new Date().toISOString()
-            };
-        }
-
-        async function saveMasterDatabaseOnlineAll(showAlert=true){
-            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat menyimpan Master Data.');return false;}
-            if(!masterSekolah.length){alert('Database sekolah belum memiliki data. Unggah file atau tambah sekolah terlebih dahulu.');return false;}
-            const cfg=getOnlineDbConfig();
-            if(!cfg.url||!cfg.key){setMasterImportStatus('Database Supabase belum terhubung.',false);if(showAlert)alert('Supabase belum terhubung.');return false;}
-            try{
-                setMasterImportStatus('⏳ Menyimpan seluruh Master Data Sekolah ke Supabase...');
-                const records=masterSekolah.map(buildMasterOnlineRecord);
-                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?on_conflict=record_key',{method:'POST',headers:onlineDbHeaders(cfg,{'Prefer':'resolution=merge-duplicates,return=minimal'}),body:JSON.stringify(records)});
-                if(!res.ok)throw new Error(await res.text());
-                // Akun operator yang sudah ada juga disinkronkan tanpa mengirim kolom status yang bermasalah pada database lama.
-                const accounts=getOperatorAccounts();
-                for(const s of masterSekolah){const a=accounts[String(s.npsn)];if(a&&a.username&&a.password){try{await upsertOnlineOperatorAccount({...a,nama_sekolah:s.nama,kecamatan:s.kecamatan,siswa:s.siswa});}catch(e){console.warn('Akun '+s.npsn+' gagal disinkronkan:',e);}}}
-                updateOnlineDbStatus('ONLINE — Master Data Sekolah tersimpan.',true);
-                setMasterImportStatus('✅ '+records.length+' data sekolah berhasil disimpan ke DATABASE SUPABASE ONLINE.');
-                if(showAlert)alert('Berhasil!\n\n'+records.length+' data Master Sekolah tersimpan di Database Supabase Online.');
-                return true;
-            }catch(e){
-                console.error(e);
-                updateOnlineDbStatus('OFFLINE / gagal menyimpan Master Data.',false);
-                const detail=String(e?.message||e||'');
-                const friendly=/rkas_online_mode_check|23514/i.test(detail)
-                    ? 'Struktur database lama membatasi nilai mode. Aplikasi sudah menggunakan mode yang kompatibel, silakan ulangi Simpan Data Online.'
-                    : detail;
-                setMasterImportStatus('❌ Gagal menyimpan online: '+friendly,false);
-                if(showAlert)alert('Master Data tersimpan di browser, tetapi gagal disimpan ke Supabase.\n\n'+friendly+'\n\nDetail server: '+detail);
-                return false;
-            }
-        }
-
-        async function loadMasterDatabaseOnline(){
-            if(!isAdmin()){alert('Akses ditolak.');return;}
-            const cfg=getOnlineDbConfig();if(!cfg.url||!cfg.key){alert('Supabase belum terhubung.');return;}
-            try{
-                setMasterImportStatus('⏳ Memuat Master Data Sekolah dari Supabase...');
-                const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,nama,kecamatan,siswa,mode,rkas_payload,updated_at&record_key=like.MASTER_SEKOLAH__%25&order=kecamatan.asc,nama.asc&limit=5000';
-                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Master Data Sekolah');
-                let count=0;
-                (Array.isArray(rows)?rows:[]).forEach(r=>{
-                    const n=normalizeNpsnValue(r.npsn);if(!/^\d{8}$/.test(n))return;
-                    const p=r.rkas_payload||{};const incoming={npsn:n,nama:String(r.nama||''),kecamatan:String(r.kecamatan||''),status:String(p.status||'Negeri'),siswa:Number(r.siswa)||0,tarif_salur_sd:Number(p.tarif_salur_sd)||1250000,tarif_salur_smp:Number(p.tarif_salur_smp)||1580000};
-                    const idx=masterSekolah.findIndex(s=>String(s.npsn)===n);if(idx>=0)Object.assign(masterSekolah[idx],incoming);else masterSekolah.push(incoming);count++;
-                });
-                localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));renderMasterTable();initApp();updateOnlineDbStatus('ONLINE — Master Data berhasil dimuat.',true);setMasterImportStatus('✅ '+count+' data sekolah dimuat dari DATABASE SUPABASE ONLINE.');alert('Master Data Online berhasil dimuat.\n\nData diproses: '+count+' sekolah.');
-            }catch(e){console.error(e);setMasterImportStatus('❌ Gagal memuat online: '+e.message,false);updateOnlineDbStatus('OFFLINE / gagal memuat Master Data.',false);alert('Gagal memuat Master Data dari Supabase.\n\n'+e.message);}
-        }
-
         function saveUploadedData(){
             if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat mengunggah atau mengubah Master Data Sekolah.');return;}
             const fileInput=document.getElementById('upload-csv-file');
@@ -2856,12 +2795,11 @@ function updateLoginPlaceholder(){
                     if(!items.length)throw new Error('Tidak ada data sekolah yang valid pada file.');
                     const result=mergeMasterData(items);
                     localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah)); renderMasterTable(); initApp();
-                    setMasterImportStatus('✅ File berhasil dibaca: '+items.length+' sekolah ('+result.countAdded+' baru, '+result.countUpdated+' diperbarui).');
+                    const upSt=document.getElementById('master-upload-status'); if(upSt) upSt.textContent=`Data siap disimpan: ${result.countAdded} sekolah baru, ${result.countUpdated} diperbarui.`;
                     const cfg=getOnlineDbConfig();
                     if(!cfg.url||!cfg.key){fileInput.value='';alert(`Data lokal berhasil disimpan: ${result.countAdded} baru, ${result.countUpdated} diperbarui.\n\nDatabase online belum dikonfigurasi, jadi data BELUM dikirim ke server.`);return;}
                     const sent=await saveUploadedDataOnline(items);
                     fileInput.value='';
-                    setMasterImportStatus('✅ File berhasil disimpan ke DATABASE SUPABASE ONLINE: '+sent+' data sekolah.');
                     alert(`BERHASIL DISIMPAN ONLINE!\n\n${sent} data sekolah dari file sudah dikirim ke database online.\n\nKlik ☁️ Muat Sekolah Online untuk memastikan seluruh data server terbaca.`);
                 }catch(err){console.error(err);alert('Gagal menyimpan data: '+err.message);}
             };
@@ -2936,7 +2874,6 @@ function updateLoginPlaceholder(){
             loadMasterDatabase();
             _initAppOriginal();
             updateSheetPlaceDate();
-            renderRekapData();
         };
 
 
@@ -3030,181 +2967,284 @@ function updateLoginPlaceholder(){
             renderHasilRekap();
         }
 
+        // ============================================================
+        // HASIL REKAP - TAMPILAN FINAL
+        // RKAS Murni      : hanya Murni/Sebelum Perubahan
+        // RKAS Perubahan  : Sebelum + Sesudah Perubahan
+        // Rekap Perubahan akan tetap menampilkan sekolah yang hanya
+        // mengirim RKAS Murni; kolom Sesudah = 0.
+        // ============================================================
         function renderRekapHeader(mode){
-            const head = document.getElementById('hasil-rekap-head');
-            if (!head) return;
-            if (mode === 'murni') {
-                head.innerHTML = `<tr>
-                    <th style="width:45px;">No</th>
-                    <th>Kecamatan</th>
-                    <th>NPSN</th>
-                    <th>Nama Sekolah</th>
-                    <th>Jumlah Siswa</th>
-                    <th>Pendapatan</th>
-                    <th>Barang dan Jasa</th>
-                    <th>Modal Peralatan dan Mesin</th>
-                    <th>Modal Aset Tetap Lainnya</th>
-                </tr>`;
-            } else {
-                head.innerHTML = `<tr>
+            const head=document.getElementById('hasil-rekap-head');
+            if(!head) return;
+            if(mode==='murni'){
+                head.innerHTML=`<tr>
                     <th rowspan="2" style="width:45px;">No</th>
                     <th rowspan="2">Kecamatan</th>
-                    <th rowspan="2">NPSN</th>
                     <th rowspan="2">Nama Sekolah</th>
-                    <th rowspan="2">Jumlah Siswa</th>
-                    <th colspan="4">Murni / Sebelum Perubahan</th>
-                    <th colspan="4">Sesudah Perubahan</th>
+                    <th colspan="4">Murni/sebelum perubahan</th>
+                    <th rowspan="2">Keterangan</th>
                 </tr><tr>
-                    <th>Pendapatan</th><th>Barang dan Jasa</th><th>Modal Peralatan dan Mesin</th><th>Modal Aset Tetap Lainnya</th>
-                    <th>Pendapatan</th><th>Barang dan Jasa</th><th>Modal Peralatan dan Mesin</th><th>Modal Aset Tetap Lainnya</th>
+                    <th>Pendapatan</th><th>Barang dan jasa</th><th>modal peralatan dan mesin</th><th>Modal Aset Tetap Lainnya</th>
+                </tr>`;
+            }else{
+                head.innerHTML=`<tr>
+                    <th rowspan="2" style="width:45px;">No</th>
+                    <th rowspan="2">Kecamatan</th>
+                    <th rowspan="2">Nama Sekolah</th>
+                    <th colspan="4">Murni/sebelum perubahan</th>
+                    <th colspan="3">sesudah perubahan</th>
+                    <th rowspan="2">Keterangan</th>
+                </tr><tr>
+                    <th>Pendapatan</th><th>Barang dan jasa</th><th>modal peralatan dan mesin</th><th>Modal Aset Tetap Lainnya</th>
+                    <th>Barang dan jasa</th><th>modal peralatan dan mesin</th><th>Modal Aset Tetap Lainnya</th>
                 </tr>`;
             }
         }
 
-        function populateRekapYearSelector(){ const el=document.getElementById('rekap-year-selector'); if(!el)return; const now=getCurrentYear(); el.innerHTML=''; for(let y=2026;y<=Math.max(now+10,2035);y++){ const o=document.createElement('option'); o.value=y;o.textContent=y;el.appendChild(o); } if(!el.value)el.value=String(now); }
-        async function changeRekapYear(){ const el=document.getElementById('rekap-year-selector'); const year=Number(el?.value||getCurrentYear()); if(isAdmin()){ try{ await muatRekapOnline(year); }catch(e){console.warn(e);} } renderHasilRekap(); }
-        function renderHasilRekap(){
-            const selector = document.getElementById('rekap-mode-selector');
-            const mode = selector ? selector.value : 'murni';
-            const yearSelector=document.getElementById('rekap-year-selector');
-            const selectedYear=Number(yearSelector?.value||getCurrentYear());
-            const body = document.getElementById('hasil-rekap-body');
-            const note = document.getElementById('rekap-note');
-            if (!body) return;
-            renderRekapHeader(mode);
-            const rows = loadHasilRekap().filter(r => r && r.mode === mode && Number(r.tahun||2026)===selectedYear && canAccessNpsn(r.npsn));
+        function populateRekapYearSelector(){
+            const el=document.getElementById('rekap-year-selector'); if(!el)return;
+            const now=getCurrentYear();
+            const localYears=[...loadHasilRekap(),...getHasilRekapOnlineCache()].map(r=>Number(r?.tahun||0)).filter(Boolean);
+            const years=[...new Set([...localYears,now,now+1,now+2,now+3,now+4])].sort((a,b)=>a-b);
+            const old=Number(el.value||0);
+            el.innerHTML=years.map(y=>`<option value="${y}">${y}</option>`).join('');
+            el.value=years.includes(old)?String(old):String(now);
+        }
 
-            if (note) {
-                note.innerHTML = mode === 'murni'
-                    ? 'Menampilkan hanya <b>RKAS Murni</b> yang sudah disimpan dari Lembar Kerja RKAS.'
-                    : 'Menampilkan <b>Sebelum Perubahan</b> dan <b>Sesudah Perubahan</b> untuk RKAS Perubahan yang sudah disimpan.';
+        async function changeRekapYear(){
+            renderHasilRekap();
+            if(isAdmin()){
+                try{await muatRekapOnline(Number(document.getElementById('rekap-year-selector')?.value||getCurrentYear()));}
+                catch(e){console.warn(e);}
             }
+        }
 
-            if (!rows.length) {
-                const colspan = mode === 'murni' ? 9 : 13;
-                body.innerHTML = `<tr><td colspan="${colspan}" class="rekap-empty">Belum ada data tersimpan. Pilih sekolah pada Lembar Kerja RKAS, kemudian klik <b>💾 Simpan RKAS</b>.</td></tr>`;
+        function rekapNum(v){const n=Number(v);return Number.isFinite(n)?n:0;}
+        function rekapMoney(v){return formatRupiahRekap(rekapNum(v));}
+
+        function rekapCleanSnapshot(x){
+            x=x||{};
+            return {
+                pendapatan:rekapNum(x.pendapatan),
+                barangJasa:rekapNum(x.barangJasa),
+                modalPeralatanMesin:rekapNum(x.modalPeralatanMesin),
+                modalAsetTetapLainnya:rekapNum(x.modalAsetTetapLainnya),
+                siswa:rekapNum(x.siswa)
+            };
+        }
+
+        function rekapSnapshotMurni(r){
+            return rekapCleanSnapshot(r?.snapshot||{});
+        }
+
+        function rekapSnapshotPerubahan(r){
+            const snap=r?.snapshot||{};
+            return {
+                sebelum:rekapCleanSnapshot(snap.sebelum||{}),
+                sesudah:rekapCleanSnapshot(snap.sesudah||{})
+            };
+        }
+
+        function rekapHasNumbers(x){
+            return rekapNum(x?.pendapatan)!==0 || rekapNum(x?.barangJasa)!==0 || rekapNum(x?.modalPeralatanMesin)!==0 || rekapNum(x?.modalAsetTetapLainnya)!==0;
+        }
+
+        function rekapHasChange(b,a){
+            return rekapNum(b?.pendapatan)!==rekapNum(a?.pendapatan) ||
+                   rekapNum(b?.barangJasa)!==rekapNum(a?.barangJasa) ||
+                   rekapNum(b?.modalPeralatanMesin)!==rekapNum(a?.modalPeralatanMesin) ||
+                   rekapNum(b?.modalAsetTetapLainnya)!==rekapNum(a?.modalAsetTetapLainnya);
+        }
+
+        function getHasilRekapOnlineCache(){
+            try{const x=JSON.parse(localStorage.getItem('RKAS_HASIL_REKAP_ONLINE_CACHE_V2')||'[]');return Array.isArray(x)?x:[];}catch(e){return [];} 
+        }
+        function saveHasilRekapOnlineCache(rows){try{localStorage.setItem('RKAS_HASIL_REKAP_ONLINE_CACHE_V2',JSON.stringify(rows||[]));}catch(e){}}
+
+        // Untuk RKAS Perubahan, gabungkan Murni + Perubahan berdasarkan NPSN.
+        // Ini membuat sekolah yang belum mengisi perubahan tetap tampil.
+        function rekapBaseRows(selectedYear,mode){
+            // Hasil Rekap berdiri sendiri. Untuk mode Perubahan, setiap sekolah
+            // yang mempunyai RKAS Murni tetap wajib tampil walaupun belum
+            // mempunyai record RKAS Perubahan.
+            let all=getHasilRekapOnlineCache();
+            if(!all.length) all=loadHasilRekap();
+            all=all.filter(r=>r && (isAdmin()||canAccessNpsn(r.npsn)));
+
+            const targetYear=Number(selectedYear)||getCurrentYear();
+            const valid=all.filter(r=>r.mode==='murni'||r.mode==='perubahan');
+            if(!valid.length) return [];
+
+            const bySchool=new Map();
+            valid.forEach(r=>{
+                const key=String(r.npsn||r.nama||r.record_key||r.key||'').trim();
+                if(!key)return;
+                if(!bySchool.has(key))bySchool.set(key,{murni:[],perubahan:[]});
+                const g=bySchool.get(key);
+                const modeKey=String(r.mode)==='perubahan'?'perubahan':'murni';
+                g[modeKey].push(r);
+            });
+
+            const newest=(arr)=>{
+                if(!arr.length)return null;
+                return [...arr].sort((a,b)=>{
+                    const ay=Number(a.tahun||0), by=Number(b.tahun||0);
+                    if(ay!==by)return by-ay;
+                    const at=String(a.updated_at||a.savedAt||a.saved_at||'');
+                    const bt=String(b.updated_at||b.savedAt||b.saved_at||'');
+                    return bt.localeCompare(at);
+                })[0];
+            };
+
+            const chooseForYear=(arr)=>{
+                if(!arr.length)return null;
+                // Utamakan tahun yang dipilih.
+                const exact=arr.filter(r=>Number(r.tahun||0)===targetYear);
+                if(exact.length)return newest(exact);
+                // Jika tidak ada record pada tahun pilihan, gunakan record terbaru
+                // agar sekolah tidak hilang dari Rekap.
+                return newest(arr);
+            };
+
+            const result=[];
+            bySchool.forEach((g,key)=>{
+                const murni=chooseForYear(g.murni);
+                const perubahan=chooseForYear(g.perubahan);
+
+                if(mode==='murni'){
+                    // Mode Murni hanya berasal dari record Murni.
+                    if(murni) result.push({...murni,_murni:murni,_perubahan:null});
+                    return;
+                }
+
+                // Mode Perubahan selalu dimulai dari RKAS Murni.
+                // Perubahan boleh ada atau belum ada.
+                if(murni){
+                    const base=perubahan||murni;
+                    result.push({
+                        ...base,
+                        npsn:String(base.npsn||murni.npsn||perubahan?.npsn||key),
+                        nama:String(base.nama||murni.nama||perubahan?.nama||'-'),
+                        kecamatan:String(base.kecamatan||murni.kecamatan||perubahan?.kecamatan||'-'),
+                        tahun:Number(murni.tahun||perubahan?.tahun||targetYear),
+                        _murni:murni,
+                        _perubahan:perubahan||null
+                    });
+                }
+            });
+
+            return result.sort((a,b)=>
+                String(a.kecamatan||'').localeCompare(String(b.kecamatan||''),'id') ||
+                String(a.nama||'').localeCompare(String(b.nama||''),'id')
+            );
+        }
+
+        function renderHasilRekap(){
+            const mode=document.getElementById('rekap-mode-selector')?.value||'murni';
+            const selectedYear=Number(document.getElementById('rekap-year-selector')?.value||getCurrentYear());
+            const body=document.getElementById('hasil-rekap-body');
+            const note=document.getElementById('rekap-note');
+            if(!body)return;
+
+            renderRekapHeader(mode);
+            const rows=rekapBaseRows(selectedYear,mode);
+
+            if(note)note.innerHTML=mode==='murni'
+                ? `Menampilkan <b>RKAS Murni / Sebelum Perubahan</b> tahun <b>${selectedYear}</b>.`
+                : `Menampilkan seluruh sekolah yang sudah mengirim <b>RKAS Murni</b>. Jika belum mengirim Perubahan, data Murni tetap tampil dan angka Sesudah Perubahan = <b>0</b>.<div class="rekap-status-legend"><span class="belum">MERAH: Belum input/kirim perubahan</span><span class="tetap">HIJAU: Tidak ada perubahan</span><span class="berubah">KUNING: Ada perubahan</span></div>`;
+
+            if(!rows.length){
+                body.innerHTML=`<tr><td colspan="${mode==='murni'?8:11}" class="rekap-empty">Belum ada sekolah yang mengirim RKAS Murni ke database online. Klik <b>☁️ Muat Rekap Online</b>.</td></tr>`;
                 return;
             }
 
             let html='';
-            const totals = {siswa:0, p1:0,bj1:0,m1:0,a1:0,p2:0,bj2:0,m2:0,a2:0};
+            const totals={p:0,bj:0,m:0,a:0,bj2:0,m2:0,a2:0};
+
             rows.forEach((r,i)=>{
-                if (mode === 'murni') {
-                    const x = r.snapshot || {};
-                    totals.siswa += Number(x.siswa)||0;
-                    totals.p1 += Number(x.pendapatan)||0;
-                    totals.bj1 += Number(x.barangJasa)||0;
-                    totals.m1 += Number(x.modalPeralatanMesin)||0;
-                    totals.a1 += Number(x.modalAsetTetapLainnya)||0;
-                    html += `<tr>
-                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan)}</td><td>${escapeHtml(r.npsn)}</td><td>${escapeHtml(r.nama)}</td>
-                        <td class="num">${Number(x.siswa||0).toLocaleString('id-ID')}</td>
-                        <td class="num">${formatRupiahRekap(x.pendapatan)}</td><td class="num">${formatRupiahRekap(x.barangJasa)}</td>
-                        <td class="num">${formatRupiahRekap(x.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(x.modalAsetTetapLainnya)}</td>
+                if(mode==='murni'){
+                    const x=rekapSnapshotMurni(r);
+                    totals.p+=x.pendapatan; totals.bj+=x.barangJasa; totals.m+=x.modalPeralatanMesin; totals.a+=x.modalAsetTetapLainnya;
+                    const has=rekapHasNumbers(x);
+                    html+=`<tr>
+                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan||'-')}</td><td>${escapeHtml(r.nama||'-')}</td>
+                        <td class="num">${rekapMoney(x.pendapatan)}</td>
+                        <td class="num">${rekapMoney(x.barangJasa)}</td>
+                        <td class="num">${rekapMoney(x.modalPeralatanMesin)}</td>
+                        <td class="num">${rekapMoney(x.modalAsetTetapLainnya)}</td>
+                        <td>${has?'RKAS Murni':'Belum ada angka belanja'}</td>
                     </tr>`;
-                } else {
-                    const b = r.snapshot?.sebelum || {};
-                    const a = r.snapshot?.sesudah || {};
-                    totals.siswa += Number(b.siswa)||0;
-                    totals.p1 += Number(b.pendapatan)||0; totals.bj1 += Number(b.barangJasa)||0; totals.m1 += Number(b.modalPeralatanMesin)||0; totals.a1 += Number(b.modalAsetTetapLainnya)||0;
-                    totals.p2 += Number(a.pendapatan)||0; totals.bj2 += Number(a.barangJasa)||0; totals.m2 += Number(a.modalPeralatanMesin)||0; totals.a2 += Number(a.modalAsetTetapLainnya)||0;
-                    html += `<tr>
-                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan)}</td><td>${escapeHtml(r.npsn)}</td><td>${escapeHtml(r.nama)}</td>
-                        <td class="num">${Number(b.siswa||0).toLocaleString('id-ID')}</td>
-                        <td class="num">${formatRupiahRekap(b.pendapatan)}</td><td class="num">${formatRupiahRekap(b.barangJasa)}</td><td class="num">${formatRupiahRekap(b.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(b.modalAsetTetapLainnya)}</td>
-                        <td class="num">${formatRupiahRekap(a.pendapatan)}</td><td class="num">${formatRupiahRekap(a.barangJasa)}</td><td class="num">${formatRupiahRekap(a.modalPeralatanMesin)}</td><td class="num">${formatRupiahRekap(a.modalAsetTetapLainnya)}</td>
+                }else{
+                    let b={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+                    let a={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+
+                    if(r._murni) b=rekapSnapshotMurni(r._murni);
+
+                    let status='belum';
+                    if(r._perubahan){
+                        const q=rekapSnapshotPerubahan(r._perubahan);
+                        // Jika record Perubahan tersedia, gunakan snapshot sebelum/sesudah.
+                        // Jika snapshot sebelum kosong, tetap gunakan Murni sebagai dasar.
+                        if(rekapHasNumbers(q.sebelum) || rekapHasNumbers(q.sesudah)){
+                            if(rekapHasNumbers(q.sebelum)) b=q.sebelum;
+                            a=q.sesudah;
+                            status=rekapHasChange(b,a)?'berubah':'tetap';
+                        }else{
+                            // Record perubahan ada tetapi belum berisi angka.
+                            a={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+                            status='belum';
+                        }
+                    }else{
+                        // Belum klik Simpan RKAS jenis Perubahan.
+                        a={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+                        status='belum';
+                    }
+
+                    totals.p+=b.pendapatan; totals.bj+=b.barangJasa; totals.m+=b.modalPeralatanMesin; totals.a+=b.modalAsetTetapLainnya;
+                    totals.bj2+=a.barangJasa; totals.m2+=a.modalPeralatanMesin; totals.a2+=a.modalAsetTetapLainnya;
+
+                    const rowBg = status==='berubah' ? '#fff176' : status==='tetap' ? '#69f58b' : '#ff8f8f';
+                    const ket = status==='berubah'
+                        ? 'Ada perubahan'
+                        : status==='tetap'
+                            ? 'Tidak ada perubahan'
+                            : 'Belum input perubahan / kirim RKAS perubahan';
+
+                    html+=`<tr style="background:${rowBg};">
+                        <td>${i+1}</td><td>${escapeHtml(r.kecamatan||'-')}</td><td>${escapeHtml(r.nama||'-')}</td>
+                        <td class="num">${rekapMoney(b.pendapatan)}</td>
+                        <td class="num">${rekapMoney(b.barangJasa)}</td>
+                        <td class="num">${rekapMoney(b.modalPeralatanMesin)}</td>
+                        <td class="num">${rekapMoney(b.modalAsetTetapLainnya)}</td>
+                        <td class="num">${rekapMoney(a.barangJasa)}</td>
+                        <td class="num">${rekapMoney(a.modalPeralatanMesin)}</td>
+                        <td class="num">${rekapMoney(a.modalAsetTetapLainnya)}</td>
+                        <td style="font-weight:700;">${ket}</td>
                     </tr>`;
                 }
             });
 
-            if (mode === 'murni') {
-                html += `<tr class="total-row"><td colspan="4" style="text-align:right;">TOTAL</td><td class="num">${totals.siswa.toLocaleString('id-ID')}</td><td class="num">${formatRupiahRekap(totals.p1)}</td><td class="num">${formatRupiahRekap(totals.bj1)}</td><td class="num">${formatRupiahRekap(totals.m1)}</td><td class="num">${formatRupiahRekap(totals.a1)}</td></tr>`;
-            } else {
-                html += `<tr class="total-row"><td colspan="4" style="text-align:right;">TOTAL</td><td class="num">${totals.siswa.toLocaleString('id-ID')}</td>
-                    <td class="num">${formatRupiahRekap(totals.p1)}</td><td class="num">${formatRupiahRekap(totals.bj1)}</td><td class="num">${formatRupiahRekap(totals.m1)}</td><td class="num">${formatRupiahRekap(totals.a1)}</td>
-                    <td class="num">${formatRupiahRekap(totals.p2)}</td><td class="num">${formatRupiahRekap(totals.bj2)}</td><td class="num">${formatRupiahRekap(totals.m2)}</td><td class="num">${formatRupiahRekap(totals.a2)}</td></tr>`;
+            if(mode==='murni'){
+                html+=`<tr class="total-row"><td colspan="3" style="text-align:right;">Total</td>
+                    <td class="num">${rekapMoney(totals.p)}</td><td class="num">${rekapMoney(totals.bj)}</td>
+                    <td class="num">${rekapMoney(totals.m)}</td><td class="num">${rekapMoney(totals.a)}</td><td></td></tr>`;
+            }else{
+                html+=`<tr class="total-row"><td colspan="3" style="text-align:right;">Total</td>
+                    <td class="num">${rekapMoney(totals.p)}</td><td class="num">${rekapMoney(totals.bj)}</td><td class="num">${rekapMoney(totals.m)}</td><td class="num">${rekapMoney(totals.a)}</td>
+                    <td class="num">${rekapMoney(totals.bj2)}</td><td class="num">${rekapMoney(totals.m2)}</td><td class="num">${rekapMoney(totals.a2)}</td><td></td></tr>`;
             }
             body.innerHTML=html;
         }
 
-        // ============================================================
-        // REKAP DATA PENANDATANGAN SEKOLAH
-        // ============================================================
-        const REKAP_DATA_STORAGE_KEY='RKAS_REKAP_DATA_SEKOLAH_V1';
-
-        function loadRekapData(){
-            try{const raw=localStorage.getItem(REKAP_DATA_STORAGE_KEY);const rows=raw?JSON.parse(raw):[];return Array.isArray(rows)?rows:[];}catch(e){return [];}
-        }
-        function saveRekapData(rows){localStorage.setItem(REKAP_DATA_STORAGE_KEY,JSON.stringify(rows||[]));}
-        function saveSchoolToRekapData(idx,mode){
-            const s=masterSekolah[idx]; if(!s)return;
-            const d=dataPejabat?.[mode]||{};
-            const year=Number(rkasYear)||getCurrentYear();
-            const key=String(s.npsn)+'__'+year;
-            const row={key,npsn:String(s.npsn||'-'),kecamatan:String(s.kecamatan||'-'),nama:String(s.nama||'-'),
-                komite:String(d.komite||''),komite_nip:String(d.komite_nip||''),kasek:String(d.kasek||''),kasek_nip:String(d.kasek_nip||''),
-                bendahara:String(d.bendahara||''),bendahara_nip:String(d.bendahara_nip||''),tahun:year,mode:String(mode||'perubahan'),updatedAt:new Date().toISOString()};
-            const rows=loadRekapData(); const p=rows.findIndex(r=>r&&r.key===key); if(p>=0)rows[p]=row;else rows.push(row);
-            rows.sort((a,b)=>String(a.kecamatan).localeCompare(String(b.kecamatan),'id')||String(a.nama).localeCompare(String(b.nama),'id'));
-            saveRekapData(rows); renderRekapData();
-        }
-        function getRekapDataFilteredRows(){
-            const q=String(document.getElementById('rekap-data-search')?.value||'').trim().toLowerCase();
-            const kec=String(document.getElementById('rekap-data-kecamatan')?.value||'').trim().toLowerCase();
-            return loadRekapData().filter(r=>{
-                const hay=[r.npsn,r.kecamatan,r.nama,r.komite,r.komite_nip,r.kasek,r.kasek_nip,r.bendahara,r.bendahara_nip].join(' ').toLowerCase();
-                return (!q||hay.includes(q))&&(!kec||String(r.kecamatan||'').toLowerCase().replace(/^kec\.\s*/,'')===kec.replace(/^kec\.\s*/,''));
-            });
-        }
-        function renderRekapData(){
-            const body=document.getElementById('rekap-data-body'); if(!body)return;
-            const rows=getRekapDataFilteredRows();
-            if(!rows.length){body.innerHTML='<tr><td colspan="12" class="rekap-data-empty">Belum ada data. Operator harus menekan 💾 Simpan RKAS terlebih dahulu, atau Admin dapat menekan ☁️ Muat Data Online.</td></tr>';}
-            else body.innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(r.npsn)}</td><td>${escapeHtml(r.kecamatan)}</td><td><b>${escapeHtml(r.nama)}</b></td><td>${escapeHtml(r.komite||'-')}</td><td>${escapeHtml(r.komite_nip||'-')}</td><td>${escapeHtml(r.kasek||'-')}</td><td>${escapeHtml(r.kasek_nip||'-')}</td><td>${escapeHtml(r.bendahara||'-')}</td><td>${escapeHtml(r.bendahara_nip||'-')}</td><td>${escapeHtml(r.tahun||'-')}</td><td>${escapeHtml(String(r.mode||'').toLowerCase()==='murni'?'RKAS Murni':'RKAS Perubahan')}</td></tr>`).join('');
-            const st=document.getElementById('rekap-data-status'); if(st)st.textContent=rows.length?`✅ ${rows.length} data Rekap Data ditampilkan.`:'Belum ada data Rekap Data.';
-        }
-        async function loadRekapDataOnline(){
-            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat memuat Rekap Data Online.');return;}
-            const cfg=getOnlineDbConfig(); if(!cfg.url||!cfg.key){alert('Supabase belum terhubung.');return;}
-            try{
-                const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,nama,kecamatan,tahun,mode,rkas_payload,updated_at&order=kecamatan.asc,nama.asc,tahun.desc&limit=5000';
-                const rows=await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Rekap Data Online');
-                const map={};
-                loadRekapData().forEach(r=>{map[r.key]=r;});
-                (Array.isArray(rows)?rows:[]).forEach(r=>{
-                    const key=String(r.record_key||'');
-                    if(key.startsWith('MASTER_SEKOLAH__')||key.startsWith('__TARIF_SALUR__')||key.startsWith('__SYSTEM__'))return;
-                    const p=r.rkas_payload||{}, pej=p.pejabat||{}; const mode=String(r.mode||'perubahan'); const d=pej[mode]||pej.perubahan||pej.murni||{};
-                    const year=Number(r.tahun)||getCurrentYear(); const rowKey=String(r.npsn||'')+'__'+year;
-                    map[rowKey]={key:rowKey,npsn:String(r.npsn||'-'),kecamatan:String(r.kecamatan||'-'),nama:String(r.nama||'-'),komite:String(d.komite||''),komite_nip:String(d.komite_nip||''),kasek:String(d.kasek||''),kasek_nip:String(d.kasek_nip||''),bendahara:String(d.bendahara||''),bendahara_nip:String(d.bendahara_nip||''),tahun:year,mode,updatedAt:r.updated_at||new Date().toISOString()};
-                });
-                saveRekapData(Object.values(map)); renderRekapData(); updateOnlineDbStatus('ONLINE — Rekap Data berhasil dimuat.',true);
-                alert('Rekap Data berhasil dimuat dari DATABASE ONLINE Supabase.\n\nData sekolah yang sudah menyimpan RKAS akan masuk ke tabel Rekap Data.');
-            }catch(e){console.error(e);updateOnlineDbStatus('OFFLINE / gagal memuat Rekap Data.',false);alert('Gagal memuat Rekap Data Online.\n\n'+e.message);}
-        }
-        function downloadRekapDataExcel(){
-            if(typeof XLSX==='undefined'){alert('Modul Excel belum tersedia. Pastikan perangkat terhubung internet lalu buka ulang aplikasi.');return;}
-            const rows=getRekapDataFilteredRows();
-            if(!rows.length){alert('Tidak ada data Rekap Data untuk diunduh.');return;}
-            const aoa=[['RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS) SE-KABUPATEN LINGGA'],['REKAP DATA PENANDATANGAN SEKOLAH'],[],['No','NPSN','Kecamatan','Nama Sekolah','Nama Komite','NIP Komite','Nama Kepala Sekolah','NIP Kepala Sekolah','Nama Bendahara','NIP Bendahara','Tahun','Jenis RKAS']];
-            rows.forEach((r,i)=>aoa.push([i+1,r.npsn,r.kecamatan,r.nama,r.komite||'-',r.komite_nip||'-',r.kasek||'-',r.kasek_nip||'-',r.bendahara||'-',r.bendahara_nip||'-',r.tahun,r.mode==='murni'?'RKAS Murni':'RKAS Perubahan']));
-            const ws=XLSX.utils.aoa_to_sheet(aoa); ws['!cols']=[{wch:6},{wch:13},{wch:22},{wch:34},{wch:28},{wch:22},{wch:30},{wch:22},{wch:28},{wch:22},{wch:10},{wch:18}];
-            ws['!freeze']={xSplit:0,ySplit:4};
-            const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Rekap Data');
-            XLSX.writeFile(wb,'Rekap_Data_RKAS_Se-Kabupaten_Lingga.xlsx');
-        }
-
         function deleteAllHasilRekap(){
-            if(!isAdmin()){ alert('Akses ditolak. Hanya Admin yang dapat menggunakan Hapus Semua pada Hasil Rekap.'); return; }
-            const rows = loadHasilRekap();
-            if (!rows.length) {
-                alert('Hasil Rekap Seluruh Sekolah sudah kosong.');
-                return;
-            }
-            if (!confirm('Hapus SEMUA data pada Hasil Rekap Seluruh Sekolah? Data Master Sekolah dan Lembar Kerja RKAS tidak akan dihapus.')) return;
+            if(!isAdmin()){alert('Akses ditolak. Hanya Admin yang dapat menggunakan Hapus Semua pada Hasil Rekap.');return;}
+            if(!confirm('Hapus SEMUA data pada Hasil Rekap Seluruh Sekolah? Data Master Sekolah, Rekap Data, dan Lembar Kerja RKAS tidak akan dihapus.'))return;
             localStorage.removeItem(HASIL_REKAP_STORAGE_KEY);
+            localStorage.removeItem('RKAS_HASIL_REKAP_ONLINE_CACHE_V2');
             renderHasilRekap();
-            alert('Semua data Hasil Rekap Seluruh Sekolah berhasil dihapus. Data Master Sekolah dan Lembar Kerja RKAS tetap aman.');
+            updateOnlineDbStatus('Hasil Rekap Seluruh Sekolah sudah dikosongkan. Data Master, Rekap Data, dan Lembar Kerja RKAS tetap aman.',true);
+            alert('Semua data Hasil Rekap Seluruh Sekolah berhasil dihapus.');
         }
 
         function buildRekapWorkbookRows(mode){
@@ -3214,15 +3254,15 @@ function updateLoginPlaceholder(){
                 aoa.push(['HASIL REKAP SELURUH SEKOLAH']);
                 aoa.push(['RKAS MURNI']);
                 aoa.push([]);
-                aoa.push(['No','Kecamatan','NPSN','Nama Sekolah','Jumlah Siswa','Pendapatan','Barang dan Jasa','Modal Peralatan dan Mesin','Modal Aset Tetap Lainnya']);
-                const totals={siswa:0,pendapatan:0,bj:0,mpm:0,aset:0};
+                aoa.push(['No','Kecamatan','NPSN','Nama Sekolah','Jumlah Siswa','Pendapatan','Barang dan Jasa','Modal Peralatan dan Mesin','Modal Aset Tetap Lainnya','Total Belanja','Sisa Dana']);
+                const totals={siswa:0,pendapatan:0,bj:0,mpm:0,aset:0,total:0,sisa:0};
                 rows.forEach((r,i)=>{
                     const x=r.snapshot||{};
-                    const siswa=Number(x.siswa)||0, pend=Number(x.pendapatan)||0, bj=Number(x.barangJasa)||0, mpm=Number(x.modalPeralatanMesin)||0, aset=Number(x.modalAsetTetapLainnya)||0;
-                    totals.siswa+=siswa; totals.pendapatan+=pend; totals.bj+=bj; totals.mpm+=mpm; totals.aset+=aset;
-                    aoa.push([i+1,r.kecamatan||'-',r.npsn||'-',r.nama||'-',siswa,pend,bj,mpm,aset]);
+                    const siswa=Number(x.siswa)||0, pend=Number(x.pendapatan)||0, bj=Number(x.barangJasa)||0, mpm=Number(x.modalPeralatanMesin)||0, aset=Number(x.modalAsetTetapLainnya)||0, total=Number(x.totalBelanja)||(bj+mpm+aset), sisa=Number(x.sisaDana)||(pend-total);
+                    totals.siswa+=siswa; totals.pendapatan+=pend; totals.bj+=bj; totals.mpm+=mpm; totals.aset+=aset; totals.total+=total; totals.sisa+=sisa;
+                    aoa.push([i+1,r.kecamatan||'-',r.npsn||'-',r.nama||'-',siswa,pend,bj,mpm,aset,total,sisa]);
                 });
-                aoa.push(['','','','TOTAL',totals.siswa,totals.pendapatan,totals.bj,totals.mpm,totals.aset]);
+                aoa.push(['','','','TOTAL',totals.siswa,totals.pendapatan,totals.bj,totals.mpm,totals.aset,totals.total,totals.sisa]);
             } else {
                 aoa.push(['HASIL REKAP SELURUH SEKOLAH']);
                 aoa.push(['RKAS PERUBAHAN']);
@@ -3257,11 +3297,11 @@ function updateLoginPlaceholder(){
                 const ws=XLSX.utils.aoa_to_sheet(aoa);
                 if(mode==='murni'){
                     ws['!merges']=[
-                        {s:{r:0,c:0},e:{r:0,c:8}},
-                        {s:{r:1,c:0},e:{r:1,c:8}}
+                        {s:{r:0,c:0},e:{r:0,c:10}},
+                        {s:{r:1,c:0},e:{r:1,c:10}}
                     ];
-                    ws['!cols']=[{wch:6},{wch:20},{wch:14},{wch:34},{wch:13},{wch:18},{wch:20},{wch:25},{wch:25}];
-                    ws['!autofilter']={ref:`A4:I${aoa.length-1}`};
+                    ws['!cols']=[{wch:6},{wch:20},{wch:14},{wch:34},{wch:13},{wch:18},{wch:20},{wch:25},{wch:25},{wch:18},{wch:18}];
+                    ws['!autofilter']={ref:`A4:K${aoa.length-1}`};
                 }else{
                     ws['!merges']=[
                         {s:{r:0,c:0},e:{r:0,c:12}},
@@ -3361,13 +3401,23 @@ function updateLoginPlaceholder(){
             }, extra||{});
         }
 
-        async function supabaseFetchJson(url, options={}, context='Database online'){
-            const res=await fetch(url,options);
-            if(!res.ok){
-                const text=await res.text();
-                throw new Error(text||(`${context} gagal (${res.status}).`));
-            }
-            return res.json();
+        async function supabaseFetchJson(url, options={}, context='Database online', timeoutMs=15000){
+            // Hindari layar "Membaca database online..." tanpa batas waktu.
+            // Jika Supabase tidak merespons, aplikasi berhenti menunggu maksimal 15 detik.
+            const controller=new AbortController();
+            const timer=setTimeout(()=>controller.abort(),timeoutMs);
+            const fetchOptions={...options,signal:controller.signal};
+            try{
+                const res=await fetch(url,fetchOptions);
+                if(!res.ok){
+                    const text=await res.text();
+                    throw new Error(text||(`${context} gagal (${res.status}).`));
+                }
+                return await res.json();
+            }catch(err){
+                if(err?.name==='AbortError') throw new Error(`${context} terlalu lama merespons (lebih dari ${Math.round(timeoutMs/1000)} detik). Periksa koneksi Supabase/internet.`);
+                throw err;
+            }finally{ clearTimeout(timer); }
         }
 
         // Membaca akun operator tanpa meminta kolom opsional (status), sehingga
@@ -3443,7 +3493,18 @@ function updateLoginPlaceholder(){
             try{await loadAllTarifSalurOnline();}catch(e){console.warn('Tarif Salur online tidak dapat dimuat massal:',e);}
             saveOperatorAccounts(accounts);
             if(mergeToMaster) localStorage.setItem('MASTER_SEKOLAH_RKAS',JSON.stringify(masterSekolah));
-            renderMasterTable(); initApp();
+            // Jangan memanggil initApp() di sini. initApp() terlalu berat karena ikut
+            // memuat ulang banyak pengaturan. Setelah master online dimuat, cukup refresh
+            // selector sekolah dan tabel master agar tampilan Kelola Master Data tetap berada
+            // di halaman yang sama.
+            const selector=document.getElementById('school-selector');
+            if(selector){
+                const selected=selector.value;
+                selector.innerHTML='<option value="">-- Pilih Lembaga --</option>';
+                masterSekolah.forEach((s,idx)=>{const op=document.createElement('option');op.value=idx;op.textContent=`${s.nama} (${s.npsn})`;selector.appendChild(op);});
+                if([...selector.options].some(o=>o.value===selected)) selector.value=selected;
+            }
+            renderMasterTable();
             return {rows,skipped,merged};
         }
 
@@ -3524,7 +3585,7 @@ function updateLoginPlaceholder(){
         function applyOnlineRkasPayload(idx,record){
             const payload=record?.rkas_payload||{};
             if(payload.kegiatan) kegiatanSuntikanModal[idx]=payload.kegiatan;
-            if(payload.pejabat){ dataPejabat=clonePejabatPair(payload.pejabat); saveCurrentSchoolPejabat(); }
+            if(payload.pejabat) dataPejabat=payload.pejabat;
             const year=Number(record.tahun)||rkasYear;
             applyRkasSettings({year,source:record.sumber_dana||payload.rkasSettings?.source||'Bos Reguler'});
             try{ localStorage.setItem(getRkasStorageKey(year),JSON.stringify(payload)); }catch(e){}
@@ -3548,49 +3609,44 @@ function updateLoginPlaceholder(){
             return {configured:true,record};
         }
 
-        async function loadOnlineRekapRows(){
+        async function loadOnlineRekapRows(yearOverride){
             const cfg=getOnlineDbConfig();
-            if(!cfg.url || !cfg.key) throw new Error('Database online belum dikonfigurasi.');
-            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=record_key,npsn,nama,kecamatan,siswa,mode,tahun,sumber_dana,rkas_payload,rekap_snapshot,saved_at,updated_at&order=kecamatan.asc,nama.asc,mode.asc,tahun.desc';
-            const res=await fetch(url,{headers:onlineDbHeaders(cfg)});
-            if(!res.ok) throw new Error(await res.text());
-            const data=await res.json();
-            if(!Array.isArray(data)) return [];
-            return data.filter(r=>{
-                const key=String(r?.record_key||'');
-                return !key.startsWith('MASTER_SEKOLAH__') && !key.startsWith('__TARIF_SALUR__');
-            });
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const base=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE;
+            // Hanya membaca kolom yang diperlukan Hasil Rekap. Tidak membaca rkas_payload,
+            // pejabat, akun, atau data Rekap Data sehingga proses lebih ringan dan terisolasi.
+            const select='record_key,npsn,nama,kecamatan,siswa,mode,tahun,rekap_snapshot,updated_at,saved_at';
+            const params=['select='+encodeURIComponent(select),'mode=in.(murni,perubahan)','order=updated_at.desc','limit=5000'].join('&');
+            return await supabaseFetchJson(base+'?'+params,{headers:onlineDbHeaders(cfg)},'Muat Hasil Rekap Online',15000);
         }
 
         async function muatRekapOnline(yearOverride){
             const cfg=getOnlineDbConfig();
-            if(!cfg.url || !cfg.key){
-                alert('Database online belum dikonfigurasi. Silakan buka ⚙️ Database Online dan masukkan koneksi Supabase.');
-                toggleOnlineDbSettings();
-                return;
+            if(!cfg.url||!cfg.key){
+                updateOnlineDbStatus('Database online belum dikonfigurasi. Buka ⚙️ Database Online untuk mengatur koneksi.',false);
+                toggleOnlineDbSettings(); return [];
             }
-            const selector=document.getElementById('rekap-mode-selector');
-            const mode=selector?.value||'murni';
-            const targetYear=Number(yearOverride||document.getElementById('rekap-year-selector')?.value||getCurrentYear());
-            const body=document.getElementById('hasil-rekap-body');
-            if(body) body.innerHTML='<tr><td colspan="13" style="text-align:center;padding:20px;">⏳ Membaca database online...</td></tr>';
+            const targetYear=Number(yearOverride||document.getElementById('rekap-year-selector')?.value||getCurrentYear())||getCurrentYear();
+            const btn=document.querySelector('#rekap-view button[onclick="muatRekapOnline()"]');
+            if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='⏳ Membaca online...';}
+            updateOnlineDbStatus('Sedang membaca data RKAS langsung dari database online...',true);
             try{
-                const rows=await loadOnlineRekapRows();
-                const mapped=rows.filter(r=>canAccessNpsn(r.npsn) && Number(r.tahun||2026)===targetYear).map(r=>({
-                    key:r.record_key, mode:r.mode, tahun:Number(r.tahun||2026), npsn:r.npsn, nama:r.nama, kecamatan:r.kecamatan, siswa:r.siswa,
-                    snapshot:r.rekap_snapshot, savedAt:r.updated_at||r.saved_at
+                const rows=await loadOnlineRekapRows(targetYear);
+                const mapped=(Array.isArray(rows)?rows:[]).filter(r=>r && r.npsn && (r.mode==='murni'||r.mode==='perubahan') && (isAdmin()||canAccessNpsn(r.npsn))).map(r=>({
+                    key:r.record_key||('ONLINE-'+r.npsn+'-'+r.mode+'-'+r.tahun),record_key:r.record_key||'',mode:String(r.mode||'murni'),tahun:Number(r.tahun)||targetYear,
+                    npsn:String(r.npsn||''),nama:String(r.nama||''),kecamatan:String(r.kecamatan||''),siswa:Number(r.siswa)||0,
+                    snapshot:r.rekap_snapshot||{},updated_at:r.updated_at||'',saved_at:r.saved_at||'',savedAt:r.updated_at||r.saved_at||''
                 }));
-                // Tampilkan langsung dari database online dan sinkronkan salinan lokal agar workbook tetap bisa digunakan.
-                localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(mapped));
+                // Cache khusus Hasil Rekap. Tidak menyentuh storage Rekap Data.
+                saveHasilRekapOnlineCache(mapped);
+                try{localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(mapped));}catch(e){}
                 renderHasilRekap();
-                const count=mapped.filter(r=>r.mode===mode && Number(r.tahun||2026)===targetYear).length;
-                updateOnlineDbStatus(`Berhasil memuat ${count} data ${mode==='murni'?'RKAS Murni':'RKAS Perubahan'} tahun ${targetYear} dari database online.`,true);
+                const m=mapped.filter(r=>r.mode==='murni').length,p=mapped.filter(r=>r.mode==='perubahan').length;
+                updateOnlineDbStatus(mapped.length?`Berhasil memuat ${m} RKAS Murni + ${p} RKAS Perubahan. Hasil Rekap tampil langsung dari database online.`:'Database online terbaca, tetapi belum ada RKAS Murni/Perubahan.',!!mapped.length);
+                return mapped;
             }catch(err){
-                console.error(err);
-                renderHasilRekap();
-                updateOnlineDbStatus('Gagal memuat: '+err.message,false);
-                alert('Gagal memuat Rekap Online.\n\n'+err.message);
-            }
+                console.error('Muat Hasil Rekap Online gagal:',err); renderHasilRekap(); updateOnlineDbStatus('Gagal membaca database online: '+(err?.message||err),false); return [];
+            }finally{if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'☁️ Muat Rekap Online';}}
         }
 
         // Simpan RKAS tetap menggunakan alur V8, lalu otomatis mengirim salinan ke database online jika dikonfigurasi.
@@ -3624,31 +3680,7 @@ function updateLoginPlaceholder(){
             if(tabId === 'rekap-view') renderHasilRekap();
         };
 
-        let supabaseHeartbeatTimer=null;
-        async function refreshSupabaseOnlineStatus(silent=true){
-            const cfg=getOnlineDbConfig();
-            if(!cfg.url||!cfg.key){updateOnlineDbStatus('OFFLINE — Supabase belum dikonfigurasi.',false);return false;}
-            try{
-                const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),7000);
-                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=id&limit=1',{headers:onlineDbHeaders(cfg),signal:ctl.signal});clearTimeout(timer);
-                if(!res.ok)throw new Error('HTTP '+res.status);
-                updateOnlineDbStatus('ONLINE — Supabase terhubung',true);const badge=document.getElementById('global-supabase-status');if(badge){badge.textContent='● SUPABASE ONLINE';badge.classList.add('online');badge.classList.remove('offline');}return true;
-            }catch(e){
-                updateOnlineDbStatus('OFFLINE — koneksi Supabase tidak tersedia.',false);const badge=document.getElementById('global-supabase-status');if(badge){badge.textContent='● SUPABASE OFFLINE';badge.classList.add('offline');badge.classList.remove('online');}if(!silent)console.warn(e);return false;
-            }
-        }
-        function startSupabaseHeartbeat(){
-            refreshSupabaseOnlineStatus(true);if(supabaseHeartbeatTimer)clearInterval(supabaseHeartbeatTimer);supabaseHeartbeatTimer=setInterval(()=>refreshSupabaseOnlineStatus(true),15000);
-        }
-
-        const AUTO_LOGOUT_MS=5*60*1000;let autoLogoutTimer=null;let lastActivityAt=Date.now();
-        function resetAutoLogoutTimer(){
-            lastActivityAt=Date.now();if(autoLogoutTimer)clearTimeout(autoLogoutTimer);if(isLoggedIn())autoLogoutTimer=setTimeout(()=>{if(isLoggedIn()){alert('Aplikasi otomatis keluar karena tidak ada aktivitas selama 5 menit.');logoutOnlineUser();}},AUTO_LOGOUT_MS);
-        }
-        ['click','keydown','mousemove','mousedown','scroll','touchstart','pointerdown'].forEach(ev=>document.addEventListener(ev,()=>resetAutoLogoutTimer(),{passive:true}));
-
         async function initOnlineAuthApp(){
-            startSupabaseHeartbeat();
             document.body.classList.add('auth-locked');
             updateLoginPlaceholder();
             refreshLoginDeadlineDisplay().catch(()=>{});
@@ -3657,6 +3689,311 @@ function updateLoginPlaceholder(){
             await tryRestoreLogin();
         }
         window.onload = initOnlineAuthApp;
-    </script>
-<script>setInterval(function(){if(document.getElementById('auth-overlay'))refreshLoginDeadlineDisplay()},30000);</script></body>
+    
+        // ============================================================
+        // STATUS SUPABASE REAL-TIME + AUTO LOGOUT 5 MENIT
+        // ============================================================
+        function setGlobalDatabaseStatus(state,msg){
+            const text=msg|| (state==='online'?'DATABASE SUPABASE: ONLINE':state==='offline'?'DATABASE SUPABASE: OFFLINE':'DATABASE SUPABASE: MEMERIKSA...');
+            ['global-db-status','login-db-status'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.classList.remove('online','offline','checking');el.classList.add(state==='online'?'online':state==='offline'?'offline':'checking');el.textContent=(state==='online'?'● ':state==='offline'?'● ':'● ')+text;});
+            const master=document.querySelector('.master-online-badge'); if(master){master.textContent=state==='online'?'● DATABASE ONLINE • TARIF SALUR TERSINKRON':state==='offline'?'● DATABASE OFFLINE • DATA LOKAL AKTIF':'● DATABASE MEMERIKSA KONEKSI...';master.style.background=state==='online'?'#eaf9ef':state==='offline'?'#fff4e8':'#eef8ff';master.style.color=state==='online'?'#14733c':state==='offline'?'#9a4b00':'#155e75';}
+        }
+        async function checkSupabaseOnlineStatus(silent=true){
+            setGlobalDatabaseStatus('checking','DATABASE SUPABASE: MEMERIKSA...');
+            try{
+                const cfg=getOnlineDbConfig();
+                if(!cfg.url||!cfg.key)throw new Error('Koneksi belum dikonfigurasi');
+                const res=await fetch(cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?select=id&limit=1',{headers:onlineDbHeaders(cfg),cache:'no-store'});
+                if(!res.ok)throw new Error('HTTP '+res.status);
+                setGlobalDatabaseStatus('online','DATABASE SUPABASE: ONLINE');
+                if(!silent)updateOnlineDbStatus('Koneksi berhasil. Database siap digunakan.',true);
+                return true;
+            }catch(e){
+                setGlobalDatabaseStatus('offline','DATABASE SUPABASE: OFFLINE');
+                if(!silent)updateOnlineDbStatus('OFFLINE: '+e.message,false);
+                return false;
+            }
+        }
+        setInterval(()=>{ if(isLoggedIn()) checkSupabaseOnlineStatus(true); },60000);
+
+        const AUTO_LOGOUT_MS=5*60*1000;
+        let inactivityTimer=null;
+        function resetInactivityTimer(){
+            if(!isLoggedIn())return;
+            clearTimeout(inactivityTimer);
+            inactivityTimer=setTimeout(()=>{
+                if(isLoggedIn()){
+                    alert('Aplikasi otomatis logout karena tidak ada aktivitas selama 5 menit. Silakan login kembali.');
+                    logoutOnlineUser();
+                }
+            },AUTO_LOGOUT_MS);
+        }
+        ['click','mousemove','mousedown','keydown','touchstart','scroll','wheel','pointerdown'].forEach(evt=>document.addEventListener(evt,resetInactivityTimer,{passive:true}));
+        const _enterAuthenticatedAppOriginal=enterAuthenticatedApp;
+        enterAuthenticatedApp=async function(){const r=await _enterAuthenticatedAppOriginal.apply(this,arguments);resetInactivityTimer();return r;};
+        const _logoutOnlineUserOriginal=logoutOnlineUser;
+        logoutOnlineUser=function(){clearTimeout(inactivityTimer);return _logoutOnlineUserOriginal.apply(this,arguments);};
+
+        // Simpan RKAS: lokal + otomatis online tanpa perlu klik tombol kedua.
+        saveRkasData=async function(){
+            if(!isLoggedIn()){alert('Silakan login terlebih dahulu.');return;}
+            const idx=getCurrentSchoolIndex();
+            const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            if(idx===null){alert('Silakan pilih Sekolah Target terlebih dahulu.');return;}
+            if(!canAccessSchool(idx)){alert('AKSES DITOLAK. Anda hanya dapat mengubah data sekolah yang ditugaskan kepada akun Anda.');return;}
+            resetInactivityTimer();
+            try{
+                const payload={version:2,savedAt:new Date().toISOString(),schoolIndex:idx,kegiatan:ensureSchoolModalData(idx),pejabat:JSON.parse(JSON.stringify(dataPejabat)),rkasSettings:{year:rkasYear,source:rkasSource}};
+                localStorage.setItem(getRkasStorageKey(),JSON.stringify(payload));
+                saveSchoolToHasilRekap(idx,mode);
+                const online=await checkSupabaseOnlineStatus(true);
+                if(online){await saveCurrentRkasOnline(idx,mode);setSubmitRkasStatus('✅ RKAS berhasil disimpan ONLINE ke Supabase.',true);alert('RKAS berhasil disimpan ke DATABASE ONLINE Supabase.');}
+                else{setSubmitRkasStatus('⚠️ RKAS tersimpan lokal. Supabase sedang OFFLINE.',false);alert('RKAS tersimpan di perangkat, tetapi DATABASE SUPABASE sedang OFFLINE. Data akan tetap aman di penyimpanan lokal.');}
+            }catch(err){console.error(err);setSubmitRkasStatus('❌ Gagal menyimpan RKAS: '+err.message,false);alert('Gagal menyimpan RKAS: '+err.message);}
+        };
+
+        // Pastikan status database langsung dicek saat aplikasi dibuka.
+        const _initOnlineAuthAppOriginal=initOnlineAuthApp;
+        initOnlineAuthApp=async function(){
+            checkSupabaseOnlineStatus(true).catch(()=>{});
+            return _initOnlineAuthAppOriginal.apply(this,arguments);
+        };
+        window.addEventListener('online',()=>checkSupabaseOnlineStatus(true));
+        window.addEventListener('offline',()=>setGlobalDatabaseStatus('offline','DATABASE SUPABASE: OFFLINE'));
+        window.onload = initOnlineAuthApp;
+</script>
+<script>setInterval(function(){if(document.getElementById('auth-overlay'))refreshLoginDeadlineDisplay()},30000);
+        // ============================================================
+        // REKAP DATA: IDENTITAS PENANDATANGAN PER SEKOLAH
+        // ============================================================
+        const REKAP_DATA_STORAGE_KEY='RKAS_REKAP_DATA_V1';
+        function getRekapDataLocal(){try{const x=JSON.parse(localStorage.getItem(REKAP_DATA_STORAGE_KEY)||'[]');return Array.isArray(x)?x:[];}catch(e){return [];}}
+        function saveRekapDataLocal(rows){try{localStorage.setItem(REKAP_DATA_STORAGE_KEY,JSON.stringify(rows||[]));}catch(e){}}
+        function pejabatFromPayload(payload,mode){
+            // Mendukung hasil PostgREST rkas_payload->pejabat maupun payload lengkap.
+            let all=payload?.pejabat??payload??{};
+            if(typeof all==='string'){try{all=JSON.parse(all);}catch(e){all={};}}
+            const d=all?.[mode]||all?.perubahan||all?.murni||all||{};
+            return {komite:String(d?.komite||''),komite_nip:String(d?.komite_nip||''),kasek:String(d?.kasek||''),kasek_nip:String(d?.kasek_nip||''),bendahara:String(d?.bendahara||''),bendahara_nip:String(d?.bendahara_nip||'')};
+        }
+        // Rekap Data = SATU baris terbaru untuk setiap sekolah (NPSN) per tahun.
+        // Jika sekolah mengganti Komite/Kepala Sekolah/Bendahara, penyimpanan berikutnya
+        // menggantikan data lama, bukan membuat baris pejabat baru.
+        function upsertRekapDataLocal(idx,mode){
+            const s=masterSekolah[idx]; if(!s)return;
+            const d=pejabatFromPayload({pejabat:dataPejabat},mode);
+            const rows=getRekapDataLocal();
+            const npsn=String(s.npsn||'').trim();
+            const year=Number(rkasYear)||2026;
+            const key=`${npsn}__${year}`;
+            const row={key,npsn,kecamatan:String(s.kecamatan||''),nama:String(s.nama||''),...d,tahun:year,mode,savedAt:new Date().toISOString()};
+            // Hapus record lama untuk sekolah/tahun yang sama, termasuk format key lama
+            // yang masih memakai __mode__.
+            const cleaned=rows.filter(x=>{
+                if(!x)return false;
+                const xn=String(x.npsn||'').trim();
+                const xy=Number(x.tahun||0)||0;
+                return !(xn===npsn && xy===year);
+            });
+            cleaned.push(row);
+            cleaned.sort((a,b)=>String(a.kecamatan).localeCompare(String(b.kecamatan),'id')||String(a.nama).localeCompare(String(b.nama),'id')||String(a.npsn).localeCompare(String(b.npsn),'id'));
+            saveRekapDataLocal(cleaned); return row;
+        }
+        function populateRekapDataFilters(){
+            const ys=document.getElementById('rekap-data-year');
+            if(ys){const now=getCurrentYear();ys.innerHTML='';for(let y=2026;y<=Math.max(now+10,2035);y++){const o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o);}ys.value=String(Number(rkasYear)||now);}
+            const ks=document.getElementById('rekap-data-kecamatan');
+            if(ks){const old=ks.value;const vals=[...new Set(masterSekolah.map(s=>String(s.kecamatan||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'id'));ks.innerHTML='<option value="">Semua Kecamatan</option>'+vals.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');if(vals.includes(old))ks.value=old;}
+        }
+        function renderRekapDataTable(){
+            const body=document.getElementById('rekap-data-body'); if(!body)return;
+            populateRekapDataFilters();
+            const q=String(document.getElementById('rekap-data-search')?.value||'').toLowerCase().trim();
+            const kec=String(document.getElementById('rekap-data-kecamatan')?.value||'').toLowerCase().trim();
+            const rows=getRekapDataLocal().filter(r=>{
+                const text=[r.kecamatan,r.nama,r.komite,r.komite_nip,r.kasek,r.kasek_nip,r.bendahara,r.bendahara_nip].join(' ').toLowerCase();
+                return (!q||text.includes(q))&&(!kec||String(r.kecamatan||'').toLowerCase()===kec);
+            });
+            if(!rows.length){body.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:#777;">Belum ada Rekap Data. Klik <b>☁️ Muat Data Online</b> untuk membaca data yang tersimpan operator.</td></tr>';return;}
+            body.innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(r.kecamatan||'-')}</td><td>${escapeHtml(r.nama||'-')}</td><td>${escapeHtml(r.komite||'-')}</td><td>${escapeHtml(r.komite_nip||'-')}</td><td>${escapeHtml(r.kasek||'-')}</td><td>${escapeHtml(r.kasek_nip||'-')}</td><td>${escapeHtml(r.bendahara||'-')}</td><td>${escapeHtml(r.bendahara_nip||'-')}</td></tr>`).join('');
+            const st=document.getElementById('rekap-data-status');if(st)st.textContent=`Menampilkan ${rows.length} data Rekap Data.`;
+        }
+        function resetRekapDataFilter(){const a=document.getElementById('rekap-data-search');if(a)a.value='';const b=document.getElementById('rekap-data-kecamatan');if(b)b.value='';renderRekapDataTable();}
+        async function loadOnlineRekapPenandatangan(yearOverride){
+            const cfg=getOnlineDbConfig();
+            if(!cfg.url||!cfg.key) throw new Error('Database online belum dikonfigurasi.');
+            const year=Number(yearOverride||document.getElementById('rekap-data-year')?.value||rkasYear)||getCurrentYear();
+            // KHUSUS REKAP DATA. Tidak memanggil loadOnlineRekapRows() milik Hasil Rekap/Kelola Master Data.
+            // Hanya meminta identitas sekolah dan pejabat dari RKAS yang benar-benar disimpan operator.
+            const select='npsn,nama,kecamatan,mode,tahun,saved_at,updated_at,pejabat:rkas_payload->pejabat';
+            const params=[
+                'select='+encodeURIComponent(select),
+                'tahun=eq.'+encodeURIComponent(String(year)),
+                'mode=in.(murni,perubahan)',
+                'order=updated_at.desc',
+                'limit=1000'
+            ].join('&');
+            const url=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE+'?'+params;
+            return await supabaseFetchJson(url,{headers:onlineDbHeaders(cfg)},'Muat Rekap Data Penandatangan',8000).then(data=>Array.isArray(data)?data:[]);
+        }
+
+        async function muatRekapDataOnline(){
+            if(!isAdmin()){alert('Akses ditolak. Rekap Data hanya dapat dimuat oleh Admin.');return;}
+            const st=document.getElementById('rekap-data-status');
+            if(st)st.textContent='⏳ Memuat data penandatangan dari database online...';
+            const btn=document.querySelector('#rekap-data-view button[onclick="muatRekapDataOnline()"]');
+            if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='⏳ Membaca...';}
+            try{
+                const targetYear=Number(document.getElementById('rekap-data-year')?.value||rkasYear)||getCurrentYear();
+                const rows=await loadOnlineRekapPenandatangan(targetYear);
+                // Satu baris terbaru per NPSN + tahun. Jika pejabat diganti dan RKAS disimpan lagi,
+                // record dengan updated_at terbaru menjadi sumber Rekap Data.
+                const latest=new Map();
+                rows.filter(r=>canAccessNpsn(r.npsn)&&['murni','perubahan'].includes(r.mode)).forEach(r=>{
+                    const npsn=String(r.npsn||'').trim(); if(!npsn)return;
+                    const key=npsn+'__'+targetYear;
+                    const stamp=new Date(r.updated_at||r.saved_at||0).getTime()||0;
+                    const old=latest.get(key); const oldStamp=old?(new Date(old.updated_at||old.saved_at||0).getTime()||0):-1;
+                    if(!old||stamp>=oldStamp)latest.set(key,r);
+                });
+                const mapped=[...latest.values()].map(r=>{
+                    const d=pejabatFromPayload(r.pejabat,r.mode);
+                    return {key:String(r.npsn)+'__'+targetYear,npsn:String(r.npsn||''),kecamatan:String(r.kecamatan||''),nama:String(r.nama||''),...d,tahun:targetYear,mode:r.mode,savedAt:r.updated_at||r.saved_at||''};
+                });
+                // Hanya Rekap Data yang diperbarui. Hasil Rekap dan Master Data tidak disentuh.
+                saveRekapDataLocal(mapped);
+                populateRekapDataFilters();
+                renderRekapDataTable();
+                if(st)st.textContent=`✅ ${mapped.length} sekolah dimuat dari database online. Hanya data operator yang tersimpan yang ditampilkan.`;
+            }catch(e){
+                console.error(e);
+                if(st)st.textContent='❌ Gagal memuat Rekap Data Online: '+e.message;
+                alert('Gagal memuat Rekap Data Online.\n\n'+e.message);
+            }finally{
+                if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'☁️ Muat Data Online';}
+            }
+        }
+
+        function downloadRekapDataWorkbook(){
+            if(typeof XLSX==='undefined'){alert('Modul Excel belum tersedia. Pastikan internet aktif.');return;}
+            const rows=getRekapDataLocal();
+            if(!rows.length){alert('Belum ada data Rekap Data. Klik Muat Data Online terlebih dahulu.');return;}
+            const aoa=[
+                ['RENCANA KEGIATAN DAN ANGGARAN SEKOLAH (RKAS) SE-KABUPATEN LINGGA'],
+                ['REKAP DATA PENANDATANGAN SEKOLAH'],[],
+                ['No','Kecamatan','Nama Sekolah','Nama Komite','NIP Komite','Nama Kepala Sekolah','NIP Kepala Sekolah','Nama Bendahara','NIP Bendahara']
+            ];
+            rows.forEach((r,i)=>aoa.push([i+1,r.kecamatan||'',r.nama||'',r.komite||'',r.komite_nip||'',r.kasek||'',r.kasek_nip||'',r.bendahara||'',r.bendahara_nip||'']));
+            const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(aoa);
+            ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:8}},{s:{r:1,c:0},e:{r:1,c:8}}];
+            ws['!cols']=[{wch:6},{wch:22},{wch:35},{wch:28},{wch:22},{wch:30},{wch:22},{wch:30},{wch:22}];
+            ws['!autofilter']={ref:`A4:I${aoa.length}`}; ws['!freeze']={xSplit:0,ySplit:4};
+            XLSX.utils.book_append_sheet(wb,ws,'Rekap Data');
+            XLSX.writeFile(wb,`Rekap_Data_RKAS_Lingga_${getCurrentYear()}.xlsx`);
+        }
+        const _switchTabForRekapData = switchTab;
+        switchTab=function(tabId,el){
+            if(!isLoggedIn()){alert('Silakan login terlebih dahulu.');return;}
+            if((tabId==='master-view'||tabId==='rekap-view'||tabId==='rekap-data-view')&&!isAdmin()){alert('Akses ditolak. Menu ini hanya untuk Admin.');return;}
+            _switchTabForRekapData(tabId,el);
+            if(tabId==='rekap-view')renderHasilRekap();
+            if(tabId==='rekap-data-view'){populateRekapDataFilters();renderRekapDataTable();}
+        };
+
+        // Simpan RKAS final: lokal + Rekap Data + Supabase online.
+        saveRkasData=async function(){
+            if(!isLoggedIn()){alert('Silakan login terlebih dahulu.');return;}
+            const idx=getCurrentSchoolIndex();
+            const mode=document.getElementById('rkas-type-selector')?.value||'perubahan';
+            if(idx===null){alert('Silakan pilih Sekolah Target terlebih dahulu.');return;}
+            if(!canAccessSchool(idx)){alert('AKSES DITOLAK. Anda hanya dapat mengubah data sekolah yang ditugaskan kepada akun Anda.');return;}
+            resetInactivityTimer();
+            try{
+                const payload={version:3,savedAt:new Date().toISOString(),schoolIndex:idx,kegiatan:ensureSchoolModalData(idx),pejabat:JSON.parse(JSON.stringify(dataPejabat)),rkasSettings:{year:rkasYear,source:rkasSource}};
+                localStorage.setItem(getRkasStorageKey(),JSON.stringify(payload));
+                saveSchoolToHasilRekap(idx,mode);
+                upsertRekapDataLocal(idx,mode);
+                const online=await checkSupabaseOnlineStatus(true);
+                if(online){
+                    await saveCurrentRkasOnline(idx,mode);
+                    setSubmitRkasStatus('✅ RKAS tersimpan: Rekap Data + DATABASE ONLINE Supabase.',true);
+                    if(isAdmin())renderRekapDataTable();
+                    alert('RKAS berhasil disimpan.\n\n✅ Masuk Hasil Rekap\n✅ Masuk Rekap Data\n✅ Tersimpan di DATABASE ONLINE Supabase.');
+                }else{
+                    setSubmitRkasStatus('⚠️ RKAS tersimpan lokal; Supabase sedang OFFLINE.',false);
+                    alert('RKAS berhasil disimpan lokal dan masuk Rekap Data, tetapi DATABASE SUPABASE sedang OFFLINE.');
+                }
+            }catch(err){console.error(err);setSubmitRkasStatus('❌ Gagal menyimpan RKAS: '+err.message,false);alert('Gagal menyimpan RKAS: '+err.message);}
+        };
+        // Migrasi Rekap Data lokal: satukan record lama berdasarkan NPSN + tahun.
+        function migrateRekapDataLocalToLatestPerSchool(){
+            const rows=getRekapDataLocal(); const latest=new Map();
+            rows.forEach(r=>{
+                if(!r)return;
+                const key=`${String(r.npsn||'').trim()}__${Number(r.tahun||2026)||2026}`;
+                const stamp=new Date(r.savedAt||0).getTime()||0;
+                const old=latest.get(key);
+                if(!old || stamp >= (new Date(old.savedAt||0).getTime()||0)) latest.set(key,{...r,key});
+            });
+            saveRekapDataLocal([...latest.values()]);
+        }
+        migrateRekapDataLocalToLatestPerSchool();
+        // Saat Admin masuk ke Rekap Data, data lokal langsung ditampilkan dan database online dibaca.
+        populateRekapDataFilters();
+        renderRekapDataTable();
+</script><script>
+(function(){
+function N(v){const n=Number(v);return Number.isFinite(n)?n:0;}
+function clean(x){x=x||{};return {pendapatan:N(x.pendapatan),barangJasa:N(x.barangJasa),modalPeralatanMesin:N(x.modalPeralatanMesin),modalAsetTetapLainnya:N(x.modalAsetTetapLainnya),siswa:N(x.siswa)};}
+function yr(r){return N(r&&r.tahun)} function tm(r){return String(r&& (r.updated_at||r.savedAt||r.saved_at)||'');}
+window.rekapBaseRows=function(selectedYear,mode){
+ let all=getHasilRekapOnlineCache(); if(!Array.isArray(all)||!all.length)all=loadHasilRekap(); if(!Array.isArray(all))all=[];
+ all=all.filter(r=>r&&(isAdmin()||canAccessNpsn(r.npsn))&&(String(r.mode)==='murni'||String(r.mode)==='perubahan'));
+ const target=N(selectedYear)||getCurrentYear(), map=new Map();
+ all.forEach(r=>{const k=String(r.npsn||r.nama||r.record_key||r.key||'').trim();if(!k)return;if(!map.has(k))map.set(k,{murni:[],perubahan:[]});map.get(k)[String(r.mode)==='murni'?'murni':'perubahan'].push(r);});
+ const newestYear=(a,y)=>a.filter(r=>yr(r)===y).sort((x,z)=>tm(z).localeCompare(tm(x)))[0]||null;
+ const newest=(a)=>a.slice().sort((x,z)=>yr(z)-yr(x)||tm(z).localeCompare(tm(x)))[0]||null;
+ const out=[]; map.forEach((g,k)=>{
+   let m=newestYear(g.murni,target)||g.murni.find(r=>!yr(r))||newest(g.murni);
+   let p=newestYear(g.perubahan,target)||g.perubahan.find(r=>!yr(r))||newest(g.perubahan);
+   if(mode==='murni'){if(!m)return;out.push({...m,_murni:m,_perubahan:null});return;}
+   if(!m&&!p)return; const s=m||p; out.push({...s,npsn:String(s.npsn||m?.npsn||p?.npsn||k),nama:String(s.nama||m?.nama||p?.nama||'-'),kecamatan:String(s.kecamatan||m?.kecamatan||p?.kecamatan||'-'),siswa:N(s.siswa||m?.siswa||p?.siswa),tahun:yr(m||p)||target,_murni:m,_perubahan:p});
+ });
+ return out.sort((a,b)=>String(a.kecamatan||'').localeCompare(String(b.kecamatan||''),'id')||String(a.nama||'').localeCompare(String(b.nama||''),'id'));
+};
+window.renderHasilRekap=function(){
+ const mode=document.getElementById('rekap-mode-selector')?.value||'murni',year=N(document.getElementById('rekap-year-selector')?.value)||getCurrentYear(),body=document.getElementById('hasil-rekap-body'),note=document.getElementById('rekap-note');
+ if(!body)return; renderRekapHeader(mode); const rows=rekapBaseRows(year,mode);
+ if(note)note.innerHTML=mode==='murni'?`Menampilkan <b>RKAS Murni / Sebelum Perubahan</b> tahun <b>${year}</b>.`:`Menampilkan semua sekolah yang sudah mengirim <b>RKAS Murni</b>. Jika belum mengirim perubahan, angka Murni tetap tampil dan Sesudah Perubahan = <b>0</b>.<div class="rekap-status-legend"><span class="belum">BELUM INPUT/KIRIM PERUBAHAN</span><span class="tetap">TIDAK ADA PERUBAHAN</span><span class="berubah">ADA PERUBAHAN</span></div>`;
+ if(!rows.length){body.innerHTML=`<tr><td colspan="${mode==='murni'?8:11}" class="rekap-empty">Belum ada sekolah yang mengirim RKAS Murni. Klik <b>☁️ Muat Rekap Online</b>.</td></tr>`;return;}
+ let h='',t={p:0,b:0,m:0,a:0,b2:0,m2:0,a2:0};
+ rows.forEach((r,i)=>{
+  if(mode==='murni'){
+   const x=rekapSnapshotMurni(r);t.p+=x.pendapatan;t.b+=x.barangJasa;t.m+=x.modalPeralatanMesin;t.a+=x.modalAsetTetapLainnya;
+   h+=`<tr><td>${i+1}</td><td>${escapeHtml(r.kecamatan||'-')}</td><td>${escapeHtml(r.nama||'-')}</td><td class="num">${rekapMoney(x.pendapatan)}</td><td class="num">${rekapMoney(x.barangJasa)}</td><td class="num">${rekapMoney(x.modalPeralatanMesin)}</td><td class="num">${rekapMoney(x.modalAsetTetapLainnya)}</td><td style="background:#00ff00;font-weight:700;">RKAS Murni</td></tr>`;return;
+  }
+  let b={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0},a={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+  if(r._murni)b=rekapSnapshotMurni(r._murni);
+  let status='belum';
+  if(r._perubahan){
+   const q=rekapSnapshotPerubahan(r._perubahan);
+   if(!r._murni&&rekapHasNumbers(q.sebelum))b=q.sebelum;
+   a=q.sesudah;
+   if(rekapHasNumbers(a))status=rekapHasChange(b,a)?'berubah':'tetap';
+   else status='belum';
+  }
+  if(status==='belum')a={pendapatan:0,barangJasa:0,modalPeralatanMesin:0,modalAsetTetapLainnya:0};
+  t.p+=b.pendapatan;t.b+=b.barangJasa;t.m+=b.modalPeralatanMesin;t.a+=b.modalAsetTetapLainnya;t.b2+=a.barangJasa;t.m2+=a.modalPeralatanMesin;t.a2+=a.modalAsetTetapLainnya;
+  const bg=status==='berubah'?'#ffff00':status==='tetap'?'#00ff00':'#E30B0B';
+  const ket=status==='berubah'?'Ada perubahan':status==='tetap'?'Tidak ada perubahan':'Belum input perubahan / kirim RKAS perubahan';
+  h+=`<tr><td style="background:${bg};">${i+1}</td><td style="background:${bg};">${escapeHtml(r.kecamatan||'-')}</td><td style="background:${bg};">${escapeHtml(r.nama||'-')}</td><td class="num" style="background:${bg};">${rekapMoney(b.pendapatan)}</td><td class="num" style="background:${bg};">${rekapMoney(b.barangJasa)}</td><td class="num" style="background:${bg};">${rekapMoney(b.modalPeralatanMesin)}</td><td class="num" style="background:${bg};">${rekapMoney(b.modalAsetTetapLainnya)}</td><td class="num" style="background:${bg};">${rekapMoney(a.barangJasa)}</td><td class="num" style="background:${bg};">${rekapMoney(a.modalPeralatanMesin)}</td><td class="num" style="background:${bg};">${rekapMoney(a.modalAsetTetapLainnya)}</td><td style="background:${bg};font-weight:700;">${ket}</td></tr>`;
+ });
+ h+=mode==='murni'?`<tr class="total-row"><td colspan="3" style="text-align:right;">Total</td><td class="num">${rekapMoney(t.p)}</td><td class="num">${rekapMoney(t.b)}</td><td class="num">${rekapMoney(t.m)}</td><td class="num">${rekapMoney(t.a)}</td><td></td></tr>`:`<tr class="total-row"><td colspan="3" style="text-align:right;">Total</td><td class="num">${rekapMoney(t.p)}</td><td class="num">${rekapMoney(t.b)}</td><td class="num">${rekapMoney(t.m)}</td><td class="num">${rekapMoney(t.a)}</td><td class="num">${rekapMoney(t.b2)}</td><td class="num">${rekapMoney(t.m2)}</td><td class="num">${rekapMoney(t.a2)}</td><td></td></tr>`;
+ body.innerHTML=h;
+};
+window.loadOnlineRekapRows=async function(){const cfg=getOnlineDbConfig();if(!cfg.url||!cfg.key)throw new Error('Database online belum dikonfigurasi.');const base=cfg.url+'/rest/v1/'+ONLINE_DB_TABLE;const select='record_key,npsn,nama,kecamatan,siswa,mode,tahun,rekap_snapshot,updated_at,saved_at';const q='select='+encodeURIComponent(select)+'&mode=in.(murni,perubahan)&order=updated_at.desc&limit=5000';return await supabaseFetchJson(base+'?'+q,{headers:onlineDbHeaders(cfg)},'Muat Hasil Rekap Online',15000);};
+window.muatRekapOnline=async function(){const cfg=getOnlineDbConfig();if(!cfg.url||!cfg.key){updateOnlineDbStatus('Database online belum dikonfigurasi.',false);toggleOnlineDbSettings();return [];}const btn=document.querySelector('#rekap-view button[onclick="muatRekapOnline()"]');if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='⏳ Membaca online...';}try{const rows=await loadOnlineRekapRows();const mapped=(Array.isArray(rows)?rows:[]).filter(r=>r&&r.npsn&&(r.mode==='murni'||r.mode==='perubahan')&&(isAdmin()||canAccessNpsn(r.npsn))).map(r=>({key:r.record_key||('ONLINE-'+r.npsn+'-'+r.mode+'-'+r.tahun),record_key:r.record_key||'',mode:String(r.mode),tahun:N(r.tahun),npsn:String(r.npsn),nama:String(r.nama||''),kecamatan:String(r.kecamatan||''),siswa:N(r.siswa),snapshot:r.rekap_snapshot||{},updated_at:r.updated_at||'',saved_at:r.saved_at||'',savedAt:r.updated_at||r.saved_at||''}));saveHasilRekapOnlineCache(mapped);localStorage.setItem(HASIL_REKAP_STORAGE_KEY,JSON.stringify(mapped));populateRekapYearSelector();renderHasilRekap();updateOnlineDbStatus(mapped.length?`Berhasil memuat ${mapped.filter(r=>r.mode==='murni').length} RKAS Murni + ${mapped.filter(r=>r.mode==='perubahan').length} RKAS Perubahan.`:'Database terbaca, tetapi belum ada RKAS yang dikirim.',!!mapped.length);return mapped;}catch(e){console.error(e);renderHasilRekap();updateOnlineDbStatus('Gagal membaca database online: '+(e?.message||e),false);return [];}finally{if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'☁️ Muat Rekap Online';}}};
+})();
+</script>
+</body>
 </html>
